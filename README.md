@@ -45,7 +45,7 @@ php artisan db:seed
 ・Laravel10.0.0
 ・MySQL8.0.33
 
-##ER図
+## ER図
 
 
 ## URL
