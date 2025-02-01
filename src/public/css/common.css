@@ -1,0 +1,30 @@
+html,
+body {
+    height: 100%;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+.app {
+    display: flex;
+    flex-direction: column;
+}
+
+.header {
+    background-color: #000;
+    width: 100%;
+    margin: 0;
+    padding: 0;
+}
+
+.header__heading {
+    width: 100%;
+    margin: 10px 0 5px 0;
+    padding: 0;
+}
+
+.header__logo {
+    margin-left: 15px;
+    padding: 0;
+}
