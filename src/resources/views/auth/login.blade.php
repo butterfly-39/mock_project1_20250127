@@ -1,14 +1,13 @@
 @extends('layouts.app')
 
 @section('css')
-    <link rel="stylesheet" href="{{ asset('css/auth/login.css') }}">
+<link rel="stylesheet" href="{{ asset('css/auth/login.css') }}">
 @endsection
 
 @section('content')
-    <div class="login-form">
-        <h2 class="login-form__heading">ログイン</h2>
-    </div>
-        <div class="login-form__inner">
+<div class="login-form">
+    <h2 class="login-form__heading">ログイン</h2>
+    <div class="login-form__inner">
         <form class="login-form__form" action="/login" method="post">
             @csrf
             <div class="login-form__group">
@@ -32,9 +31,10 @@
             </div>
 
             <div class="login-form__btn-group">
-                <input class="login-form__login-btn" type="submit" value="ログイン" name="login">
-                <input class="login-form__register-btn" type="submit" value="会員登録はこちら" name="register">
+                <input class="login-form__login-btn" type="submit" value="ログインする" name="login">
+                <a href="/register" class="login-form__register-btn">会員登録はこちら</a>
             </div>
         </form>
     </div>
+</div>
 @endsection

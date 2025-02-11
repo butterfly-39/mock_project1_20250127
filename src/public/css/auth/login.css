@@ -1,0 +1,56 @@
+.login-form__heading {
+    text-align: center;
+    font-size: 30px;
+}
+
+.login-form__group {
+    display: flex;
+    flex-direction: column;
+    /* 子要素を縦方向に配置 */
+}
+
+.login-form__label {
+    font-size: 20px;
+}
+
+.login-form__input {
+    padding: 13px;
+    border: 1px solid #9d9c9c;
+    border-radius: 3px;
+}
+
+.login-form__error-message {
+    color: #ff0000;
+}
+
+/* ボタン */
+.login-form__btn-group {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+}
+
+.login-form__login-btn {
+    display: block;
+    text-align: center;
+    padding: 10px 32px;
+    border: none;
+    background-color: rgb(245, 69, 69);
+    color: #FFF;
+    font-size: 20px;
+    cursor: pointer;
+    border-radius: 3px;
+    margin: 0 auto;
+    margin-top: 50px;
+    width: 100%;
+    /* 親要素の幅いっぱいに広げる */
+    box-sizing: border-box;
+    /* paddingを含めた全体の幅を指定できるように */
+}
+
+.login-form__register-btn {
+    text-decoration: none;
+    color: #3e80bd;
+    padding-top: 10px;
+}
