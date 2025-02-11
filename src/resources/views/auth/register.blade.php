@@ -51,8 +51,8 @@
                 </p>
             </div>
             <div class="register-form__btn-group">
-                <input class="register-form__register-btn" type="submit" value="登録する" name="register">
-                <input class="register-form__login-btn" type="submit" value="ログインはこちら" name="login">
+                <input class="register-form__register-btn" type="submit" value="登録する">
+                <a href="{{ route('login') }}" class="register-form__login-btn">ログインはこちら</a>
             </div>
         </form>
     </div>
