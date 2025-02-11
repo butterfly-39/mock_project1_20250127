@@ -6,27 +6,68 @@ body {
     padding: 0;
 }
 
+label {
+    font-weight: bold;
+}
+
 .app {
     display: flex;
     flex-direction: column;
+    height: 100%;
 }
 
+/* ヘッダー */
 .header {
     background-color: #000;
     width: 100%;
     margin: 0;
     padding: 0;
+    height: 60px;
+    display: flex;
+    align-items: center;
 }
 
 .header__heading {
     width: 100%;
-    margin: 10px 0 5px 0;
     padding: 0;
 }
 
 .header__logo {
     margin-left: 15px;
     padding: 0;
+}
+
+/* コンテンツ */
+.content {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    justify-content: center;
+    width: 50%;
+    margin: 0 auto;
+    box-sizing: border-box;
+}
+
+.content__heading {
+    text-align: center;
+    font-weight: 100;
+    font-size: 32px;
+}
+
+/* タブレット (768px以上) */
+@media screen and (min-width: 768px) {
+    .content {
+        padding: 20px;
+        max-width: 90%;
+    }
+}
+
+/* PC (1400px以上) */
+@media screen and (min-width: 1400px) {
+    .content {
+        padding: 20px;
+        max-width: 1230px;
+    }
 }
 
 
