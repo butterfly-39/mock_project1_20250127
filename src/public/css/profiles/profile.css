@@ -1,0 +1,102 @@
+.profile-form__heading {
+    text-align: center;
+    font-size: 30px;
+}
+
+.profile-form__group {
+    display: flex;
+    flex-direction: column;
+    /* 子要素を縦方向に配置 */
+}
+
+.profile-form__label {
+    font-size: 20px;
+}
+
+.profile-form__input {
+    padding: 13px;
+    border: 1px solid #9d9c9c;
+    border-radius: 3px;
+}
+
+.profile-form__error-message {
+    color: #ff0000;
+}
+
+/* ボタン */
+.profile-form__btn-group {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+}
+
+.profile-form__update-btn {
+    display: block;
+    text-align: center;
+    padding: 10px 32px;
+    border: none;
+    background-color: rgb(245, 69, 69);
+    color: #FFF;
+    font-size: 20px;
+    cursor: pointer;
+    border-radius: 3px;
+    margin: 0 auto;
+    margin-top: 50px;
+    width: 100%;
+    /* 親要素の幅いっぱいに広げる */
+    box-sizing: border-box;
+    /* paddingを含めた全体の幅を指定できるように */
+}
+
+.profile-form__register-btn {
+    text-decoration: none;
+    color: #3e80bd;
+    padding-top: 10px;
+}
+
+/* 画像 */
+.profile-form__image-container {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 2rem;
+    margin-bottom: 50px;
+}
+
+.profile-form__image-preview {
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    overflow: hidden;
+    background-color: #f5f5f5;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+}
+
+.profile-form__image-preview img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.profile-form__no-image {
+    font-size: 4rem;
+    color: #888787;
+}
+
+.profile-form__select-btn {
+    display: none;
+}
+
+.profile-form__select-label {
+    padding: 0.5rem 1rem;
+    background-color: white;
+    color: rgb(245, 69, 69);
+    border-radius: 6px;
+    cursor: pointer;
+    white-space: nowrap;
+    border: 1px solid rgb(245, 69, 69);
+}

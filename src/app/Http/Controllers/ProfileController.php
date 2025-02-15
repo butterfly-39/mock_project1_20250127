@@ -18,16 +18,16 @@ class ProfileController extends Controller
 
     public function edit_update(Request $request)
     {
-        return view('profiles.edit');
+        return view('profiles.profile');
     }
 
     public function buy_view()
     {
-        return view('profiles.buy');
+        return view('profiles.mypage');
     }
 
     public function sell_view()
     {
-        return view('profiles.sell');
+        return view('profiles.mypage');
     }
 }
