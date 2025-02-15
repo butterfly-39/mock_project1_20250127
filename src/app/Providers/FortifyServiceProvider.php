@@ -37,9 +37,8 @@ class FortifyServiceProvider extends ServiceProvider
             return new class implements RegisterResponse {
                 public function toResponse($request): RedirectResponse
                 {
-                    // 自動ログインを防ぎ、loginページへリダイレクト
-                    auth()->logout();
-                    return redirect('/login');
+                    // 登録後、マイページのプロフィール画面へリダイレクト
+                    return redirect('/mypage/profile');
                 }
             };
         });

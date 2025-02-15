@@ -13,7 +13,7 @@ class ProfileController extends Controller
 
     public function edit_view()
     {
-        return view('profiles.edit');
+        return view('profiles.profile');
     }
 
     public function edit_update(Request $request)
