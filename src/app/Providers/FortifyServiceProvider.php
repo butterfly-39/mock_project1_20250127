@@ -14,6 +14,8 @@ use Illuminate\Support\Str;
 use Laravel\Fortify\Fortify;
 use Laravel\Fortify\Http\Requests\LoginRequest as FortifyLoginRequest;
 use App\Http\Requests\LoginRequest;
+use Laravel\Fortify\Contracts\RegisterResponse;
+use Illuminate\Http\RedirectResponse;
 
 class FortifyServiceProvider extends ServiceProvider
 {
@@ -30,6 +32,18 @@ class FortifyServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
+        // 登録後のレスポンスをカスタマイズ
+        $this->app->singleton(RegisterResponse::class, function () {
+            return new class implements RegisterResponse {
+                public function toResponse($request): RedirectResponse
+                {
+                    // 自動ログインを防ぎ、loginページへリダイレクト
+                    auth()->logout();
+                    return redirect('/login');
+                }
+            };
+        });
+
         Fortify::createUsersUsing(CreateNewUser::class);
 
         Fortify::registerView(function () {
@@ -41,9 +55,9 @@ class FortifyServiceProvider extends ServiceProvider
         });
 
         RateLimiter::for('login', function (Request $request) {
-            $email = (string) $request->email;
+            $identifier = (string) $request->input('email') ?? $request->input('name');
 
-            return Limit::perMinute(10)->by($email . $request->ip());
+            return Limit::perMinute(10)->by($identifier . $request->ip());
         });
 
         $this->app->bind(FortifyLoginRequest::class, LoginRequest::class);
