@@ -6,8 +6,28 @@ use Illuminate\Http\Request;
 
 class ProfileController extends Controller
 {
-    public function register(Request $request)
+    public function mypage_view()
     {
-        return view('auth.register');
+        return view('profiles.mypage');
+    }
+
+    public function edit_view()
+    {
+        return view('profiles.edit');
+    }
+
+    public function edit_update(Request $request)
+    {
+        return view('profiles.edit');
+    }
+
+    public function buy_view()
+    {
+        return view('profiles.buy');
+    }
+
+    public function sell_view()
+    {
+        return view('profiles.sell');
     }
 }
