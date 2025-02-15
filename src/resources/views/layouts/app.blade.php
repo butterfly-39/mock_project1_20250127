@@ -16,7 +16,7 @@
             </h1>
             <ul class="header-nav">
                 @if (Auth::check())
-                <li class="header-nav__item">
+                <li class="header-nav__item--search">
                     <form class="header-search" action="/search" method="get">
                         <div class="header-search__container">
                             <input type="text" name="query" class="header-search__input" placeholder="なにをお探しですか？">
@@ -26,14 +26,14 @@
                 <li class="header-nav__item">
                     <form class="header-logout" action="/logout" method="post">
                         @csrf
-                        <button class="header-logout__button">ログアウト</button>
+                        <a class="header-nav__link" href="/logout">ログアウト</a>
                     </form>
                 </li>
                 <li class="header-nav__item">
                     <a class="header-nav__link" href="/mypage">マイページ</a>
                 </li>
                 <li class="header-nav__item">
-                    <a class="header-nav__link" href="/sell">出品</a>
+                    <button class="header-nav__button" href="/sell">出品</button>
                 </li>
                 @endif
             </ul>
