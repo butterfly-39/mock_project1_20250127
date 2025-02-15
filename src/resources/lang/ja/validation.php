@@ -86,7 +86,7 @@ return [
     'min'                  => [
         'numeric' => ':attributeには、:min以上の数字を指定してください。',
         'file'    => ':attributeには、:min KB以上のファイルを指定してください。',
-        'string'  => ':attributeは、:min文字以上にしてください。',
+        'string'  => ':attributeは:min文字以上で入力してください',
         'array'   => ':attributeの項目は、:min個以上にしてください。',
     ],
     'multiple_of'          => 'The :attribute must be a multiple of :value',
@@ -139,7 +139,6 @@ return [
         ],
         'password' => [
             'required' => 'パスワードを入力してください',
-            'min' => 'パスワードは8文字以上で入力してください',
         ]
     ],
 

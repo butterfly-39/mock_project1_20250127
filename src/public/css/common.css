@@ -49,7 +49,10 @@ label {
 .header-nav__link {
     text-decoration: none;
     color: white;
+    background-color: black;
     white-space: nowrap;
+    font-size: 14px;
+    border: none;
 }
 
 .header-nav__button {

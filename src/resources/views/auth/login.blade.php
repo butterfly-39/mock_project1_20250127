@@ -11,10 +11,10 @@
         <form class="login-form__form" action="/login" method="post">
             @csrf
             <div class="login-form__group">
-                <label class="login-form__label" for="name">ユーザー名/メールアドレス</label>
-                <input class="login-form__input" type="text" name="email" id="email">
+                <label class="login-form__label" for="login">ユーザー名/メールアドレス</label>
+                <input class="login-form__input" type="text" name="login" id="login">
                 <p class="login-form__error-message">
-                    @error('email')
+                    @error('login')
                     {{ $message }}
                     @enderror
                 </p>

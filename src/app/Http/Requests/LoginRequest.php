@@ -14,29 +14,36 @@ class LoginRequest extends FortifyLoginRequest
     public function rules()
     {
         return [
-            'email' => 'required|exists:users,email',
-            'password' => 'required',
+            'login' => 'required|exists:users,email,name|email',
+            'password' => 'required|min:8',
         ];
+    }
+
+    /**
+     * Configure the validator instance.
+     *
+     * @param  \Illuminate\Validation\Validator  $validator
+     * @return void
+     */
+    public function withValidator($validator)
+    {
+        $validator->after(function ($validator) {
+            $login = $this->input('login');
+            $user = \App\Models\User::where('email', $login)
+                ->orWhere('name', $login)
+                ->first();
+
+            if (!$user) {
+                $validator->errors()->add('login', 'ログイン情報が登録されていません');
+            }
+        });
     }
 
     public function messages()
     {
         return [
-            'email.required' => 'メールアドレスを入力してください',
-            'email.exists' => 'ログイン情報が登録されていません',
+            'login.required' => 'ユーザー名またはメールアドレスを入力してください',
             'password.required' => 'パスワードを入力してください',
         ];
-    }
-
-    protected function failedValidation(\Illuminate\Contracts\Validation\Validator $validator)
-    {
-        $email = $this->input('email');
-        $password = $this->input('password');
-
-        if ($email && $password && \App\Models\User::where('email', $email)->exists()) {
-            $validator->errors()->add('email', 'ログイン情報が登録されていません');
-        }
-
-        parent::failedValidation($validator);
     }
 }
