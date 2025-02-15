@@ -25,6 +25,5 @@ class PurchaseController extends Controller
     {
         return view('profiles.address', ['item_id' => $item_id]);
     }
-    
 }
 

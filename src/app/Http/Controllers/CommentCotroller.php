@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 
-class CommentCotroller extends Controller
+class CommentController extends Controller
 {
     //
 }
