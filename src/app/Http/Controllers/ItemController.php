@@ -15,5 +15,20 @@ class ItemController extends Controller
     {
         return view('items.show', ['item_id' => $item_id]);
     }
+
+    public function mylist_view()
+    {
+        return view('items.mylist');
+    }
+
+    public function sell_view()
+    {
+        return view('items.sell');
+    }
+
+    public function sell()
+    {
+        return view('items.sell');
+    }
 }
 
