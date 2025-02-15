@@ -14,8 +14,16 @@ class LoginRequest extends FortifyLoginRequest
     public function rules()
     {
         return [
-            'login' => 'required|exists:users,email,name|email',
-            'password' => 'required|min:8',
+            'login' => ['required', function ($attribute, $value, $fail) {
+                if (filter_var($value, FILTER_VALIDATE_EMAIL)) {
+                    return;
+                }
+                if (preg_match('/^[a-zA-Z0-9_\-\p{Han}\p{Hiragana}\p{Katakana}]+$/u', $value)) {
+                    return;
+                }
+                $fail('ユーザー名またはメールアドレスを入力してください');
+            }],
+            'password' => 'required',
         ];
     }
 
@@ -29,11 +37,18 @@ class LoginRequest extends FortifyLoginRequest
     {
         $validator->after(function ($validator) {
             $login = $this->input('login');
+            $password = $this->input('password');
+
             $user = \App\Models\User::where('email', $login)
                 ->orWhere('name', $login)
                 ->first();
 
             if (!$user) {
+                $validator->errors()->add('login', 'ログイン情報が登録されていません');
+                return;
+            }
+
+            if (!password_verify($password, $user->password)) {
                 $validator->errors()->add('login', 'ログイン情報が登録されていません');
             }
         });
