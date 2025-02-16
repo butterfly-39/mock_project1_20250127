@@ -1,0 +1,25 @@
+.content {
+    position: absolute;
+    top: 20%;
+    left: 35%;
+    transform: translate(-50%, -50%);
+}
+
+.items-form__heading {
+    font-size: 18px;
+    color: #333;
+    text-decoration: none;
+    cursor: pointer;
+    margin-right: 40px;
+}
+
+.items-form__heading:hover {
+    color: rgb(245, 69, 69);
+}
+
+/* 横線のスタイル */
+.divider {
+    width: 100vw;
+    height: 1px;
+    background-color: #959494;
+}

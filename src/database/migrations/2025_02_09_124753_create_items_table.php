@@ -20,6 +20,7 @@ class CreateItemsTable extends Migration
             $table->string('image_url');
             $table->string('name');
             $table->text('description');
+            $table->string('brand_name');
             $table->string('price');
             $table->timestamps();
         });
