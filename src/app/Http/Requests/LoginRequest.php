@@ -24,8 +24,20 @@ class LoginRequest extends FortifyLoginRequest
     public function rules()
     {
         return [
-            'login' => 'required_without:name|required_without:email|email',
+            'email' => 'required|email|exists:users,email',
             'password' => 'required',
+        ];
+    }
+
+    /**
+     * Get custom messages for validator errors.
+     *
+     * @return array
+     */
+    public function messages()
+    {
+        return [
+            'email.exists' => 'ログイン情報が登録されていません',
         ];
     }
 }
