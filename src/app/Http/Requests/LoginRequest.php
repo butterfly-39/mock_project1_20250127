@@ -28,16 +28,4 @@ class LoginRequest extends FortifyLoginRequest
             'password' => 'required',
         ];
     }
-
-    /**
-     * Get custom messages for validator errors.
-     *
-     * @return array
-     */
-    public function messages()
-    {
-        return [
-            'email.exists' => 'ログイン情報が登録されていません',
-        ];
-    }
 }
