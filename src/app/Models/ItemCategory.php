@@ -10,17 +10,17 @@ class ItemCategory extends Model
     use HasFactory;
 
     protected $fillable = [
-        'user_id',
         'item_id',
+        'category_id',
     ];
 
-    public function user()
+    public function item()
     {
         return $this->belongsTo(User::class);
     }
 
-    public function item()
+    public function category()
     {
-        return $this->belongsTo(Item::class);
+        return $this->belongsTo(Category::class);
     }
 }
