@@ -11,9 +11,11 @@ class Item extends Model
 
     protected $fillable = [
         'user_id',
+        'image',
+        'category_id',
         'condition_id',
-        'image_url',
         'name',
+        'brand_name',
         'description',
         'price',
     ];
@@ -23,8 +25,13 @@ class Item extends Model
         return $this->belongsTo(User::class);
     }
 
-    public function condition()
+    public function category()
     {
-        return $this->belongsTo(Condition::class);
+        return $this->belongsTo(Category::class);
+    }
+
+    public function conditions()
+    {
+        return $this->belongsToMany(Condition::class);
     }
 }

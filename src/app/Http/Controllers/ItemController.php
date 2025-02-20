@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Category;
 use App\Models\Condition;
+use App\Http\Requests\ExhibitionRequest;
+use App\Models\Item;
 
 class ItemController extends Controller
 {
@@ -30,9 +32,11 @@ class ItemController extends Controller
         return view('items.sell', compact('categories', 'conditions'));
     }
 
-    public function sell_update()
+    public function sell_update(ExhibitionRequest $request)
     {
-        return view('items.sell');
+        $item = $request->only('image', 'category', 'condition', 'name', 'brand_name', 'description', 'price');
+        Item::create($item);
+        return view('items.index');
     }
 }
 

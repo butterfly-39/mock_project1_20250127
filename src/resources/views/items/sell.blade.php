@@ -40,10 +40,10 @@
                 <div class="sell-form__category-buttons">
                     @foreach($categories as $category)
                         <div class="sell-form__category-item">
-                            <input type="radio"name="category"
+                            <input type="checkbox" name="category[]"
                                 id="category_{{ $category->id }}"
                                 value="{{ $category->id }}"
-                                {{ old('category') == $category->id ? 'checked' : '' }}
+                                {{ is_array(old('category')) && in_array($category->id, old('category')) ? 'checked' : '' }}
                                 class="sell-form__category-input">
                             <label for="category_{{ $category->id }}" class="sell-form__category-label">
                                 {{ $category->category }}
