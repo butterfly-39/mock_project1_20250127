@@ -8,7 +8,7 @@
 <div class="sell-form">
     <h2 class="sell-form__heading">商品の出品</h2>
     <div class="sell-form__inner">
-        <form class="sell-form__form" action="/mypage/profile" method="post">
+        <form class="sell-form__form" action="/sell" method="post">
         @csrf
             <div class="sell-form__group">
                 <label class="sell-form__label">商品画像</label>
@@ -100,7 +100,7 @@
 
             <div class="sell-form__group">
                 <label class="sell-form__label" for="description">商品説明</label>
-                <textarea class="sell-form__input" name="description" id="description" value="{{ old('description') }}"></textarea>
+                <textarea class="sell-form__input" name="description" id="description">{{ old('description') }}</textarea>
                 <p class="sell-form__error-message">
                     @error('description')
                     {{ $message }}
@@ -110,7 +110,7 @@
 
             <div class="sell-form__group">
                 <label class="sell-form__label" for="price">販売価格</label>
-                <input class="sell-form__input sell-form__input--price" type="text" name="price" id="price" value="¥{{ old('price') }}">
+                <input class="sell-form__input sell-form__input--price" type="text" name="price" id="price" value="{{ old('price') }}">
                 <p class="sell-form__error-message">
                     @error('price')
                     {{ $message }}

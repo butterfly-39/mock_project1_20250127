@@ -153,3 +153,7 @@
 .sell-form__category-label:hover {
     background-color: #e9e9e9;
 }
+
+.sell-form__error-message {
+    color: #ff0000;
+}

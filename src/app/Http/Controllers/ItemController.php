@@ -35,8 +35,10 @@ class ItemController extends Controller
     public function sell_update(ExhibitionRequest $request)
     {
         $item = $request->only('image', 'category', 'condition', 'name', 'brand_name', 'description', 'price');
+        $item['user_id'] = auth()->id();
         Item::create($item);
-        return view('items.index');
+        return redirect('/');
     }
 }
+
 
