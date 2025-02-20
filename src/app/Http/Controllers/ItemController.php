@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Category;
+use App\Models\Condition;
 
 class ItemController extends Controller
 {
@@ -13,7 +15,7 @@ class ItemController extends Controller
 
     public function item_show($item_id)
     {
-        return view('items.show', ['item_id' => $item_id]);
+        return view('items.show', compact('item_id'));
     }
 
     public function mylist_view()
@@ -23,10 +25,12 @@ class ItemController extends Controller
 
     public function sell_view()
     {
-        return view('items.sell');
+        $categories = Category::all();
+        $conditions = Condition::all();
+        return view('items.sell', compact('categories', 'conditions'));
     }
 
-    public function sell()
+    public function sell_update()
     {
         return view('items.sell');
     }
