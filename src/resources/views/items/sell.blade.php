@@ -8,17 +8,17 @@
 <div class="sell-form">
     <h2 class="sell-form__heading">商品の出品</h2>
     <div class="sell-form__inner">
-        <form class="sell-form__form" action="/sell" method="post">
+        <form class="sell-form__form" action="/sell" method="post" enctype="multipart/form-data">
         @csrf
             <div class="sell-form__group">
                 <label class="sell-form__label">商品画像</label>
                 <div class="sell-form__image-container">
                     <div class="sell-form__image-preview">
-                        @if(isset($user->image))
-                            <img src="storage/{{ $user->image }}" alt="プロフィール画像">
+                        @if(old('image'))
+                            <img src="{{ old('image') }}" alt="商品画像">
                         @else
                             <div class="sell-form__no-image">
-                                <i class="fas fa-user"></i>
+                                <i class="fas fa-image"></i>
                             </div>
                         @endif
                     </div>

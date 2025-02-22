@@ -8,13 +8,13 @@
 <div class="profile-form">
     <h2 class="profile-form__heading">プロフィール設定</h2>
     <div class="profile-form__inner">
-        <form class="profile-form__form" action="/mypage/profile" method="post">
+        <form class="profile-form__form" action="/mypage/profile" method="post" enctype="multipart/form-data">
         @csrf
             <div class="profile-form__group">
                 <div class="profile-form__image-container">
                     <div class="profile-form__image-preview">
                         @if(isset($user->image))
-                            <img src="storage/{{ $user->image }}" alt="プロフィール画像">
+                            <img src="{{ asset('storage/' . $user->image) }}" alt="プロフィール画像">
                         @else
                             <div class="profile-form__no-image">
                                 <i class="fas fa-user"></i>
@@ -28,7 +28,7 @@
 
             <div class="profile-form__group">
                 <label class="profile-form__label" for="name">ユーザー名</label>
-                <input class="profile-form__input" type="text" name="name" id="name" value="{{ old('name') }}">
+                <input class="profile-form__input" type="text" name="name" id="name" value="{{ old('name', $user->name) }}">
                 <p class="profile-form__error-message">
                     @error('name')
                     {{ $message }}

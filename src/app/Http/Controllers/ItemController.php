@@ -34,7 +34,15 @@ class ItemController extends Controller
 
     public function sell_update(ExhibitionRequest $request)
     {
-        $item = $request->only('image', 'category', 'condition', 'name', 'brand_name', 'description', 'price');
+        $item = $request->only('category', 'condition', 'name', 'brand_name', 'description', 'price');
+        // 画像がアップロードされた場合の処理
+        if ($request->hasFile('image')) {
+            $image = $request->file('image');
+            // publicディレクトリ内のimagesフォルダに保存
+            $path = $image->store('images', 'public');
+            $item['image'] = $path;
+        }
+
         $item['user_id'] = auth()->id();
         Item::create($item);
         return redirect('/');
