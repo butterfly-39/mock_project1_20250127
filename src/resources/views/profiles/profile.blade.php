@@ -12,10 +12,8 @@
         @csrf
             <div class="profile-form__group">
                 <div class="profile-form__image-container">
-                    <div class="profile-form__image-preview">
-                        @if(old('image'))
-                            <img src="{{ old('image') }}" alt="プレビュー画像">
-                        @elseif(isset($user->image))
+                    <div class="profile-form__image-preview" id="preview">
+                        @if(isset($user->image))
                             <img src="{{ asset('storage/' . $user->image) }}" alt="プロフィール画像">
                         @else
                             <div class="profile-form__no-image">
@@ -23,7 +21,7 @@
                             </div>
                         @endif
                     </div>
-                    <input class="profile-form__select-btn" type="file" name="image" id="image" accept="image/*">
+                    <input class="profile-form__select-btn" type="file" name="image" id="image" accept="image/*" onchange="previewImage(this);">
                     <label class="profile-form__select-label" for="image">画像を選択する</label>
                 </div>
             </div>
@@ -69,5 +67,20 @@
         </form>
     </div>
 </div>
+@endsection
+
+@section('scripts')
+<script>
+function previewImage(input) {
+    const preview = document.getElementById('preview');
+    if (input.files && input.files[0]) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            preview.innerHTML = `<img src="${e.target.result}" alt="プレビュー画像">`;
+        }
+        reader.readAsDataURL(input.files[0]);
+    }
+}
+</script>
 @endsection
 

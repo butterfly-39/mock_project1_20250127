@@ -23,12 +23,16 @@ class ProfileController extends Controller
     public function edit_update(AddressRequest $request)
     {
         $user = Auth::user();
-        $profile = $request->only(['name', 'postal_code', 'address', 'building']);
+        // usersテーブルの更新
+        $user->update([
+            'name' => $request->name
+        ]);
 
-        // 画像がアップロードされた場合の処理
+        // profilesテーブル用のデータ
+        $profile = $request->only(['postal_code', 'address', 'building']);
+
         if ($request->hasFile('image')) {
             $image = $request->file('image');
-            // publicディレクトリ内のprofile_imagesフォルダに保存
             $path = $image->store('profile_images', 'public');
             $profile['image'] = $path;
         }
@@ -38,6 +42,7 @@ class ProfileController extends Controller
             ['user_id' => $user->id],
             $profile
         );
+
         return redirect('/');
     }
 
