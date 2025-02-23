@@ -13,7 +13,9 @@
             <div class="profile-form__group">
                 <div class="profile-form__image-container">
                     <div class="profile-form__image-preview">
-                        @if(isset($user->image))
+                        @if(old('image'))
+                            <img src="{{ old('image') }}" alt="プレビュー画像">
+                        @elseif(isset($user->image))
                             <img src="{{ asset('storage/' . $user->image) }}" alt="プロフィール画像">
                         @else
                             <div class="profile-form__no-image">

@@ -10,7 +10,8 @@ class ProfileController extends Controller
 {
     public function mypage_view()
     {
-        return view('profiles.mypage');
+        $user = Auth::user();
+        return view('profiles.mypage', compact('user'));
     }
 
     public function edit_view()
@@ -23,7 +24,7 @@ class ProfileController extends Controller
     {
         $user = Auth::user();
         $profile = $request->only(['name', 'postal_code', 'address', 'building']);
-        
+
         // 画像がアップロードされた場合の処理
         if ($request->hasFile('image')) {
             $image = $request->file('image');

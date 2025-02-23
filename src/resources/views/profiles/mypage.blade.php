@@ -1,15 +1,22 @@
 @extends('layouts.app')
 
 @section('css')
-<link rel="stylesheet" href="{{ asset('css/items/index.css') }}">
+<link rel="stylesheet" href="{{ asset('css/profiles/mypage.css') }}">
 @endsection
 
 @section('content')
-<div class="mypage-form__group">
-    <div class="mypage-form__image-container">
-        <input class="mypage-form__select-btn" type="file" name="image" id="image" accept="image/*">
-        <label class="mypage-form__select-label" for="image">ユーザー名</label>
-        <a href="/mypage/profile" class="mypage-form__select-label">プロフィールを編集</a>
+<div class="mypage-form">
+    <div class="mypage-form__group">
+        <div class="mypage-form__image-container">
+            <input class="mypage-form__select-btn" type="file" name="image" id="image" accept="image/*">
+            @if($user->image)
+                <img src="{{ asset('storage/' . $user->image) }}" alt="プロフィール画像" class="mypage-form__image">
+            @else
+                <i class="fas fa-user mypage-form__no-image"></i>
+            @endif
+            <label class="mypage-form__label" for="image">ユーザー名</label>
+            <a class="mypage-form__label-btn" href="/mypage/profile">プロフィールを編集</a>
+        </div>
     </div>
 
     <div class="mypage-form__group">
