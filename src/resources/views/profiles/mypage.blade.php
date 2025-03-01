@@ -28,10 +28,21 @@
 <div class="divider"></div>
 
 <div class="mypage-list">
-    <div class="mypage-card">
-        <img src="/images/sample.jpg" alt="商品画像" class="mypage-card__image">
-        <p class="mypage-card__name">商品名</p>
-    </div>
+    @foreach($items as $item)
+        <div class="mypage-card">
+            @if($item->image)
+                <img src="{{ asset('storage/' . $item->image) }}" alt="商品画像" class="mypage-card__image">
+            @else
+                <img src="/images/sample.jpg" alt="商品画像" class="mypage-card__image">
+            @endif
+            <p class="mypage-card__name">{{ $item->name }}</p>
+            <p class="mypage-card__price">¥{{ number_format($item->price) }}</p>
+        </div>
+    @endforeach
+
+    @if($items->isEmpty())
+        <p class="mypage-list__empty">出品した商品はありません</p>
+    @endif
 </div>
 @endsection
 

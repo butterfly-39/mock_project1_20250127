@@ -49,3 +49,17 @@
     text-decoration: none;
     font-weight: bold;
 }
+
+.mypage-list {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.mypage-card__image {
+    width: 100px;
+    height: 100px;
+    object-fit: cover;
+    display: flex;
+    flex-wrap: wrap;
+}

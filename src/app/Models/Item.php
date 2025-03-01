@@ -19,13 +19,28 @@ class Item extends Model
         'price',
     ];
 
-    public function user()
+    /**
+     * カテゴリーとの多対多リレーション
+     */
+    public function categories()
     {
-        return $this->belongsTo(User::class);
+        return $this->belongsToMany(Category::class, 'item_categories', 'item_id', 'category_id')
+            ->withTimestamps();
     }
 
+    /**
+     * 商品状態とのリレーション
+     */
     public function condition()
     {
         return $this->belongsTo(Condition::class);
+    }
+
+    /**
+     * ユーザーとのリレーション
+     */
+    public function user()
+    {
+        return $this->belongsTo(User::class);
     }
 }

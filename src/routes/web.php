@@ -18,22 +18,22 @@ use App\Http\Controllers\CommentController;
 */
 
 Route::middleware('auth')->group(function () {
-    Route::get('/?tab=mylist', [ItemController::class, 'mylist_view']);
+    Route::get('/mypage', [ProfileController::class, 'mypage_view']);
+    Route::get('/mylist', [ItemController::class, 'mylist_view']);
+    Route::get('/mypage/buy', [ProfileController::class, 'buy_view']);
+    Route::get('/mypage/sell', [ProfileController::class, 'sell_view']);
     Route::get('/sell', [ItemController::class, 'sell_view']);
     Route::post('/sell', [ItemController::class, 'sell_update']);
-    Route::get('/mypage', [ProfileController::class, 'mypage_view']);
     Route::get('/mypage/profile', [ProfileController::class, 'edit_view']);
     Route::post('/mypage/profile', [ProfileController::class, 'edit_update']);
-    Route::get('/mypage?tab=buy', [ProfileController::class, 'buy_view']);
-    Route::get('/mypage?tab=sell', [ProfileController::class, 'sell_view']);
-    Route::get('/purchase/:item_id', [PurchaseController::class, 'purchase_view']);
-    Route::post('/purchase/:item_id', [PurchaseController::class, 'purchase_update']);
-    Route::get('/purchase/address/:item_id', [PurchaseController::class, 'address_view']);
-    Route::post('/purchase/address/:item_id', [PurchaseController::class, 'address_update']);
-    Route::post('/item/:item_id/favorites', [FavoriteController::class, 'item_favorite_create']);
-    Route::delete('/item/:item_id/favorites', [FavoriteController::class, 'item_favorite_delete']);
-    Route::post('/item/:item_id/comments', [CommentController::class, 'item_comment_create']);
+    Route::get('/purchase/{item_id}', [PurchaseController::class, 'purchase_view']);
+    Route::post('/purchase/{item_id}', [PurchaseController::class, 'purchase_update']);
+    Route::get('/purchase/address/{item_id}', [PurchaseController::class, 'address_view']);
+    Route::post('/purchase/address/{item_id}', [PurchaseController::class, 'address_update']);
+    Route::post('/item/{item_id}/favorites', [FavoriteController::class, 'item_favorite_create']);
+    Route::delete('/item/{item_id}/favorites', [FavoriteController::class, 'item_favorite_delete']);
+    Route::post('/item/{item_id}/comments', [CommentController::class, 'item_comment_create']);
 });
 Route::get('/', [ItemController::class, 'items_view']);
-Route::get('/item/:item_id', [ItemController::class, 'item_show']);
+Route::get('/item/{item_id}', [ItemController::class, 'item_show']);
 

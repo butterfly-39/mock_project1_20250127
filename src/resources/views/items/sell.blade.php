@@ -13,16 +13,16 @@
             <div class="sell-form__group">
                 <label class="sell-form__label">商品画像</label>
                 <div class="sell-form__image-container">
-                    <div class="sell-form__image-preview">
-                        @if(old('image'))
-                            <img src="{{ old('image') }}" alt="商品画像">
+                    <div class="sell-form__image-preview" id="preview">
+                        @if(isset($item->image))
+                            <img src="{{ asset('storage/' . $item->image) }}" alt="商品画像">
                         @else
                             <div class="sell-form__no-image">
                                 <i class="fas fa-image"></i>
                             </div>
                         @endif
                     </div>
-                    <input class="sell-form__select-btn" type="file" name="image" id="image" accept="image/*">
+                    <input class="sell-form__select-btn" type="file" name="image" id="image" accept="image/*" onchange="previewImage(this);">
                     <label class="sell-form__select-label" for="image">画像を選択する</label>
                 </div>
             </div>
@@ -60,16 +60,16 @@
 
             <div class="sell-form__group">
                 <label class="sell-form__label" for="condition">商品の状態</label>
-                <select class="sell-form__input" name="condition" id="condition">
+                <select class="sell-form__input" name="condition_id" id="condition">
                     <option value="">選択してください</option>
                     @foreach($conditions as $condition)
-                        <option value="{{ $condition->id }}" {{ old('condition') == $condition->id ? 'selected' : '' }}>
+                        <option value="{{ $condition->id }}" {{ old('condition_id') == $condition->id ? 'selected' : '' }}>
                             {{ $condition->condition }}
                         </option>
                     @endforeach
                 </select>
                 <p class="sell-form__error-message">
-                    @error('condition')
+                    @error('condition_id')
                     {{ $message }}
                     @enderror
                 </p>
@@ -124,5 +124,20 @@
         </form>
     </div>
 </div>
+@endsection
+
+@section('scripts')
+<script>
+function previewImage(input) {
+    const preview = document.getElementById('preview');
+    if (input.files && input.files[0]) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            preview.innerHTML = `<img src="${e.target.result}" alt="商品画像">`;
+        }
+        reader.readAsDataURL(input.files[0]);
+    }
+}
+</script>
 @endsection
 

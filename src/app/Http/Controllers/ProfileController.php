@@ -5,13 +5,15 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\AddressRequest;
+use App\Models\Item;
 
 class ProfileController extends Controller
 {
     public function mypage_view()
     {
         $user = Auth::user();
-        return view('profiles.mypage', compact('user'));
+        $items = $user->items()->latest()->get();
+        return view('profiles.mypage', compact('user', 'items'));
     }
 
     public function edit_view()
@@ -48,11 +50,17 @@ class ProfileController extends Controller
 
     public function buy_view()
     {
-        return view('profiles.mypage');
+        $user = Auth::user();
+        
+        return view('profiles.mypage', compact('user', 'items'));
     }
 
     public function sell_view()
     {
-        return view('profiles.mypage');
+        $user = Auth::user();
+        // ユーザーが出品した商品を取得
+        $items = $user->items()->latest()->get();
+        
+        return view('profiles.mypage', compact('user', 'items'));
     }
 }
