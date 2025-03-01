@@ -36,6 +36,9 @@
                 <img src="/images/sample.jpg" alt="商品画像" class="mypage-card__image">
             @endif
             <p class="mypage-card__name">{{ $item->name }}</p>
+            <p class="mypage-card__status">
+                {{ request()->get('tab') === 'buy' ? '購入済み' : '出品中' }}
+            </p>
         </div>
     @endforeach
 

@@ -9,10 +9,23 @@ use App\Models\Item;
 
 class ProfileController extends Controller
 {
-    public function mypage_view()
+    public function mypage_view(Request $request)
     {
         $user = Auth::user();
-        $items = $user->items()->latest()->get();
+        $tab = $request->get('tab', 'sell'); // デフォルトは'sell'
+
+        if ($tab === 'buy') {
+            // 購入した商品を取得
+            $items = $user->orders()
+                ->orderBy('created_at', 'desc')
+                ->get();
+        } else {
+            // 出品した商品を取得
+            $items = $user->items()
+                ->orderBy('created_at', 'desc')
+                ->get();
+        }
+
         return view('profiles.mypage', compact('user', 'items'));
     }
 
@@ -48,24 +61,5 @@ class ProfileController extends Controller
         return redirect('/');
     }
 
-    public function buy_view()
-    {
-        $user = Auth::user();
-        $tab = $request->get('tab', 'sell');
-
-        $items = $tab === 'buy'
-        ? $user->purchasedItems
-        : $user->listedItems;
-        
-        return view('profiles.mypage', compact('user', 'items'));
-    }
-
-    public function sell_view()
-    {
-        $user = Auth::user();
-        // ユーザーが出品した商品を取得
-        $items = $user->items()->latest()->get();
-        
-        return view('profiles.mypage', compact('user', 'items'));
-    }
 }
+

@@ -47,9 +47,20 @@ class User extends Authenticatable
         return $this->hasOne(Profile::class);
     }
 
+    /**
+     * 出品した商品のリレーション
+     */
     public function items()
     {
-        return $this->hasMany(Item::class);
+        return $this->hasMany(Item::class, 'user_id');
+    }
+
+    /**
+     * 購入した商品のリレーション
+     */
+    public function orders()
+    {
+        return $this->hasMany(Order::class, 'user_id');
     }
 
 }
