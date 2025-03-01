@@ -20,8 +20,8 @@
     </div>
 
     <div class="mypage-form__group">
-        <a href="/mypage?tab=sell" class="mypage-form__heading">出品した商品</a>
-        <a href="/mypage?tab=buy" class="mypage-form-group__heading">購入した商品</a>
+        <a href="/mypage?tab=sell" class="mypage-form__heading {{ request()->get('tab') === 'sell' ? 'active' : '' }}">出品した商品</a>
+        <a href="/mypage?tab=buy" class="mypage-form__heading {{ request()->get('tab') === 'buy' ? 'active' : '' }}">購入した商品</a>
     </div>
 </div>
 
@@ -36,12 +36,13 @@
                 <img src="/images/sample.jpg" alt="商品画像" class="mypage-card__image">
             @endif
             <p class="mypage-card__name">{{ $item->name }}</p>
-            <p class="mypage-card__price">¥{{ number_format($item->price) }}</p>
         </div>
     @endforeach
 
     @if($items->isEmpty())
-        <p class="mypage-list__empty">出品した商品はありません</p>
+        <p class="mypage-list__empty">
+            {{ request()->get('tab') === 'buy' ? '購入した商品はありません' : '出品した商品はありません' }}
+        </p>
     @endif
 </div>
 @endsection

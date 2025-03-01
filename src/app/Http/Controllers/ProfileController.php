@@ -51,6 +51,11 @@ class ProfileController extends Controller
     public function buy_view()
     {
         $user = Auth::user();
+        $tab = $request->get('tab', 'sell');
+
+        $items = $tab === 'buy'
+        ? $user->purchasedItems
+        : $user->listedItems;
         
         return view('profiles.mypage', compact('user', 'items'));
     }
