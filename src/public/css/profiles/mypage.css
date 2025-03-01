@@ -1,3 +1,28 @@
+.mypage-form__heading {
+    font-size: 18px;
+    color: #333;
+    text-decoration: none;
+    cursor: pointer;
+    margin-right: 40px;
+}
+
+.mypage-form__heading:hover,
+.mypage-form__heading.active {
+    color: rgb(245, 69, 69);
+}
+
+/* 横線のスタイル */
+.divider {
+    width: 100vw;
+    position: relative;
+    left: 50%;
+    right: 50%;
+    margin-left: -50vw;
+    margin-right: -50vw;
+    height: 1px;
+    background-color: #656565;
+}
+
 /* 画像 */
 .mypage-form__image-container {
     display: flex;
@@ -25,8 +50,15 @@
     object-fit: cover;
 }
 
+.mypage-form__image {
+    width: 5rem;
+    height: 5rem;
+    object-fit: cover;
+    border-radius: 50%;
+}
+
 .mypage-form__no-image {
-    font-size: 4rem;
+    font-size: 5rem;
     color: #888787;
 }
 
@@ -48,6 +80,7 @@
     border: 1px solid rgb(245, 69, 69);
     text-decoration: none;
     font-weight: bold;
+    margin-left: 100px;
 }
 
 .mypage-list {
@@ -62,12 +95,29 @@
     display: flex;
     flex-direction: column;
     align-items: center;
+    margin-top: 20px;
 }
 
 .mypage-card__image {
-    width: 100px;
-    height: 100px;
+    width: 200px;
+    height: 200px;
     object-fit: cover;
+}
+
+/* common.cssの.contentと.content__headingを上書き */
+.mypage .content {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+    justify-content: center;
+    width: 100%;
+    margin: 0 auto;
+    box-sizing: border-box;
+}
+
+.mypage .content__heading {
+    text-align: center;
+    font-size: 32px;
 }
 
 

@@ -9,10 +9,10 @@
     <div class="mypage-form__group">
         <div class="mypage-form__image-container">
             <input class="mypage-form__select-btn" type="file" name="image" id="image" accept="image/*">
-            @if($user->image)
-                <img src="{{ asset('storage/' . $user->image) }}" alt="プロフィール画像" class="mypage-form__image">
+            @if($user->profile && $user->profile->image)
+                <img src="{{ asset('storage/' . $user->profile->image) }}" alt="プロフィール画像" class="mypage-form__image" style="width: 4rem; height: 4rem;">
             @else
-                <i class="fas fa-user mypage-form__no-image"></i>
+                <i class="fas fa-user mypage-form__no-image" style="font-size: 4rem;"></i>
             @endif
             <label class="mypage-form__label" for="image">ユーザー名</label>
             <a class="mypage-form__label-btn" href="/mypage/profile">プロフィールを編集</a>
@@ -36,9 +36,6 @@
                 <img src="/images/sample.jpg" alt="商品画像" class="mypage-card__image">
             @endif
             <p class="mypage-card__name">{{ $item->name }}</p>
-            <p class="mypage-card__status">
-                {{ request()->get('tab') === 'buy' ? '購入済み' : '出品中' }}
-            </p>
         </div>
     @endforeach
 
