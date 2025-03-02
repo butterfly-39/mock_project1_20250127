@@ -6,17 +6,25 @@
 
 @section('content')
 <div class="items-form">
-    <a href="/?tab=mylist" class="items-form__heading">おすすめ</a>
-    <a href="/?tab=mylist" class="items-form__heading">マイリスト</a>
+    <a href="/" class="items-form__heading {{ request()->get('type') === 'recommended' || !request()->has('type') ? 'active' : '' }}">おすすめ</a>
+    <a href="/?tab=mylist" class="items-form__heading {{ request()->get('type') === 'mylist' ? 'active' : '' }}">マイリスト</a>
 </div>
 
 <div class="divider"></div>
 
 <div class="items-list">
-    <div class="item-card">
-        <img src="/images/sample.jpg" alt="商品画像" class="item-card__image">
-        <p class="item-card__name">商品名</p>
-    </div>
+    @foreach($items as $item)
+        <div class="item-card">
+            <a href="/item/{{ $item->id }}">
+            @if($item->image)
+                <img src="{{ asset('storage/' . $item->image) }}" alt="商品画像" class="item-card__image">
+            @else
+                <img src="/images/sample.jpg" alt="商品画像" class="item-card__image">
+            @endif
+            </a>
+            <p class="item-card__name">{{ $item->name }}</p>
+        </div>
+    @endforeach
 </div>
 @endsection
 

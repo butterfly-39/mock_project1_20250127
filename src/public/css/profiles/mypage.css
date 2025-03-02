@@ -83,14 +83,14 @@
     margin-left: 100px;
 }
 
-.mypage-list {
+.items-list {
     display: flex;
     flex-direction: row;
     flex-wrap: wrap;
     gap: 20px;
 }
 
-.mypage-card {
+.item-card {
     width: calc(25% - 15px);
     display: flex;
     flex-direction: column;
@@ -98,7 +98,7 @@
     margin-top: 20px;
 }
 
-.mypage-card__image {
+.item-card__image {
     width: 200px;
     height: 200px;
     object-fit: cover;

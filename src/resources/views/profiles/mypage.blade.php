@@ -27,20 +27,20 @@
 
 <div class="divider"></div>
 
-<div class="mypage-list">
+<div class="items-list">
     @foreach($items as $item)
-        <div class="mypage-card">
+        <div class="item-card">
             @if($item->image)
-                <img src="{{ asset('storage/' . $item->image) }}" alt="商品画像" class="mypage-card__image">
+                <img src="{{ asset('storage/' . $item->image) }}" alt="商品画像" class="item-card__image">
             @else
-                <img src="/images/sample.jpg" alt="商品画像" class="mypage-card__image">
+                <img src="/images/sample.jpg" alt="商品画像" class="item-card__image">
             @endif
-            <p class="mypage-card__name">{{ $item->name }}</p>
+            <p class="item-card__name">{{ $item->name }}</p>
         </div>
     @endforeach
 
     @if($items->isEmpty())
-        <p class="mypage-list__empty">
+        <p class="items-list__empty">
             {{ request()->get('tab') === 'buy' ? '購入した商品はありません' : '出品した商品はありません' }}
         </p>
     @endif

@@ -9,7 +9,7 @@
 </head>
 
 <body>
-    <div class="app {{ Request::is('mypage*') ? 'mypage' : '' }}">
+    <div class="app {{ Request::is('mypage*') ? 'mypage' : (Request::is('index*') ? 'index' : '') }}">
         <header class="header">
             <h1 class="header__heading">
                 <img src="{{ asset('images/logo.svg') }}" alt="COACHTECH" class="header__logo">

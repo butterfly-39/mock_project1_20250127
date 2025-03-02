@@ -7,17 +7,29 @@ use App\Models\Category;
 use App\Models\Condition;
 use App\Http\Requests\ExhibitionRequest;
 use App\Models\Item;
+use App\Models\Favorite;
+
 
 class ItemController extends Controller
 {
-    public function items_view()
+    public function items_view(Request $request)
     {
-        return view('items.index');
+        $tab = $request->query('tab', 'recommended');
+        if ($tab === 'mylist') {
+            // お気に入りに登録した商品を取得
+            $items = auth()->user()->favorites()->with('item')->get()->pluck('item');
+        } else {
+            // 他のユーザーが出品した商品を取得
+            $items = Item::where('user_id', '!=', auth()->id())->get();
+        }
+
+        return view('items.index', compact('items'));
     }
 
     public function item_show($item_id)
     {
-        return view('items.show', compact('item_id'));
+        $item = Item::find($item_id);
+        return view('items.show', compact('item'));
     }
 
     public function mylist_view()
