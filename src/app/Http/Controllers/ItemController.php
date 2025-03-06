@@ -8,6 +8,8 @@ use App\Models\Condition;
 use App\Http\Requests\ExhibitionRequest;
 use App\Models\Item;
 use App\Models\Favorite;
+use App\Models\ItemCategory;
+use App\Models\Comment;
 
 
 class ItemController extends Controller
@@ -29,7 +31,8 @@ class ItemController extends Controller
     public function item_show($item_id)
     {
         $item = Item::find($item_id);
-        return view('items.show', compact('item'));
+        $comment = Comment::find($item_id);
+        return view('items.show', compact('item', 'comment'));
     }
 
     public function mylist_view()

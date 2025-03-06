@@ -50,7 +50,7 @@ class User extends Authenticatable
     /**
      * 出品した商品のリレーション
      */
-    public function items()
+    public function item()
     {
         return $this->hasMany(Item::class, 'user_id');
     }
@@ -58,7 +58,7 @@ class User extends Authenticatable
     /**
      * 購入した商品のリレーション
      */
-    public function orders()
+    public function order()
     {
         return $this->hasMany(Order::class, 'user_id');
     }
@@ -66,7 +66,7 @@ class User extends Authenticatable
     /**
      * お気に入りに登録した商品のリレーション
      */
-    public function favorites()
+    public function favorite()
     {
         return $this->hasMany(Favorite::class, 'user_id');
     }

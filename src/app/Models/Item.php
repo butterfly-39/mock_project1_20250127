@@ -22,7 +22,7 @@ class Item extends Model
     /**
      * カテゴリーとの多対多リレーション
      */
-    public function categories()
+    public function category()
     {
         return $this->belongsToMany(Category::class, 'item_categories', 'item_id', 'category_id')
             ->withTimestamps();
@@ -42,5 +42,30 @@ class Item extends Model
     public function user()
     {
         return $this->belongsTo(User::class);
+    }
+
+    /**
+     * アイテムカテゴリーとのリレーション
+     */
+    public function itemCategory()
+    {
+        return $this->hasOne(ItemCategory::class);
+    }
+
+    /**
+     * お気に入りとのリレーション
+     */
+    public function favorites()
+    {
+        return $this->hasMany(Favorite::class);
+    }
+
+    /**
+     * お気に入りされているかどうかを判定するメソッド
+     */
+    public function isFavoritedBy($user)
+    {
+        if (!$user) return false;
+        return $this->favorites->contains('user_id', $user->id);
     }
 }
