@@ -31,7 +31,7 @@ class Item extends Model
     /**
      * 商品状態とのリレーション
      */
-    public function conditions()
+    public function condition()
     {
         return $this->belongsTo(Condition::class);
     }

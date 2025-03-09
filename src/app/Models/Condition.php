@@ -12,4 +12,12 @@ class Condition extends Model
     protected $fillable = [
         'condition',
     ];
+
+    /**
+     * この状態の商品を取得
+     */
+    public function items()
+    {
+        return $this->hasMany(Item::class);
+    }
 }
