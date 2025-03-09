@@ -22,7 +22,7 @@ class Item extends Model
     /**
      * カテゴリーとの多対多リレーション
      */
-    public function category()
+    public function categories()
     {
         return $this->belongsToMany(Category::class, 'item_categories', 'item_id', 'category_id')
             ->withTimestamps();
@@ -31,7 +31,7 @@ class Item extends Model
     /**
      * 商品状態とのリレーション
      */
-    public function condition()
+    public function conditions()
     {
         return $this->belongsTo(Condition::class);
     }

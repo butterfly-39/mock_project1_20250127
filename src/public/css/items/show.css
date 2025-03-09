@@ -10,6 +10,15 @@
     gap: 40px;
 }
 
+.item-show__image {
+    grid-column: 1;
+}
+
+.item-show__detail,
+.item-show__comments {
+    grid-column: 2;
+}
+
 .item-show__image img {
     width: 100%;
     height: auto;

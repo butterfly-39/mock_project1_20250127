@@ -23,9 +23,9 @@
                 </div>
                 <div class="item-show__stats">
                     <div class="stat-item">
-                        <form action="{{ $item->isFavoritedBy(Auth::user()) 
-                            ? '/item/'.$item->id.'/favorites/delete' 
-                            : '/item/'.$item->id.'/favorites' }}" 
+                        <form action="{{ $item->isFavoritedBy(Auth::user())
+                            ? '/item/'.$item->id.'/favorites/delete'
+                            : '/item/'.$item->id.'/favorites' }}"
                             method="POST">
                             @csrf
                             @if($item->isFavoritedBy(Auth::user()))
@@ -68,28 +68,27 @@
                     </div>
                 </div>
             </div>
-        </div>
-
-        <div class="item-show__comments">
-            <h3>コメント</h3>
-            <div class="comment-list">
-                @if(isset($comment) && $comment)
-                    <div class="comment-item">
-                        <div class="comment-user">
-                            <img src="{{ asset('images/default-avatar.png') }}" alt="ユーザーアバター">
-                            <span>{{ $comment->user_id }}</span>
+            <div class="item-show__comments">
+                <h3>コメント</h3>
+                <div class="comment-list">
+                    @if(isset($comment) && $comment)
+                        <div class="comment-item">
+                            <div class="comment-user">
+                                <img src="{{ asset('images/default-avatar.png') }}" alt="ユーザーアバター">
+                                <span>{{ $comment->user_id }}</span>
+                            </div>
+                            <p class="comment-text">{{ $comment->comment }}</p>
                         </div>
-                        <p class="comment-text">{{ $comment->comment }}</p>
-                    </div>
-                @else
-                    <p class="no-comments">コメントはまだありません</p>
-                @endif
-            </div>
+                    @else
+                        <p class="no-comments">コメントはまだありません</p>
+                    @endif
+                </div>
 
-            <div class="comment-form">
-                <h3>商品へのコメント</h3>
-                <textarea name="comment" placeholder="コメントを入力してください"></textarea>
-                <button type="submit" class="comment-submit-btn">コメントを送信する</button>
+                <div class="comment-form">
+                    <h3>商品へのコメント</h3>
+                    <textarea name="comment" placeholder="コメントを入力してください"></textarea>
+                    <button type="submit" class="comment-submit-btn">コメントを送信する</button>
+                </div>
             </div>
         </div>
     </div>

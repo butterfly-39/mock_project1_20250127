@@ -42,6 +42,9 @@ class User extends Authenticatable
         'email_verified_at' => 'datetime',
     ];
 
+    /**
+     * ユーザーのプロフィール情報を取得
+     */
     public function profile()
     {
         return $this->hasOne(Profile::class);
@@ -50,7 +53,7 @@ class User extends Authenticatable
     /**
      * 出品した商品のリレーション
      */
-    public function item()
+    public function items()
     {
         return $this->hasMany(Item::class, 'user_id');
     }
@@ -58,7 +61,7 @@ class User extends Authenticatable
     /**
      * 購入した商品のリレーション
      */
-    public function order()
+    public function orders()
     {
         return $this->hasMany(Order::class, 'user_id');
     }
@@ -66,7 +69,7 @@ class User extends Authenticatable
     /**
      * お気に入りに登録した商品のリレーション
      */
-    public function favorite()
+    public function favorites()
     {
         return $this->hasMany(Favorite::class, 'user_id');
     }
