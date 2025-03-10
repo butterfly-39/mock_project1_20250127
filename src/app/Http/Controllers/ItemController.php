@@ -67,7 +67,7 @@ class ItemController extends Controller
             $newItem->categories()->attach($request->input('category'));
         }
 
-        return redirect('/mypage/sell');
+        return redirect('/');
     }
 }
 

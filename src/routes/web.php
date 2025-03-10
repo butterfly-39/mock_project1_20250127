@@ -20,8 +20,8 @@ use App\Http\Controllers\CommentController;
 Route::middleware('auth')->group(function () {
     Route::get('/mypage', [ProfileController::class, 'mypage_view']);
     Route::get('/mylist', [ItemController::class, 'mylist_view']);
-    Route::get('/mypage/buy', [ProfileController::class, 'buy_view']);
-    Route::get('/mypage/sell', [ProfileController::class, 'sell_view']);
+    Route::get('/mypage?tab=buy', [ProfileController::class, 'buy_view']);
+    Route::get('/mypage?tab=sell', [ProfileController::class, 'sell_view']);
     Route::get('/sell', [ItemController::class, 'sell_view']);
     Route::post('/sell', [ItemController::class, 'sell_update']);
     Route::get('/mypage/profile', [ProfileController::class, 'edit_view']);
