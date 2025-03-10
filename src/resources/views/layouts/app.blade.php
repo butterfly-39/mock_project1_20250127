@@ -38,6 +38,23 @@
                 <li class="header-nav__item">
                     <a class="header-nav__button" href="/sell">出品</a>
                 </li>
+                @else
+                <li class="header-nav__item--search">
+                    <form class="header-search" action="/search" method="get">
+                        <div class="header-search__container">
+                            <input type="text" name="query" class="header-search__input" placeholder="なにをお探しですか？">
+                        </div>
+                    </form>
+                </li>
+                <li class="header-nav__item">
+                    <a class="header-nav__link" href="/login">ログイン</a>
+                </li>
+                <li class="header-nav__item">
+                    <a class="header-nav__link" href="/mypage">マイページ</a>
+                </li>
+                <li class="header-nav__item">
+                    <a class="header-nav__button" href="/sell">出品</a>
+                </li>
                 @endif
             </ul>
             @yield('link')

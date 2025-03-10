@@ -14,9 +14,9 @@
                 <div class="profile-form__image-container">
                     <div class="profile-form__image-preview" id="preview">
                         @if(isset($user->profile->image))
-                            <img src="{{ asset('storage/' . $user->profile->image) }}" alt="プロフィール画像">
+                            <img src="{{ asset('storage/' . $user->image) }}" alt="プロフィール画像">
                         @else
-                            <div class="profile-form__no-image">
+                            <div    class="profile-form__no-image">
                                 <i class="fas fa-user"></i>
                             </div>
                         @endif
