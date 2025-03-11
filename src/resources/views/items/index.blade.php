@@ -15,6 +15,9 @@
 <div class="items-list">
     @foreach($items as $item)
         <div class="item-card">
+            @if($item->status === 'sold')
+                <div class="item-card__sold">SOLD</div>
+            @endif
             <a href="/item/{{ $item->id }}">
             @if($item->image)
                 <img src="{{ asset('storage/' . $item->image) }}" alt="商品画像" class="item-card__image">

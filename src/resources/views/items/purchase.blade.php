@@ -65,8 +65,45 @@
                     @endif
                 </div>
             </div>
+
+            <div class="divider"></div>
+
+            <div class="item-show__summary">
+                <div class="purchase-summary">
+                    <div class="purchase-summary__row">
+                        <span class="purchase-summary__label">商品代金</span>
+                        <span class="purchase-summary__price">¥{{ number_format($item->price) }}</span>
+                    </div>
+                    <div class="purchase-summary__row">
+                        <span class="purchase-summary__label">支払い方法</span>
+                        <span class="purchase-summary__payment" id="selected-payment">未選択</span>
+                    </div>
+                </div>
+            </div>
+
+            <form action="/purchase/{{ $item->id }}" method="POST">
+                @csrf
+                <input type="hidden" name="item_id" value="{{ $item->id }}">
+                <input type="hidden" name="payment_method" id="payment_method_input">
+                <div class="item-show__purchase-btn">
+                    <button type="submit" class="purchase-btn btn" {{ !$profile ? 'disabled' : '' }}>購入する</button>
+                </div>
+            </form>
         </div>
     </div>
+    
 </div>
+
+<script>
+document.querySelector('.payment-method__select').addEventListener('change', function() {
+    const paymentText = {
+        'convenience': 'コンビニ払い',
+        'credit_card': 'クレジットカード払い'
+    };
+    document.getElementById('selected-payment').textContent = 
+        this.value ? paymentText[this.value] : '未選択';
+    document.getElementById('payment_method_input').value = this.value;
+});
+</script>
 @endsection
 

@@ -44,7 +44,7 @@
                         <i class="fas fa-comment">💬</i>
                     </div>
                 </div>
-                <form action="/purchase/{{ $item->id }}" method="post">
+                <form action="/purchase/{{ $item->id }}" method="get">
                     @csrf
                     <button type="submit" class="item-show__purchase-btn">購入手続きへ</button>
                 </form>
