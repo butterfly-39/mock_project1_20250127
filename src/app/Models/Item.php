@@ -68,4 +68,12 @@ class Item extends Model
         if (!$user) return false;
         return $this->favorites->contains('user_id', $user->id);
     }
+
+    /**
+     * 注文とのリレーション
+     */
+    public function orders()
+    {
+        return $this->hasMany(Order::class);
+    }
 }
