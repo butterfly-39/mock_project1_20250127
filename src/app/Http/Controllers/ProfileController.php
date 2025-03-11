@@ -15,8 +15,9 @@ class ProfileController extends Controller
         $tab = $request->get('tab', 'sell'); // デフォルトは'sell'
 
         if ($tab === 'buy') {
-            // 購入した商品を取得
+            // 購入した商品を取得（itemリレーションを事前ロード）
             $items = $user->orders()
+                ->with('item')  // itemリレーションを事前ロード
                 ->orderBy('created_at', 'desc')
                 ->get();
         } else {

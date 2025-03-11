@@ -28,14 +28,23 @@
 <div class="divider"></div>
 
 <div class="items-list">
-    @foreach($items as $item)
+    @foreach($items as $order)
         <div class="item-card">
-            @if($item->image)
-                <img src="{{ asset('storage/' . $item->image) }}" alt="商品画像" class="item-card__image">
+            @if(request()->get('tab') === 'buy')
+                @if($order->item->image)
+                    <img src="{{ asset('storage/' . $order->item->image) }}" alt="商品画像" class="item-card__image">
+                @else
+                    <img src="/images/sample.jpg" alt="商品画像" class="item-card__image">
+                @endif
+                <p class="item-card__name">{{ $order->item->name }}</p>
             @else
-                <img src="/images/sample.jpg" alt="商品画像" class="item-card__image">
+                @if($order->image)
+                    <img src="{{ asset('storage/' . $order->image) }}" alt="商品画像" class="item-card__image">
+                @else
+                    <img src="/images/sample.jpg" alt="商品画像" class="item-card__image">
+                @endif
+                <p class="item-card__name">{{ $order->name }}</p>
             @endif
-            <p class="item-card__name">{{ $item->name }}</p>
         </div>
     @endforeach
 
