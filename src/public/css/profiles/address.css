@@ -1,0 +1,50 @@
+.address-form__heading {
+    text-align: center;
+    font-size: 30px;
+}
+
+.address-form__group {
+    display: flex;
+    flex-direction: column;
+    /* 子要素を縦方向に配置 */
+}
+
+.address-form__label {
+    font-size: 20px;
+}
+
+.address-form__input {
+    padding: 13px;
+    border: 1px solid #9d9c9c;
+    border-radius: 3px;
+}
+
+.address-form__error-message {
+    color: #ff0000;
+}
+
+/* ボタン */
+.address-form__btn-group {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+}
+
+.address-form__update-btn {
+    display: block;
+    text-align: center;
+    padding: 10px 32px;
+    border: none;
+    background-color: rgb(245, 69, 69);
+    color: #FFF;
+    font-size: 20px;
+    cursor: pointer;
+    border-radius: 3px;
+    margin: 0 auto;
+    margin-top: 50px;
+    width: 100%;
+    /* 親要素の幅いっぱいに広げる */
+    box-sizing: border-box;
+    /* paddingを含めた全体の幅を指定できるように */
+}

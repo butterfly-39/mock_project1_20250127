@@ -1,0 +1,72 @@
+@extends('layouts.app')
+
+@section('css')
+<link rel="stylesheet" href="{{ asset('css/items/purchase.css') }}">
+@endsection
+
+@section('content')
+<div class="item-purchase">
+    <div class="item-purchase__inner">
+        <div class="item-purchase__content">
+            <div class="item-purchase__image">
+                @if($item->image)
+                    <img src="{{ asset('storage/' . $item->image) }}" alt="商品画像">
+                @else
+                    <img src="{{ asset('images/no-image.png') }}" alt="画像なし">
+                @endif
+            </div>
+
+            <div class="divider"></div>
+
+            <div class="item-show__detail">
+                <h2 class="item-show__name">{{ $item->name }}</h2>
+                <p class="item-show__brand">{{ $item->brand_name }}</p>
+                <div class="item-show__price-container">
+                    <p class="item-show__price">¥{{ number_format($item->price) }}</p>
+                </div>
+            </div>
+
+            <div class="divider"></div>
+
+            <div class="item-show__purchase">
+                <h3>支払い方法</h3>
+                <div class="payment-method">
+                    <select name="payment_method" class="payment-method__select">
+                        <option value="" disabled selected>選択してください</option>
+                        <option value="convenience">コンビニ払い</option>
+                        <option value="credit_card">クレジットカード払い</option>
+                    </select>
+                </div>
+            </div>
+
+            <div class="divider"></div>
+            
+            <div class="item-show__shipping">
+                <h3>配送先</h3>
+                <a href="/purchase/address/{{ $item->id }}" class="shipping-address__change">変更する</a>
+                <div class="shipping-address">
+                    @if($profile)
+                        <div class="shipping-address__content">
+                            <p class="shipping-address__zip">〒{{ $profile->postal_code }}</p>
+                            <p class="shipping-address__detail">
+                                {{ $profile->prefecture }}{{ $profile->city }}{{ $profile->address }}
+                            </p>
+                            <p class="shipping-address__name">
+                                {{ $profile->last_name }} {{ $profile->first_name }}
+                            </p>
+                        </div>
+                    @else
+                        <p class="shipping-address__empty">
+                            配送先住所が登録されていません。
+                            <a href="{{ route('profile.edit') }}" class="shipping-address__link">
+                                プロフィール編集から登録してください
+                            </a>
+                        </p>
+                    @endif
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@endsection
+
