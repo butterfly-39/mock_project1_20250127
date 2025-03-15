@@ -12,7 +12,7 @@
 </head>
 
 <body>
-    <div class="app {{ Request::is('mypage*') ? 'mypage' : (Request::is('index*') ? 'index' : '') }}">
+    <div class="app {{ Request::is('mypage*') ? 'mypage' : (Request::is('index*') ? 'index' : (Request::is('purchase*') ? 'purchase' : '')) }}">
         <header class="header">
             <h1 class="header__heading">
                 <img src="{{ asset('images/logo.svg') }}" alt="COACHTECH" class="header__logo">
@@ -39,13 +39,6 @@
                     <a class="header-nav__button" href="/sell">出品</a>
                 </li>
                 @else
-                <li class="header-nav__item--search">
-                    <form class="header-search" action="/search" method="get">
-                        <div class="header-search__container">
-                            <input type="text" name="query" class="header-search__input" placeholder="なにをお探しですか？">
-                        </div>
-                    </form>
-                </li>
                 <li class="header-nav__item">
                     <a class="header-nav__link" href="/login">ログイン</a>
                 </li>

@@ -13,7 +13,7 @@ class PurchaseController extends Controller
     public function purchase_view($item_id)
     {
         $item = Item::find($item_id);
-        $profile = Profile::find($item->user_id);  // ログインユーザーのプロフィール情報を取得
+        $profile = Profile::find($item->user_id); 
         return view('items.purchase', compact('item', 'profile'));
     }
 
