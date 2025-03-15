@@ -14,24 +14,27 @@ class PurchaseController extends Controller
 {
     public function purchase_view($item_id)
     {
-        $item = Item::find($item_id);
-        $profile = Profile::find($item->user_id); 
-        return view('items.purchase', compact('item', 'profile'));
+        try {
+            $item = Item::where('id', $item_id)
+                    ->where('status', '!=', 'sold')
+                    ->firstOrFail();
+
+            $profile = Profile::find($item->user_id);
+            return view('items.purchase', compact('item', 'profile'));
+
+        } catch (\Exception $e) {
+            return redirect('/');
+        }
     }
 
     public function purchase_update(PurchaseRequest $request, $item_id)
     {
         $item = Item::find($item_id);
         $profile = Profile::find($item->user_id);
-        
+
         // プロフィール情報の存在チェックを追加
         if (!$profile || !$profile->postal_code || !$profile->address) {
             return redirect()->back()->with('error', '配送先情報が不完全です。');
-        }
-        
-        // 商品が既に売れていないかチェック
-        if ($item->status === 'sold') {
-            return redirect()->back()->with('error', 'この商品は既に売り切れです。');
         }
 
         // トランザクション開始

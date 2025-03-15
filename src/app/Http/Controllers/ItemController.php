@@ -18,8 +18,13 @@ class ItemController extends Controller
     {
         $tab = $request->query('tab', 'recommended');
         if ($tab === 'mylist') {
-            // お気に入りに登録した商品を取得
-            $items = auth()->user()->favorites()->with('item')->get()->pluck('item');
+            if (auth()->check()) {
+                // お気に入りに登録した商品を取得
+                $items = auth()->user()->favorites()->with('item')->get()->pluck('item');
+            } else {
+                // 未ログインユーザーの場合は空のコレクションを返す
+                $items = collect([]);
+            }
         } else {
             // 他のユーザーが出品した商品を取得
             $items = Item::where('user_id', '!=', auth()->id())->get();
@@ -33,11 +38,6 @@ class ItemController extends Controller
         $item = Item::with(['itemCategories.category'])->findOrFail($item_id);
         $comment = Comment::find($item_id);
         return view('items.show', compact('item', 'comment'));
-    }
-
-    public function mylist_view()
-    {
-        return view('items.mylist');
     }
 
     public function sell_view()
