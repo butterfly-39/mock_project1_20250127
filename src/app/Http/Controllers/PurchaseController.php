@@ -6,7 +6,8 @@ use Illuminate\Http\Request;
 use App\Models\Item;
 use App\Models\Profile;
 use App\Models\Order;
-
+use App\Http\Requests\PurchaseRequest;
+use App\Http\Requests\AddressRequest;
 class PurchaseController extends Controller
 {
     public function purchase_view($item_id)
@@ -16,7 +17,7 @@ class PurchaseController extends Controller
         return view('items.purchase', compact('item', 'profile'));
     }
 
-    public function purchase_update(Request $request, $item_id)
+    public function purchase_update(PurchaseRequest $request, $item_id)
     {
         $item = Item::find($item_id);
         // 注文を作成
@@ -39,10 +40,19 @@ class PurchaseController extends Controller
         return view('profiles.address', ['item' => $item]);
     }
 
-    public function address_update($item_id)
+    public function address_update(AddressRequest $request, $item_id)
     {
         $item = Item::find($item_id);
-        return view('profiles.address', ['item' => $item]);
+        $profile = Profile::find($item->user_id);
+        $profile->update([
+            'postal_code' => $request->postal_code,
+            'address' => $request->address,
+            'building' => $request->building,
+        ]);
+        return view('items.purchase', [
+            'item' => $item,
+            'profile' => $profile
+        ]);
     }
 }
 

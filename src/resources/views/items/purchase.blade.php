@@ -37,6 +37,9 @@
                         <option value="credit_card">クレジットカード払い</option>
                     </select>
                 </div>
+                @error('payment_method')
+                    <p class="error-message">{{ $message }}</p>
+                @enderror
             </div>
 
             <div class="divider"></div>
@@ -45,25 +48,15 @@
                 <h3>配送先</h3>
                 <a href="/purchase/address/{{ $item->id }}" class="shipping-address__change">変更する</a>
                 <div class="shipping-address">
-                    @if($profile)
-                        <div class="shipping-address__content">
-                            <p class="shipping-address__zip">〒{{ $profile->postal_code }}</p>
-                            <p class="shipping-address__detail">
-                                {{ $profile->prefecture }}{{ $profile->city }}{{ $profile->address }}
-                            </p>
-                            <p class="shipping-address__name">
-                                {{ $profile->last_name }} {{ $profile->first_name }}
-                            </p>
-                        </div>
-                    @else
-                        <p class="shipping-address__empty">
-                            配送先住所が登録されていません。
-                            <a href="{{ route('profile.edit') }}" class="shipping-address__link">
-                                プロフィール編集から登録してください
-                            </a>
-                        </p>
-                    @endif
+                    <div class="shipping-address__content">
+                        <p class="shipping-address__zip">〒{{ $profile->postal_code }}</p>
+                        <p class="shipping-address__detail">
+                            {{ $profile->prefecture }}{{ $profile->city }}{{ $profile->address }}</p>
+                    </div>
                 </div>
+                @error('')
+                    <p class="error-message">{{ $message }}</p>
+                @enderror
             </div>
 
             <div class="divider"></div>
@@ -81,7 +74,7 @@
                 </div>
             </div>
 
-            <form action="/purchase/{{ $item->id }}" method="POST">
+            <form action="/purchase/{{ $item->id }}" method="POST" id="purchase-form">
                 @csrf
                 <input type="hidden" name="item_id" value="{{ $item->id }}">
                 <input type="hidden" name="payment_method" id="payment_method_input">
@@ -102,7 +95,6 @@ document.querySelector('.payment-method__select').addEventListener('change', fun
     };
     document.getElementById('selected-payment').textContent = 
         this.value ? paymentText[this.value] : '未選択';
-    document.getElementById('payment_method_input').value = this.value;
 });
 </script>
 @endsection

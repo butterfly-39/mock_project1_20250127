@@ -47,9 +47,9 @@ class Item extends Model
     /**
      * アイテムカテゴリーとのリレーション
      */
-    public function itemCategory()
+    public function itemCategories()
     {
-        return $this->hasOne(ItemCategory::class);
+        return $this->hasMany(ItemCategory::class);
     }
 
     /**

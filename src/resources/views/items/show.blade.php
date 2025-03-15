@@ -33,9 +33,9 @@
                             @endif
                             <button type="submit" class="favorite-btn">
                                 @if($item->isFavoritedBy(Auth::user()))
-                                    <i class="fas fa-heart" style="color: red;">⭐️</i>
+                                    <span class="star-icon favorited">★</span>
                                 @else
-                                    <i class="fas fa-heart">☆</i>
+                                    <span class="star-icon">★</span>
                                 @endif
                             </button>
                         </form>
@@ -59,11 +59,13 @@
                     <div class="info-grid">
                         <div class="info-item">
                             <span class="label">カテゴリー</span>
-                            <span class="tag">{{ $item->itemCategory->category->category }}</span>
+                            @foreach($item->itemCategories as $itemCategory)
+                                <span class="tag category-tag">{{ $itemCategory->category->category }}</span>
+                            @endforeach
                         </div>
                         <div class="info-item">
                             <span class="label">商品の状態</span>
-                            <span class="tag">{{ $item->condition->condition }}</span>
+                            <span class="tag condition-tag">{{ $item->condition->condition }}</span>
                         </div>
                     </div>
                 </div>
@@ -85,8 +87,8 @@
                 </div>
 
                 <div class="comment-form">
-                    <h3>商品へのコメント</h3>
-                    <textarea name="comment" placeholder="コメントを入力してください"></textarea>
+                    <h4>商品へのコメント</h4>
+                    <textarea name="comment"></textarea>
                     <button type="submit" class="comment-submit-btn">コメントを送信する</button>
                 </div>
             </div>

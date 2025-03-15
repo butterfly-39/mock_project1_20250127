@@ -7,7 +7,7 @@
 .item-show__content {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 40px;
+    gap: 45px;
 }
 
 .item-show__image {
@@ -21,32 +21,29 @@
 
 .item-show__image img {
     width: 100%;
-    height: auto;
-    background-color: #f5f5f5;
+    margin-top: 20px;
+    border-radius: 3px;
 }
 
 .item-show__name {
-    font-size: 24px;
-    margin-bottom: 8px;
+    margin: 0;
 }
 
 .item-show__brand {
-    color: #666;
-    margin-bottom: 16px;
+    margin: 0;
 }
 
 .item-show__price-container {
-    margin: 20px 0;
+    font-size: 14px;
 }
 
 .item-show__price {
-    font-size: 24px;
-    font-weight: bold;
+    font-size: 25px;
+    margin: 10px 0;
 }
 
 .tax-included {
-    font-size: 14px;
-    color: #666;
+    font-size: 18px;
 }
 
 .item-show__stats {
@@ -58,11 +55,28 @@
 .stat-item {
     display: flex;
     align-items: center;
-    gap: 5px;
+    margin-left: 20px;
 }
 
-.stat-item i.fas.fa-heart {
-    color: #ff6b6b;
+.favorite-btn {
+    background: none;
+    text-decoration: none;
+    border: none;
+    font-size: 1.2em;
+}
+
+.star-icon {
+    color: transparent;
+    -webkit-text-stroke: 2px black;
+    background: none;
+    text-decoration: none;
+    border: none;
+    font-size: 1.2em;
+}
+
+.star-icon.favorited {
+    color: #FFD700;
+    -webkit-text-stroke: 2px #FFD700;
 }
 
 .stat-item i.fas.fa-comment {
@@ -71,12 +85,13 @@
 
 .item-show__purchase-btn {
     width: 100%;
-    padding: 15px;
+    padding: 5px;
     background-color: #ff6b6b;
     color: white;
     border: none;
-    border-radius: 4px;
+    border-radius: 3px;
     font-size: 16px;
+    font-weight: bold;
     cursor: pointer;
 }
 
@@ -91,19 +106,39 @@
     margin-top: 15px;
 }
 
-.info-item {
+.info-item  {
     display: flex;
-    gap: 10px;
+    margin-bottom: 10px;
 }
 
-.tag {
+.info-item .label {
+    font-weight: bold;
+    font-size: 14px;
+    white-space: nowrap;
+}
+
+.info-item .category-tag {
     background-color: #f0f0f0;
-    padding: 4px 12px;
+    padding: 2px 25px;
     border-radius: 15px;
+    font-size: 10px;
+    margin-left: 30px;
+    white-space: nowrap;
+}
+
+.info-item .condition-tag {
+    font-size: 10px;
+    margin-left: 40px;
+    white-space: nowrap;
 }
 
 .item-show__comments {
-    margin-top: 40px;
+    margin-top: 0;
+    width: 100%;
+}
+
+.item-show__comments h3 {
+    margin-top: 0;
 }
 
 .comment-item {
@@ -126,21 +161,29 @@
     border-radius: 50%;
 }
 
+.comment-form h4 {
+    margin-bottom: 5px;
+}
+
 .comment-form textarea {
     width: 100%;
-    min-height: 100px;
-    margin: 15px 0;
+    min-height: 120px;
     padding: 10px;
-    border: 1px solid #ddd;
+    border: 1px solid black;
     border-radius: 4px;
+    box-sizing: border-box;
+    margin-bottom: 18px;
 }
 
 .comment-submit-btn {
     width: 100%;
-    padding: 15px;
+    padding: 5px;
     background-color: #ff6b6b;
     color: white;
     border: none;
-    border-radius: 4px;
+    border-radius: 3px;
+    font-size: 14px;
+    font-weight: bold;
     cursor: pointer;
 }
+

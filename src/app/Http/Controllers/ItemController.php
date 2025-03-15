@@ -30,7 +30,7 @@ class ItemController extends Controller
 
     public function item_show($item_id)
     {
-        $item = Item::find($item_id);
+        $item = Item::with(['itemCategories.category'])->findOrFail($item_id);
         $comment = Comment::find($item_id);
         return view('items.show', compact('item', 'comment'));
     }
