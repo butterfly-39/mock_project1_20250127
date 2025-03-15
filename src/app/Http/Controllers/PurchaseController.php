@@ -8,6 +8,8 @@ use App\Models\Profile;
 use App\Models\Order;
 use App\Http\Requests\PurchaseRequest;
 use App\Http\Requests\AddressRequest;
+use Illuminate\Support\Facades\DB;
+
 class PurchaseController extends Controller
 {
     public function purchase_view($item_id)
@@ -20,15 +22,30 @@ class PurchaseController extends Controller
     public function purchase_update(PurchaseRequest $request, $item_id)
     {
         $item = Item::find($item_id);
-        // 注文を作成
-        $order = Order::create([
-            'user_id' => auth()->id(),
-            'item_id' => $item->id,
-            'payment_method' => $request->payment_method
-        ]);
+        $profile = Profile::find($item->user_id);
+        
+        // プロフィール情報の存在チェックを追加
+        if (!$profile || !$profile->postal_code || !$profile->address) {
+            return redirect()->back()->with('error', '配送先情報が不完全です。');
+        }
+        
+        // 商品が既に売れていないかチェック
+        if ($item->status === 'sold') {
+            return redirect()->back()->with('error', 'この商品は既に売り切れです。');
+        }
 
-        // 商品のステータスを「sold」に更新
-        $item->update(['status' => 'sold']);
+        // トランザクション開始
+        DB::transaction(function () use ($item, $request) {
+            // 注文を作成
+            $order = Order::create([
+                'user_id' => auth()->id(),
+                'item_id' => $item->id,
+                'payment_method' => $request->payment_method
+            ]);
+
+            // 商品のステータスを「sold」に更新
+            $item->update(['status' => 'sold']);
+        });
 
         // 商品一覧ページにリダイレクト
         return redirect('/');

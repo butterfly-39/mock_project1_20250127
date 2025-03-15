@@ -69,6 +69,17 @@ class ItemController extends Controller
 
         return redirect('/');
     }
+
+    public function search(Request $request)
+    {
+        $query = $request->input('query');
+        
+        $items = Item::where('name', 'LIKE', "%{$query}%")
+            ->orderBy('created_at', 'desc')
+            ->paginate(20);
+            
+        return view('items.index', compact('items', 'query'));
+    }
 }
 
 
