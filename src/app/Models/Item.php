@@ -76,4 +76,12 @@ class Item extends Model
     {
         return $this->hasMany(Order::class);
     }
+
+    /**
+     * コメントとのリレーション
+     */
+    public function comments()
+    {
+        return $this->hasMany(Comment::class);
+    }
 }

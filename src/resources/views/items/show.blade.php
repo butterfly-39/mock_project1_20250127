@@ -71,26 +71,36 @@
                 </div>
             </div>
             <div class="item-show__comments">
-                <h3>コメント</h3>
+                <h3>コメント ({{ $item->comments->count() }})</h3>
                 <div class="comment-list">
-                    @if(isset($comment) && $comment)
-                        <div class="comment-item">
-                            <div class="comment-user">
-                                <img src="{{ asset('images/default-avatar.png') }}" alt="ユーザーアバター">
-                                <span>{{ $comment->user_id }}</span>
+                    @if($item->comments && $item->comments->count() > 0)
+                        @foreach($item->comments as $comment)
+                            <div class="comment-item">
+                                <div class="comment-user">
+                                    @if($comment->user->profile->image)
+                                        <img src="{{ asset('storage/' . $comment->user->profile->image) }}" alt="ユーザーアバター">
+                                    @else
+                                        <img src="{{ asset('images/default-avatar.png') }}" alt="デフォルトアバター">
+                                    @endif
+                                    <span>{{ $comment->user->name }}</span>
+                                </div>
+                                <p class="comment-text">{{ $comment->comment }}</p>
                             </div>
-                            <p class="comment-text">{{ $comment->comment }}</p>
-                        </div>
+                        @endforeach
                     @else
                         <p class="no-comments">コメントはまだありません</p>
                     @endif
                 </div>
 
-                <div class="comment-form">
+                <form action="/item/{{ $item->id }}/comments" method="post" class="comment-form">
+                    @csrf
                     <h4>商品へのコメント</h4>
-                    <textarea name="comment"></textarea>
+                    <textarea name="comment" class="comment-textarea"></textarea>
                     <button type="submit" class="comment-submit-btn">コメントを送信する</button>
-                </div>
+                    @error('comment')
+                        <p class="error-message">{{ $message }}</p>
+                    @enderror
+                </form>
             </div>
         </div>
     </div>
