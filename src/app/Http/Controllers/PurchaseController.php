@@ -14,19 +14,15 @@ class PurchaseController extends Controller
 {
     public function purchase_view($item_id)
     {
-        try {
-            $item = Item::find($item_id);
-            $is_item_sold = Order::where('item_id', $item_id)->exists();
-            if ($is_item_sold) {
-                return redirect('/')->with('error', 'この商品は既に売り切れです。');
-            }
-            $profile = Profile::find($item->user_id);
-            return view('items.purchase', compact('item', 'profile'));
-
-        } catch (\Exception $e) {
-            // エラーの場合は商品一覧ページにリダイレクト
-            return redirect('/')->with('error', '商品が見つかりませんでした。');
+        $item = Item::findOrFail($item_id);
+        
+        $is_item_sold = Order::where('item_id', $item_id)->exists();
+        if ($is_item_sold) {
+            return redirect('/');
         }
+        
+        $profile = Profile::find($item->user_id);
+        return view('items.purchase', compact('item', 'profile'));
     }
 
     public function purchase_update(PurchaseRequest $request, $item_id)
