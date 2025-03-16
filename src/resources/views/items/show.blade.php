@@ -37,11 +37,15 @@
                                 @else
                                     <span class="star-icon">★</span>
                                 @endif
+                                <span class="favorite-count">{{ $item->favorites->count() }}</span>
                             </button>
                         </form>
                     </div>
                     <div class="stat-item">
-                        <i class="fas fa-comment">💬</i>
+                        <div class="comment-stat-vertical">
+                            <i class="fas fa-comment">💬</i>
+                            <span>{{ $item->comments->count() }}</span>
+                        </div>
                     </div>
                 </div>
                 <form action="/purchase/{{ $item->id }}" method="get">
