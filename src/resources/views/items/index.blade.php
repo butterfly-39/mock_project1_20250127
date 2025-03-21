@@ -6,8 +6,20 @@
 
 @section('content')
 <div class="items-form">
-    <a href="/" class="items-form__heading {{ request()->get('tab') === 'recommended' || !request()->has('tab') ? 'active' : '' }}">おすすめ</a>
-    <a href="/?tab=mylist" class="items-form__heading {{ request()->get('tab') === 'mylist' ? 'active' : '' }}">マイリスト</a>
+    <a href="/?{{ http_build_query(array_merge(
+            ['tab' => 'recommended'],
+            request()->has('query') ? ['query' => request()->get('query')] : []
+        )) }}"
+        class="items-form__heading {{ request()->get('tab') === 'recommended' || !request()->has('tab') ? 'active' : '' }}">
+        おすすめ
+    </a>
+    <a href="/?{{ http_build_query(array_merge(
+            ['tab' => 'mylist'],
+            request()->has('query') ? ['query' => request()->get('query')] : []
+        )) }}"
+        class="items-form__heading {{ request()->get('tab') === 'mylist' ? 'active' : '' }}">
+        マイリスト
+    </a>
 </div>
 
 <div class="divider"></div>

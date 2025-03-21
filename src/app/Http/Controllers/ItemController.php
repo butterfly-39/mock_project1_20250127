@@ -17,20 +17,30 @@ class ItemController extends Controller
     public function items_view(Request $request)
     {
         $tab = $request->query('tab', 'recommended');
+        $query = $request->query('query');
+        
+        $items = Item::query();
+        
+        // 検索クエリがある場合
+        if ($query) {
+            $items = $items->where('name', 'LIKE', "%{$query}%");
+        }
+        
+        // タブに応じてフィルタリング
         if ($tab === 'mylist') {
             if (auth()->check()) {
-                // お気に入りに登録した商品を取得
-                $items = auth()->user()->favorites()->with('item')->get()->pluck('item');
+                $favoriteItemIds = auth()->user()->favorites()->pluck('item_id');
+                $items = $items->whereIn('id', $favoriteItemIds);
             } else {
-                // 未ログインユーザーの場合は空のコレクションを返す
-                $items = collect([]);
+                $items = $items->whereRaw('1 = 0'); // 空の結果を返す
             }
         } else {
-            // 他のユーザーが出品した商品を取得
-            $items = Item::where('user_id', '!=', auth()->id())->get();
+            $items = $items->where('user_id', '!=', auth()->id());
         }
-
-        return view('items.index', compact('items'));
+        
+        $items = $items->orderBy('created_at', 'desc')->get();
+        
+        return view('items.index', compact('items', 'query'));
     }
 
     public function item_show($item_id)

@@ -20,9 +20,12 @@
             <ul class="header-nav">
                 @if (Auth::check())
                 <li class="header-nav__item--search">
-                    <form class="header-search" action="/search" method="get">
+                    <form class="header-search" action="/" method="get">
                         <div class="header-search__container">
-                            <input type="text" name="query" class="header-search__input" placeholder="なにをお探しですか？">
+                            @if(request()->has('tab'))
+                                <input type="hidden" name="tab" value="{{ request()->get('tab') }}">
+                            @endif
+                            <input type="text" name="query" class="header-search__input" value="{{ request()->get('query') }}" placeholder="なにをお探しですか？">
                         </div>
                     </form>
                 </li>

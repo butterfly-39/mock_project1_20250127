@@ -32,7 +32,6 @@ Route::middleware('auth')->group(function () {
     Route::post('/item/{item_id}/favorite', [FavoriteController::class, 'item_favorite_create']);
     Route::delete('/item/{item_id}/favorite', [FavoriteController::class, 'item_favorite_delete']);
     Route::post('/item/{item_id}/comment', [CommentController::class, 'item_comment_create']);
-    Route::get('/search', [ItemController::class, 'search']);
 });
 Route::get('/', [ItemController::class, 'items_view']);
 Route::get('/item/{item_id}', [ItemController::class, 'item_show']);
