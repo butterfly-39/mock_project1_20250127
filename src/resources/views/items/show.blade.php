@@ -23,10 +23,7 @@
                 </div>
                 <div class="item-show__stats">
                     <div class="stat-item">
-                        <form action="{{ $item->isFavoritedBy(Auth::user())
-                            ? '/item/'.$item->id.'/favorites/delete'
-                            : '/item/'.$item->id.'/favorites' }}"
-                            method="POST">
+                        <form action="/item/{{ $item->id }}/favorite" method="POST">
                             @csrf
                             @if($item->isFavoritedBy(Auth::user()))
                                 @method('DELETE')
@@ -96,7 +93,7 @@
                     @endif
                 </div>
 
-                <form action="/item/{{ $item->id }}/comments" method="post" class="comment-form">
+                <form action="/item/{{ $item->id }}/comment" method="post" class="comment-form">
                     @csrf
                     <h4>商品へのコメント</h4>
                     <textarea name="comment" class="comment-textarea"></textarea>

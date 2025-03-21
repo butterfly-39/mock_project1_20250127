@@ -15,20 +15,21 @@ class PurchaseController extends Controller
     public function purchase_view($item_id)
     {
         $item = Item::findOrFail($item_id);
-        
+
         $is_item_sold = Order::where('item_id', $item_id)->exists();
         if ($is_item_sold) {
             return redirect('/');
         }
-        
-        $profile = Profile::find($item->user_id);
+
+        $profile = Profile::where('user_id', $item->user_id)->first();
+
         return view('items.purchase', compact('item', 'profile'));
     }
 
     public function purchase_update(PurchaseRequest $request, $item_id)
     {
         $item = Item::find($item_id);
-        $profile = Profile::find($item->user_id);
+        $profile = Profile::where('user_id', $item->user_id)->first();
 
         // プロフィール情報の存在チェックを追加
         if (!$profile || !$profile->postal_code || !$profile->address) {
@@ -61,7 +62,7 @@ class PurchaseController extends Controller
     public function address_update(AddressRequest $request, $item_id)
     {
         $item = Item::find($item_id);
-        $profile = Profile::find($item->user_id);
+        $profile = Profile::where('user_id', $item->user_id)->first();
         $profile->update([
             'postal_code' => $request->postal_code,
             'address' => $request->address,

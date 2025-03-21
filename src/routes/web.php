@@ -29,9 +29,9 @@ Route::middleware('auth')->group(function () {
     Route::post('/purchase/{item_id}', [PurchaseController::class, 'purchase_update']);
     Route::get('/purchase/address/{item_id}', [PurchaseController::class, 'address_view']);
     Route::post('/purchase/address/{item_id}', [PurchaseController::class, 'address_update']);
-    Route::post('/item/{item_id}/favorites', [FavoriteController::class, 'item_favorite_create']);
-    Route::delete('/item/{item_id}/favorites/delete', [FavoriteController::class, 'item_favorite_delete']);
-    Route::post('/item/{item_id}/comments', [CommentController::class, 'item_comment_create']);
+    Route::post('/item/{item_id}/favorite', [FavoriteController::class, 'item_favorite_create']);
+    Route::delete('/item/{item_id}/favorite', [FavoriteController::class, 'item_favorite_delete']);
+    Route::post('/item/{item_id}/comment', [CommentController::class, 'item_comment_create']);
     Route::get('/search', [ItemController::class, 'search']);
 });
 Route::get('/', [ItemController::class, 'items_view']);

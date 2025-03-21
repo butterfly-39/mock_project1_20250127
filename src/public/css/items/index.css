@@ -45,7 +45,7 @@
 }
 
 /* common.cssの.contentと.content__headingを上書き */
-.index .content {
+body .content {
     display: flex;
     flex-direction: column;
     flex-grow: 1;
@@ -55,7 +55,7 @@
     box-sizing: border-box;
 }
 
-.index .content__heading {
+body .content__heading {
     text-align: center;
     font-size: 32px;
 }
