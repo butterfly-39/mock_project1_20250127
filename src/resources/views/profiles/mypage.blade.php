@@ -20,8 +20,8 @@
     </div>
 
     <div class="mypage-form__group">
-        <a href="/mypage?tab=sell" class="mypage-form__heading {{ request()->get('tab') === 'sell' ? 'active' : '' }}">出品した商品</a>
-        <a href="/mypage?tab=buy" class="mypage-form__heading {{ request()->get('tab') === 'buy' ? 'active' : '' }}">購入した商品</a>
+        <a href="/mypage?tab=sell" class="mypage-form__heading {{ request()->get('tab', 'sell') === 'sell' ? 'active' : '' }}">出品した商品</a>
+        <a href="/mypage?tab=buy" class="mypage-form__heading {{ request()->get('tab', 'sell') === 'buy' ? 'active' : '' }}">購入した商品</a>
     </div>
 </div>
 
