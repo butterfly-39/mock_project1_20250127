@@ -68,12 +68,10 @@ label {
 
 .header-nav__item {
     margin-right: 20px;
-    /* アイテム間の間隔を設定 */
 }
 
 .header-nav__item:first-child {
     margin-left: 0;
-    /* 最初のアイテムの左マージンを削除 */
 }
 
 .header-nav__item--search {
@@ -96,7 +94,7 @@ label {
 }
 
 .header-search__container {
-    margin: 0 10px;  /* コンテナに余白を追加 */
+    margin: 0 10px;
 }
 
 /* コンテンツ */
@@ -116,19 +114,27 @@ label {
     font-size: 32px;
 }
 
-/* タブレット (768px以上) */
-@media screen and (min-width: 768px) {
+/* タブレット (768px以上850px以下) */
+@media screen and (min-width: 768px) and (max-width: 850px) {
     .content {
         padding: 20px;
-        max-width: 90%;
+        max-width: 95%;
+    }
+
+    .header-search {
+        width: 300px;
+    }
+
+    .header-search__input {
+        width: 220px;
     }
 }
 
-/* PC (1400px以上) */
-@media screen and (min-width: 1400px) {
+/* PC (1400px以上1540px以下) */
+@media screen and (min-width: 1400px) and (max-width: 1540px) {
     .content {
         padding: 20px;
-        max-width: 1230px;
+        max-width: 1200px;
     }
 }
 
