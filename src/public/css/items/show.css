@@ -68,7 +68,7 @@
     font-size: 1.2em;
 }
 
-.favorite-count {
+.favorite-count .comment-count {
     font-size: 0.8em;
     margin-top: 2px;
 }

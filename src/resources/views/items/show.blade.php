@@ -41,7 +41,7 @@
                     <div class="stat-item">
                         <div class="comment-stat-vertical">
                             <i class="fas fa-comment">💬</i>
-                            <span>{{ $item->comments->count() }}</span>
+                            <span class="comment-count">{{ $item->comments->count() }}</span>
                         </div>
                     </div>
                 </div>
