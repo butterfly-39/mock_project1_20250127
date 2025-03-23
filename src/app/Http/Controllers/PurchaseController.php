@@ -21,7 +21,8 @@ class PurchaseController extends Controller
             return redirect('/');
         }
 
-        $profile = Profile::where('user_id', $item->user_id)->first();
+        // 購入者（ログインユーザー）のプロフィール情報を取得
+        $profile = Profile::where('user_id', auth()->id())->first();
 
         return view('items.purchase', compact('item', 'profile'));
     }

@@ -55,9 +55,9 @@
                         </div>
                         <div class="shipping-address">
                             <div class="shipping-address__content">
-                                <p class="shipping-address__zip">〒{{ $profile->postal_code }}</p>
+                                <p class="shipping-address__zip">〒{{ Auth::user()->profile->postal_code }}</p>
                                 <p class="shipping-address__detail">
-                                    {{ $profile->prefecture }}{{ $profile->city }}{{ $profile->address }}</p>
+                                    {{ Auth::user()->profile->address }}{{ Auth::user()->profile->building ? ' ' . Auth::user()->profile->building : '' }}</p>
                             </div>
                         </div>
                         @error('shipping-address')
