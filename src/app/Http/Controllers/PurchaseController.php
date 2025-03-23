@@ -21,7 +21,6 @@ class PurchaseController extends Controller
             return redirect('/');
         }
 
-        // 購入者（ログインユーザー）のプロフィール情報を取得
         $profile = Profile::where('user_id', auth()->id())->first();
 
         return view('items.purchase', compact('item', 'profile'));
@@ -50,7 +49,6 @@ class PurchaseController extends Controller
             $item->update(['status' => 'sold']);
         });
 
-        // 商品一覧ページにリダイレクト
         return redirect('/');
     }
 

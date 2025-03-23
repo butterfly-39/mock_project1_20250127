@@ -15,7 +15,9 @@
     <div class="app {{ Request::is('mypage*') ? 'mypage' : (Request::is('index*') ? 'index' : (Request::is('purchase*') ? 'purchase' : '')) }}">
         <header class="header">
             <h1 class="header__heading">
-                <img src="{{ asset('images/logo.svg') }}" alt="COACHTECH" class="header__logo">
+                <a href="/">
+                    <img src="{{ asset('images/logo.svg') }}" alt="COACHTECH" class="header__logo">
+                </a>
             </h1>
             <ul class="header-nav">
                 @if (Auth::check())
