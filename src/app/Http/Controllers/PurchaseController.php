@@ -61,16 +61,15 @@ class PurchaseController extends Controller
     public function address_update(AddressRequest $request, $item_id)
     {
         $item = Item::find($item_id);
-        $profile = Profile::where('user_id', $item->user_id)->first();
+        $profile = Profile::where('user_id', auth()->id())->first();
+        
         $profile->update([
             'postal_code' => $request->postal_code,
             'address' => $request->address,
             'building' => $request->building,
         ]);
-        return view('items.purchase', [
-            'item' => $item,
-            'profile' => $profile
-        ]);
+
+        return redirect("/purchase/{$item_id}");
     }
 }
 
