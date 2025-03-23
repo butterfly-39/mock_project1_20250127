@@ -29,7 +29,7 @@ class PurchaseController extends Controller
     public function purchase_update(PurchaseRequest $request, $item_id)
     {
         $item = Item::find($item_id);
-        $profile = Profile::where('user_id', $item->user_id)->first();
+        $profile = Profile::where('user_id', auth()->id())->first();
 
         // プロフィール情報の存在チェックを追加
         if (!$profile || !$profile->postal_code || !$profile->address) {
@@ -37,12 +37,14 @@ class PurchaseController extends Controller
         }
 
         // トランザクション開始
-        DB::transaction(function () use ($item, $request) {
-            // 注文を作成
+        DB::transaction(function () use ($item, $request, $profile) {
+            // 注文を作成（住所情報も含める）
             $order = Order::create([
                 'user_id' => auth()->id(),
                 'item_id' => $item->id,
-                'payment_method' => $request->payment_method
+                'order_postal_code' => $profile->postal_code,
+                'order_address' => $profile->address,
+                'order_building' => $profile->building
             ]);
 
             // 商品のステータスを「sold」に更新
