@@ -22,9 +22,25 @@ class UsersTableSeeder extends Seeder
             'password' => Hash::make('password'),
         ]);
 
+        // ログインユーザー作成
+        $loginUserId = DB::table('users')->insertGetId([
+            'name' => 'test2',
+            'email' => 'test2@test.com',
+            'password' => Hash::make('password'),
+        ]);
+
         // プロフィールを作成
         DB::table('profiles')->insert([
             'user_id' => $userId,
+            'postal_code' => '123-4567',
+            'address' => '東京都渋谷区代々木1-1-1',
+            'building' => 'テストビル101',
+            'image' => null,
+        ]);
+
+        // ログインユーザープロフィール作成
+        DB::table('profiles')->insert([
+            'user_id' => $loginUserId,
             'postal_code' => '123-4567',
             'address' => '東京都渋谷区代々木1-1-1',
             'building' => 'テストビル101',
