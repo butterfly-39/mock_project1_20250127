@@ -54,5 +54,5 @@ php artisan db:seed
 ・phpMyAdmin：http://localhost:8085/
 
 ## ログインユーザー情報
-・メールアドレス：test@test.com
+・メールアドレス：test2@test.com
 ・パスワード：password
