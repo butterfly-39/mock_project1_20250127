@@ -6,28 +6,33 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\ProfileRequest;
 use App\Models\Item;
+use App\Models\Order; // Added this import for Order model
 
 class ProfileController extends Controller
 {
     public function mypage_view(Request $request)
     {
-        $user = Auth::user();
-        $tab = $request->get('tab', 'sell'); // デフォルトは'sell'
+        $user = auth()->user();
+        $tab = $request->get('tab', 'sell');
 
         if ($tab === 'buy') {
-            // 購入した商品を取得（itemリレーションを事前ロード）
-            $items = $user->orders()
-                ->with('item')  // itemリレーションを事前ロード
-                ->orderBy('created_at', 'desc')
+            $items = Order::where('user_id', $user->id)->with('item')->get();
+            $tradingItems = collect(); // 空のコレクション
+            $tradingCount = 0;
+        } elseif ($tab === 'trading') {
+            $items = collect(); // 空のコレクション
+            $tradingItems = Item::where('user_id', $user->id)
+                ->where('status', 'trading') // 取引中のステータス
                 ->get();
+            $tradingCount = $tradingItems->count();
         } else {
-            // 出品した商品を取得
-            $items = $user->items()
-                ->orderBy('created_at', 'desc')
-                ->get();
+            // sellタブ（デフォルト）
+            $items = Item::where('user_id', $user->id)->get();
+            $tradingItems = collect(); // 空のコレクション
+            $tradingCount = 0;
         }
 
-        return view('profiles.mypage', compact('user', 'items'));
+        return view('profiles.mypage', compact('user', 'items', 'tradingItems', 'tradingCount'));
     }
 
     public function edit_view()

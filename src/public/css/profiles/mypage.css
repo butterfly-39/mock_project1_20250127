@@ -4,11 +4,30 @@
     text-decoration: none;
     cursor: pointer;
     margin-right: 40px;
+    position: relative; /* 通知バッジの位置調整用 */
 }
 
 .mypage-form__heading:hover,
 .mypage-form__heading.active {
     color: rgb(245, 69, 69);
+}
+
+/* 通知バッジのスタイル */
+.mypage-form__notification-badge {
+    position: absolute;
+    top: -8px;
+    right: -12px;
+    background-color: #ff4444;
+    color: white;
+    border-radius: 50%;
+    width: 20px;
+    height: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 12px;
+    font-weight: bold;
+    min-width: 20px;
 }
 
 /* 横線のスタイル */
@@ -102,6 +121,13 @@
     width: 200px;
     height: 200px;
     object-fit: cover;
+}
+
+.item-card__status {
+    margin-top: 8px;
+    font-size: 14px;
+    color: #ff4444;
+    font-weight: bold;
 }
 
 /* common.cssの.contentと.content__headingを上書き */

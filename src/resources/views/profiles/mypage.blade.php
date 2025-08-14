@@ -22,36 +22,66 @@
     <div class="mypage-form__group">
         <a href="/mypage?tab=sell" class="mypage-form__heading {{ request()->get('tab', 'sell') === 'sell' ? 'active' : '' }}">出品した商品</a>
         <a href="/mypage?tab=buy" class="mypage-form__heading {{ request()->get('tab', 'sell') === 'buy' ? 'active' : '' }}">購入した商品</a>
+        <a href="/mypage?tab=trading" class="mypage-form__heading {{ request()->get('tab', 'sell') === 'trading' ? 'active' : '' }}">
+            取引中の商品
+            @if($tradingCount > 0)
+                <span class="mypage-form__notification-badge">{{ $tradingCount }}</span>
+            @endif
+        </a>
     </div>
 </div>
 
 <div class="divider"></div>
 
 <div class="items-list">
-    @foreach($items as $order)
-        <div class="item-card">
-            @if(request()->get('tab') === 'buy')
+    @if(request()->get('tab') === 'trading')
+        @foreach($tradingItems as $item)
+            <div class="item-card">
+                @if($item->image)
+                    <img src="{{ asset('storage/' . $item->image) }}" alt="商品画像" class="item-card__image">
+                @else
+                    <img src="/images/sample.jpg" alt="商品画像" class="item-card__image">
+                @endif
+                <p class="item-card__name">{{ $item->name }}</p>
+                <p class="item-card__status">取引中</p>
+            </div>
+        @endforeach
+    @elseif(request()->get('tab') === 'buy')
+        @foreach($items as $order)
+            <div class="item-card">
                 @if($order->item->image)
                     <img src="{{ asset('storage/' . $order->item->image) }}" alt="商品画像" class="item-card__image">
                 @else
                     <img src="/images/sample.jpg" alt="商品画像" class="item-card__image">
                 @endif
                 <p class="item-card__name">{{ $order->item->name }}</p>
-            @else
-                @if($order->image)
-                    <img src="{{ asset('storage/' . $order->image) }}" alt="商品画像" class="item-card__image">
+            </div>
+        @endforeach
+    @else
+        @foreach($items as $item)
+            <div class="item-card">
+                @if($item->image)
+                    <img src="{{ asset('storage/' . $item->image) }}" alt="商品画像" class="item-card__image">
                 @else
                     <img src="/images/sample.jpg" alt="商品画像" class="item-card__image">
                 @endif
-                <p class="item-card__name">{{ $order->name }}</p>
-            @endif
-        </div>
-    @endforeach
+                <p class="item-card__name">{{ $item->name }}</p>
+            </div>
+        @endforeach
+    @endif
 
-    @if($items->isEmpty())
+    @if($items->isEmpty() && request()->get('tab') !== 'trading')
         <p class="items-list__empty">
-            {{ request()->get('tab') === 'buy' ? '購入した商品はありません' : '出品した商品はありません' }}
+            @if(request()->get('tab') === 'buy')
+                購入した商品はありません
+            @else
+                出品した商品はありません
+            @endif
         </p>
+    @endif
+
+    @if(request()->get('tab') === 'trading' && $tradingItems->isEmpty())
+        <p class="items-list__empty">取引中の商品はありません</p>
     @endif
 </div>
 @endsection
