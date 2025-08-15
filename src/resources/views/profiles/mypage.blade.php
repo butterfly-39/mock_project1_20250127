@@ -24,8 +24,8 @@
         <a href="/mypage?tab=buy" class="mypage-form__heading {{ request()->get('tab', 'sell') === 'buy' ? 'active' : '' }}">購入した商品</a>
         <a href="/mypage?tab=trading" class="mypage-form__heading {{ request()->get('tab', 'sell') === 'trading' ? 'active' : '' }}">
             取引中の商品
-            @if($tradingCount > 0)
-                <span class="mypage-form__notification-badge">{{ $tradingCount }}</span>
+            @if($unreadMessageCount > 0)
+                <span class="mypage-form__notification-badge">{{ $unreadMessageCount }}</span>
             @endif
         </a>
     </div>
@@ -47,14 +47,14 @@
             </div>
         @endforeach
     @elseif(request()->get('tab') === 'buy')
-        @foreach($items as $order)
+        @foreach($items as $item)
             <div class="item-card">
-                @if($order->item->image)
-                    <img src="{{ asset('storage/' . $order->item->image) }}" alt="商品画像" class="item-card__image">
+                @if($item->image)
+                    <img src="{{ asset('storage/' . $item->image) }}" alt="商品画像" class="item-card__image">
                 @else
                     <img src="/images/sample.jpg" alt="商品画像" class="item-card__image">
                 @endif
-                <p class="item-card__name">{{ $order->item->name }}</p>
+                <p class="item-card__name">{{ $item->name }}</p>
             </div>
         @endforeach
     @else

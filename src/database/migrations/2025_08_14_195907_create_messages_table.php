@@ -24,6 +24,10 @@ class CreateMessagesTable extends Migration
             $table->text('message');
             $table->string('image')->nullable();
 
+            // 既読管理
+            $table->boolean('is_read')->default(false);
+            $table->timestamp('read_at')->nullable();
+
             // 編集・削除管理
             $table->boolean('is_edited')->default(false);
             $table->timestamp('edited_at')->nullable();
