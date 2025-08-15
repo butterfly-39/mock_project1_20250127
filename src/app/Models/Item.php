@@ -17,6 +17,7 @@ class Item extends Model
         'brand_name',
         'description',
         'price',
+        'status'
     ];
 
     /**
@@ -83,5 +84,72 @@ class Item extends Model
     public function comments()
     {
         return $this->hasMany(Comment::class);
+    }
+
+    /**
+     * 取引状態の定数
+     */
+    const STATUS_AVAILABLE = 'available';    // 出品中
+    const STATUS_TRADING = 'trading';        // 取引中
+    const STATUS_SOLD = 'sold';              // 売却済み
+
+    /**
+     * 取引状態の変更
+     */
+    public function markAsTrading()
+    {
+        $this->update(['status' => self::STATUS_TRADING]);
+    }
+
+    public function markAsSold()
+    {
+        $this->update(['status' => self::STATUS_SOLD]);
+    }
+
+    public function markAsAvailable()
+    {
+        $this->update(['status' => self::STATUS_AVAILABLE]);
+    }
+
+    /**
+     * 取引状態の確認
+     */
+    public function isAvailable()
+    {
+        return $this->status === self::STATUS_AVAILABLE;
+    }
+
+    public function isTrading()
+    {
+        return $this->status === self::STATUS_TRADING;
+    }
+
+    public function isSold()
+    {
+        return $this->status === self::STATUS_SOLD;
+    }
+
+    /**
+     * 取引中の商品を取得するスコープ
+     */
+    public function scopeTrading($query)
+    {
+        return $query->where('status', self::STATUS_TRADING);
+    }
+
+    /**
+     * 出品中の商品を取得するスコープ
+     */
+    public function scopeAvailable($query)
+    {
+        return $query->where('status', self::STATUS_AVAILABLE);
+    }
+
+    /**
+     * 売却済みの商品を取得するスコープ
+     */
+    public function scopeSold($query)
+    {
+        return $query->where('status', self::STATUS_SOLD);
     }
 }
