@@ -20,6 +20,7 @@ class CreateOrdersTable extends Migration
             $table->string('order_postal_code')->nullable();
             $table->string('order_address')->nullable();
             $table->string('order_building')->nullable();
+            $table->enum('status', ['pending', 'completed'])->default('pending');
             $table->timestamps();
         });
     }
