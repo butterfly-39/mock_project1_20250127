@@ -44,11 +44,12 @@ class PurchaseController extends Controller
                 'item_id' => $item->id,
                 'order_postal_code' => $profile->postal_code,
                 'order_address' => $profile->address,
-                'order_building' => $profile->building
+                'order_building' => $profile->building,
+                'status' => 'pending' // 取引中として作成
             ]);
 
-            // 商品のステータスを「sold」に更新
-            $item->update(['status' => 'sold']);
+            // 商品のステータスを「trading」に更新（取引中）
+            $item->update(['status' => 'trading']); // ✅ 修正
         });
 
         return redirect('/');

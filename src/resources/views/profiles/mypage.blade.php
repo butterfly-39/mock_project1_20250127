@@ -43,7 +43,6 @@
                     <img src="/images/sample.jpg" alt="商品画像" class="item-card__image">
                 @endif
                 <p class="item-card__name">{{ $item->name }}</p>
-                <p class="item-card__status">取引中</p>
             </div>
         @endforeach
     @elseif(request()->get('tab') === 'buy')

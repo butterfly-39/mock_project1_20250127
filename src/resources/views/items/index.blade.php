@@ -27,7 +27,7 @@
 <div class="items-list">
     @foreach($items as $item)
         <div class="item-card">
-            @if($item->status === 'sold' || $item->orders->isNotEmpty())
+            @if($item->status === 'sold' || $item->status === 'trading' || $item->orders->isNotEmpty())
                 <div class="item-card__sold">SOLD</div>
             @endif
             <a href="/item/{{ $item->id }}">
