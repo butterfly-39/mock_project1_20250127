@@ -18,16 +18,21 @@
     <div class="chat-main">
         <!-- 上部ヘッダー -->
         <div class="chat-header">
-            <div class="chat-header__logo">CT COACHTECH</div>
+            <div class="product-user">
+                <div class="product-user__avatar">
+                    @if($item->user->profile && $item->user->profile->image)
+                        <img src="{{ asset('storage/' . $item->user->profile->image) }}" alt="プロフィール画像">
+                    @else
+                        <div class="product-user__avatar-placeholder">No Image</div>
+                    @endif
+                </div>
+                <p class="product-user__name">「{{ $item->user->name }}」さんとの取引画面</p>
+            </div>
             <button class="chat-header__complete-btn">取引を完了する</button>
         </div>
 
         <!-- 商品情報 -->
         <div class="chat-product-info">
-            <div class="product-user">
-                <div class="product-user__avatar"></div>
-                <p class="product-user__name">「{{ $item->user->name }}」さんとの取引画面</p>
-            </div>
             <div class="product-details">
                 <div class="product-image">
                     @if($item->image)

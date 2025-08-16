@@ -19,6 +19,7 @@
                     <img src="{{ asset('images/logo.svg') }}" alt="COACHTECH" class="header__logo">
                 </a>
             </h1>
+            @unless(Request::is('buyers/chat*') || Request::is('sellers/chat*'))
             <ul class="header-nav">
                 @if (Auth::check())
                 <li class="header-nav__item--search">
@@ -55,6 +56,7 @@
                 </li>
                 @endif
             </ul>
+            @endunless
             @yield('link')
         </header>
         <div class="content">
