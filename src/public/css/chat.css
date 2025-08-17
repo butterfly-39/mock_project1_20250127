@@ -7,6 +7,7 @@ body .content {
     margin: 0;
     padding: 0;
     max-width: none;
+    overflow: hidden; /* 全体のスクロールを無効化 */
 }
 
 body .content__heading {
@@ -24,21 +25,22 @@ body .content__heading {
     max-width: none;
     margin: 0;
     padding: 0;
+    overflow: hidden; /* レイアウト全体のスクロールを無効化 */
 }
 
-.chat-sidebar {
-    width: 80px;
-    background-color: #6a6a6a;
+.chat-layout .chat-sidebar {
+    width: 170px;
+    background-color: #7c7c7c;
     padding: 0;
     flex-shrink: 0;
     margin: 0;
 }
 
 .chat-sidebar__title {
-    font-size: 16px;
+    font-size: 20px;
     font-weight: bold;
     margin: 0;
-    padding: 20px 10px;
+    padding: 10px;
     color: white;
     text-align: center;
 }
@@ -65,7 +67,7 @@ body .content__heading {
     font-size: 18px;
     font-weight: bold;
     margin: 0;
-    padding: 20px;
+    padding: 0;
 }
 
 .product-user {
@@ -77,21 +79,36 @@ body .content__heading {
 }
 
 .product-user__name {
-    font-size: 18px;
+    font-size: 28px;
     font-weight: bold;
     margin: 0;
     padding: 0;
+}
+
+.chat-header .product-user .product-user__name {
+    font-size: 28px;
+    font-weight: bold;
+    margin: 0;
+    padding: 0;
+}
+
+.chat-header .product-user {
+    display: flex;
+    align-items: center;
+    gap: 20px;
+    margin: 0;
+    padding: 0 25px;
 }
 
 .chat-header__complete-btn {
     background-color: #ff6b6b;
     color: white;
     border: none;
-    padding: 12px 24px;
+    padding: 10px 20px;
     border-radius: 25px;
     cursor: pointer;
     transition: background-color 0.3s;
-    font-size: 14px;
+    font-size: 16px;
     margin: 20px;
 }
 
@@ -101,7 +118,7 @@ body .content__heading {
 
 .chat-product-info {
     padding: 0;
-    border-bottom: 1px solid #ddd;
+    border-bottom: 1px solid #000;
     background-color: white;
     flex-shrink: 0;
     margin: 0;
@@ -160,13 +177,12 @@ body .content__heading {
     gap: 30px;
     align-items: flex-start;
     margin: 0;
-    padding: 0 30px 30px 30px;
+    padding: 20px 40px;
 }
 
-.product-image {
+.chat-header .product-details .product-image {
     width: 200px;
     height: 200px;
-    flex-shrink: 0;
     margin: 0;
     padding: 0;
 }
@@ -175,7 +191,6 @@ body .content__heading {
     width: 100%;
     height: 100%;
     object-fit: cover;
-    border-radius: 8px;
     margin: 0;
     padding: 0;
 }
@@ -202,26 +217,26 @@ body .content__heading {
 }
 
 .product-name {
-    font-size: 24px;
+    font-size: 35px;
     font-weight: bold;
-    margin: 0 0 15px 0;
+    margin: 30px 0;
     padding: 0;
     color: #333;
 }
 
 .product-price {
-    font-size: 20px;
+    font-size: 25px;
     color: #333;
     margin: 0;
     padding: 0;
 }
 
-.chat-messages {
+.chat-layout .chat-messages {
     flex: 1;
     padding: 0;
-    overflow-y: auto;
+    overflow-y: auto; /* メッセージ部分のみスクロール可能 */
     background-color: white;
-    min-height: 400px;
+    min-height: 100px;
     margin: 0;
 }
 
@@ -314,12 +329,13 @@ body .content__heading {
     color: #333;
 }
 
-.chat-input {
+.chat-layout .chat-input {
     padding: 0;
     border-top: 1px solid #ddd;
     background-color: white;
     flex-shrink: 0;
     margin: 0;
+    min-height: 100px;
 }
 
 .chat-form__input-group {
@@ -407,8 +423,8 @@ body .content__heading {
     }
     
     .product-image {
-        width: 280px;
-        height: 280px;
+        width: 180px;
+        height: 180px;
         margin: 0;
         padding: 0;
     }

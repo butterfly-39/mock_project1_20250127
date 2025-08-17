@@ -16,7 +16,6 @@
 
     <!-- メインコンテンツ -->
     <div class="chat-main">
-        <!-- 上部ヘッダー -->
         <div class="chat-header">
             <div class="product-user">
                 <div class="product-user__avatar">
