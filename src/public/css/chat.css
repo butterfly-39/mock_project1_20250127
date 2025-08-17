@@ -331,7 +331,7 @@ body .content__heading {
 
 .chat-layout .chat-input {
     padding: 0;
-    border-top: 1px solid #ddd;
+    border-top: none;
     background-color: white;
     flex-shrink: 0;
     margin: 0;
@@ -348,15 +348,17 @@ body .content__heading {
 
 .chat-form__input {
     flex: 1;
-    padding: 15px;
-    border: 1px solid #ddd;
+    padding: 14px;
     border-radius: 8px;
     resize: none;
     font-family: inherit;
     font-size: 14px;
-    line-height: 1.4;
-    min-height: 60px;
+    min-height: 5px;
     margin: 0;
+    height: 5px;
+    display: flex; /* フレックスボックスを使用 */
+    align-items: center; /* 上下中央揃え */
+    line-height: 1; /* 行間を調整 */
 }
 
 .chat-form__input:focus {
@@ -374,10 +376,11 @@ body .content__heading {
 }
 
 .chat-form__image-btn {
-    background-color: #e74c3c;
-    color: white;
-    padding: 15px 25px;
+    background-color: white;
+    color: #e74c3c;
+    padding: 6px 20px;
     border-radius: 8px;
+    border: 1px solid #e74c3c;
     cursor: pointer;
     font-size: 14px;
     transition: background-color 0.3s;
@@ -391,20 +394,26 @@ body .content__heading {
 }
 
 .chat-form__send-btn {
-    background-color: #6c757d;
-    color: white;
+    background-color: white;
     border: none;
-    padding: 15px 20px;
-    border-radius: 8px;
+    padding: 0;
     cursor: pointer;
     font-size: 16px;
-    transition: background-color 0.3s;
+    transition: all 0.3s;
     white-space: nowrap;
     margin: 0;
 }
 
 .chat-form__send-btn:hover {
     background-color: #5a6268;
+}
+
+.chat-form__send-btn::before {
+    content: "➤";
+    font-size: 30px;
+    display: block;
+    text-align: center;
+    line-height: 1;
 }
 
 /* PCサイズでの最適化 (1400-1540px) */
