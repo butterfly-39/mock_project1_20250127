@@ -10,22 +10,27 @@ class SellerChatController extends Controller
 {
     public function show($item_id)
     {
-        $item = Item::findOrFail($item_id);
-        $user = auth()->user();
+        $item = Item::with(['user', 'orders.user'])->findOrFail($item_id);
         
         // 出品者かどうかチェック
-        if ($item->user_id !== $user->id) {
-            abort(403, 'この商品のチャットにアクセスする権限がありません。');
+        if ($item->user_id !== auth()->id()) {
+            abort(403);
         }
+        
+        // 購入者を取得
+        $buyer = $item->orders->first()->user ?? null;
         
         // メッセージを取得
         $messages = Message::where('item_id', $item_id)
             ->orderBy('created_at', 'asc')
             ->get();
         
-        // 購入者情報を取得
-        $order = $item->orders()->first();
+        // 他の取引中の商品を取得（現在の商品以外）
+        $otherTradingItems = Item::where('user_id', auth()->id())
+            ->where('status', 'trading')
+            ->where('id', '!=', $item_id)
+            ->get();
         
-        return view('sellers.chat', compact('item', 'messages', 'order'));
+        return view('sellers.chat', compact('item', 'messages', 'buyer', 'otherTradingItems'));
     }
 }

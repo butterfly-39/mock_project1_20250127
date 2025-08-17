@@ -631,3 +631,27 @@ body .content__heading {
         padding: 0;
     }
 }
+
+.chat-sidebar__transaction-item {
+    background-color: #f5f5f5;
+    margin: 10px 15px;
+    padding: 0;
+    border-radius: 3px;
+    font-weight: bold;
+    transition: background-color 0.3s;
+    margin-bottom: 30px;
+}
+
+.chat-sidebar__transaction-item:hover {
+    background-color: #e0e0e0;
+}
+
+.chat-sidebar__transaction-link {
+    color: #333;
+    padding: 5px;
+    text-decoration: none;
+    font-size: 14px;
+    display: block;
+    text-align: center;
+    word-break: break-word;
+}
