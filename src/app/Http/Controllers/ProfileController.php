@@ -15,53 +15,51 @@ class ProfileController extends Controller
     {
         $user = auth()->user();
         $tab = $request->get('tab', 'sell');
-
-        // 未読メッセージの件数を取得
-        $unreadMessageCount = Message::where('user_id', '!=', $user->id)
-            ->whereHas('item', function($query) use ($user) {
-                $query->where('user_id', $user->id);
-            })
-            ->where('is_read', false)
-            ->count();
-
-        if ($tab === 'buy') {
-            // 購入した商品（売却済みの商品）
-            $items = Item::where('status', 'sold')
-                ->whereHas('orders', function($query) use ($user) {
-                    $query->where('user_id', $user->id);
-                })
-                ->get();
-            $tradingItems = collect();
-            $tradingCount = 0;
-        } elseif ($tab === 'trading') {
-            // 取引中の商品（自分が出品した商品 + 自分が購入した商品）
-            $items = collect();
-
-            // 自分が出品した商品で取引中のもの
-            $sellerTradingItems = Item::where('user_id', $user->id)
-                ->where('status', 'trading')
-                ->get();
-
-            // 自分が購入した商品で取引中のもの
-            $buyerTradingItems = Item::where('status', 'trading')
-                ->whereHas('orders', function($query) use ($user) {
-                    $query->where('user_id', $user->id);
-                })
-                ->get();
-
-            // 両方を結合
-            $tradingItems = $sellerTradingItems->merge($buyerTradingItems);
-            $tradingCount = $tradingItems->count();
-        } else {
-            // sellタブ（デフォルト）：出品中の商品
+        
+        // 変数を初期化
+        $items = collect();  // ← 空のコレクションで初期化
+        $tradingItems = collect();  // ← 空のコレクションで初期化
+        
+        if ($tab === 'sell') {
             $items = Item::where('user_id', $user->id)
                 ->where('status', 'available')
                 ->get();
-            $tradingItems = collect();
-            $tradingCount = 0;
+        } elseif ($tab === 'buy') {
+            $items = Item::whereHas('orders', function($query) use ($user) {
+                $query->where('user_id', $user->id);
+            })->where('status', 'sold')->get();
+        } elseif ($tab === 'trading') {
+            $tradingItems = Item::where(function($query) use ($user) {
+                $query->where('user_id', $user->id)  // 自分が出品した商品
+                    ->orWhereHas('orders', function($orderQuery) use ($user) {
+                        $orderQuery->where('user_id', $user->id);  // 自分が購入した商品
+                    });
+            })->where('status', 'trading')->get();
+            
+            // 各商品の未読メッセージ件数を計算（既読処理前の状態）
+            foreach ($tradingItems as $item) {
+                $item->unreadCount = Message::where('item_id', $item->id)
+                    ->where('user_id', '!=', $user->id)  // 相手からのメッセージ
+                    ->where('is_read', false)
+                    ->where('is_deleted', false)
+                    ->count();
+            }
         }
-
-        return view('profiles.mypage', compact('user', 'items', 'tradingItems', 'tradingCount', 'unreadMessageCount'));
+        
+        // 未読メッセージ総件数を計算（既読処理前の状態）
+        $unreadMessageCount = Message::whereHas('item', function($query) use ($user) {
+            $query->where(function($itemQuery) use ($user) {
+                $itemQuery->where('user_id', $user->id)  // 自分が出品
+                    ->where('status', 'trading');
+            })->orWhereHas('orders', function($orderQuery) use ($user) {
+                $orderQuery->where('user_id', $user->id);  // 自分が購入
+            });
+        })->where('user_id', '!=', $user->id)
+        ->where('is_read', false)
+        ->where('is_deleted', false)
+        ->count();
+        
+        return view('profiles.mypage', compact('user', 'items', 'tradingItems', 'unreadMessageCount'));
     }
 
     public function edit_view()

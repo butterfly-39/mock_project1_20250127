@@ -152,4 +152,37 @@ class Item extends Model
     {
         return $query->where('status', self::STATUS_SOLD);
     }
+
+    /**
+     * 未読メッセージがあるかチェック
+     */
+    public function hasUnreadMessages()
+    {
+        // 自分が出品者の場合：購入者からの未読メッセージ
+        // 自分が購入者の場合：出品者からの未読メッセージ
+        return $this->messages()
+            ->where('user_id', '!=', auth()->id())  // ← 自分以外のユーザーからのメッセージ
+            ->where('is_read', false)
+            ->exists();
+    }
+
+    /**
+     * 未読メッセージ件数を取得
+     */
+    public function getUnreadMessageCount()
+    {
+        // 自分以外のユーザーからの未読メッセージ件数
+        return $this->messages()
+            ->where('user_id', '!=', auth()->id())  // ← 自分以外のユーザーからのメッセージ
+            ->where('is_read', false)
+            ->count();
+    }
+
+    /**
+     * メッセージとのリレーション
+     */
+    public function messages()
+    {
+        return $this->hasMany(Message::class);
+    }
 }

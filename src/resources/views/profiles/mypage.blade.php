@@ -37,29 +37,34 @@
     @if(request()->get('tab') === 'trading')
         @foreach($tradingItems as $item)
             <div class="item-card">
-                <!-- 画像をクリック可能なリンクにする -->
-                @if($item->user_id === auth()->id())
-                    <!-- 出品者の場合 -->
-                    <a href="{{ route('sellers.chat', ['item_id' => $item->id]) }}">
-                        @if($item->image)
-                            <img src="{{ asset('storage/' . $item->image) }}" alt="商品画像" class="item-card__image">
-                        @else
-                            <img src="/images/sample.jpg" alt="商品画像" class="item-card__image">
-                        @endif
-                    </a>
-                @else
-                    <!-- 購入者の場合 -->
-                    <a href="{{ route('buyers.chat', ['item_id' => $item->id]) }}">
-                        @if($item->image)
-                            <img src="{{ asset('storage/' . $item->image) }}" alt="商品画像" class="item-card__image">
-                        @else
-                            <img src="/images/sample.jpg" alt="商品画像" class="item-card__image">
-                        @endif
-                    </a>
-                @endif
+                <div class="item-card__image-container">
+                    @if($item->unreadCount > 0)  <!-- ← コントローラーで計算した件数を使用 -->
+                        <div class="unread-notification">
+                            <span class="unread-count">{{ $item->unreadCount }}</span>
+                        </div>
+                    @endif
 
+                    @if($item->user_id === auth()->id())
+                        <!-- 出品者の場合 -->
+                        <a href="{{ route('sellers.chat', ['item_id' => $item->id]) }}">
+                            @if($item->image)
+                                <img src="{{ asset('storage/' . $item->image) }}" alt="商品画像" class="item-card__image">
+                            @else
+                                <img src="/images/sample.jpg" alt="商品画像" class="item-card__image">
+                            @endif
+                        </a>
+                    @else
+                        <!-- 購入者の場合 -->
+                        <a href="{{ route('buyers.chat', ['item_id' => $item->id]) }}">
+                            @if($item->image)
+                                <img src="{{ asset('storage/' . $item->image) }}" alt="商品画像" class="item-card__image">
+                            @else
+                                <img src="/images/sample.jpg" alt="商品画像" class="item-card__image">
+                            @endif
+                        </a>
+                    @endif
+                </div>
                 <p class="item-card__name">{{ $item->name }}</p>
-
             </div>
         @endforeach
     @elseif(request()->get('tab') === 'buy')

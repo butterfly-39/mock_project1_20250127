@@ -32,6 +32,15 @@ class SellerChatController extends Controller
             ->where('id', '!=', $item_id)
             ->get();
         
+        // 相手からの未読メッセージを既読にする
+        Message::where('item_id', $item_id)
+            ->where('user_id', '!=', auth()->id())  // 相手からのメッセージ
+            ->where('is_read', false)
+            ->update([
+                'is_read' => true,
+                'read_at' => now()
+            ]);
+        
         return view('sellers.chat', compact('item', 'messages', 'buyer', 'otherTradingItems'));
     }
 }
