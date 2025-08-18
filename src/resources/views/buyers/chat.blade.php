@@ -82,6 +82,17 @@
                 @csrf
                 <input type="hidden" name="item_id" value="{{ $item->id }}">
                 
+                @if ($errors->any())
+                    <div class="chat-form__errors">
+                        @error('message')
+                            <p class="chat-form__error">{{ $message }}</p>
+                        @enderror
+                        @error('image')
+                            <p class="chat-form__error">{{ $message }}</p>
+                        @enderror
+                    </div>
+                @endif
+                
                 <div class="chat-form__input-group">
                     <textarea class="chat-form__input" name="message" placeholder="取引メッセージを記入してください" rows="3">{{ old('message') }}</textarea>
                     <div class="chat-form__buttons">

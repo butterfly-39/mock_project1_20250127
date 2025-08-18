@@ -343,7 +343,7 @@ body .content__heading {
     gap: 20px;
     align-items: flex-end;
     margin: 0;
-    padding: 30px;
+    padding: 10px;
 }
 
 .chat-form__input {
@@ -414,6 +414,16 @@ body .content__heading {
     display: block;
     text-align: center;
     line-height: 1;
+}
+
+.chat-form__errors {
+    padding: 8px 20px 0 20px;
+}
+
+.chat-form__error {
+    color: #e53935;
+    font-size: 13px;
+    margin: 0 0 6px 0;
 }
 
 /* PCサイズでの最適化 (1400-1540px) */

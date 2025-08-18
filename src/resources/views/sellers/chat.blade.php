@@ -25,13 +25,13 @@
         <div class="chat-header">
             <div class="product-user">
                 <div class="product-user__avatar">
-                    @if($item->user->profile && $item->user->profile->image)
-                        <img src="{{ asset('storage/' . $item->user->profile->image) }}" alt="プロフィール画像">
+                    @if($buyer->profile && $buyer->profile->image)
+                        <img src="{{ asset('storage/' . $buyer->profile->image) }}" alt="プロフィール画像">
                     @else
                         <div class="product-user__avatar-placeholder">No Image</div>
                     @endif
                 </div>
-                <p class="product-user__name">「{{ $item->user->name }}」さんとの取引画面</p>
+                <p class="product-user__name">「{{ $buyer->name }}」さんとの取引画面</p>
             </div>
             <button class="chat-header__complete-btn">取引を完了する</button>
         </div>
@@ -87,6 +87,17 @@
             <form class="chat-form" action="{{ route('messages.store') }}" method="post" enctype="multipart/form-data">
                 @csrf
                 <input type="hidden" name="item_id" value="{{ $item->id }}">
+
+                @if ($errors->any())
+                    <div class="chat-form__errors">
+                        @error('message')
+                            <p class="chat-form__error">{{ $message }}</p>
+                        @enderror
+                        @error('image')
+                            <p class="chat-form__error">{{ $message }}</p>
+                        @enderror
+                    </div>
+                @endif
                 
                 <div class="chat-form__input-group">
                     <textarea class="chat-form__input" name="message" placeholder="取引メッセージを記入してください" rows="3">{{ old('message') }}</textarea>
