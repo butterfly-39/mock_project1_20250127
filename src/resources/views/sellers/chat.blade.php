@@ -57,17 +57,29 @@
         <div class="chat-messages">
             @foreach($messages as $message)
                 <div class="message {{ $message->user_id === auth()->id() ? 'message--own' : 'message--other' }}">
-                    @if($message->user_id !== auth()->id())
-                        <div class="message__avatar">
-                            @if($message->user->profile && $message->user->profile->image)
-                                <img src="{{ asset('storage/' . $message->user->profile->image) }}" alt="プロフィール画像">
-                            @else
-                                <div class="message__avatar-placeholder">No Image</div>
-                            @endif
-                        </div>
-                    @endif
-                    <div class="message__content">
+                    <div class="message__user-info">
+                        @if($message->user_id !== auth()->id())
+                            <div class="message__avatar">
+                                @if($message->user->profile && $message->user->profile->image)
+                                    <img src="{{ asset('storage/' . $message->user->profile->image) }}" alt="プロフィール画像">
+                                @else
+                                    <div class="message__avatar-placeholder">No Image</div>
+                                @endif
+                            </div>
+                        @endif
                         <p class="message__username">{{ $message->user->name }}</p>
+                        @if($message->user_id === auth()->id())  <!-- ← 自分のプロフィール画像をここに移動 -->
+                            <div class="message__avatar">
+                                @if($message->user->profile && $message->user->profile->image)
+                                    <img src="{{ asset('storage/' . $message->user->profile->image) }}" alt="プロフィール画像">
+                                @else
+                                    <div class="message__avatar-placeholder">No Image</div>
+                                @endif
+                            </div>
+                        @endif
+                    </div>
+                    
+                    <div class="message__content">
                         <div class="message__bubble">
                             <p class="message__text">{{ $message->message }}</p>
                             @if($message->image)
@@ -85,15 +97,6 @@
                             </div>
                         @endif
                     </div>
-                    @if($message->user_id === auth()->id())
-                        <div class="message__avatar">
-                            @if($message->user->profile && $message->user->profile->image)
-                                <img src="{{ asset('storage/' . $message->user->profile->image) }}" alt="プロフィール画像">
-                            @else
-                                <div class="message__avatar-placeholder">No Image</div>
-                            @endif
-                        </div>
-                    @endif
                 </div>
             @endforeach
         </div>

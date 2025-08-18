@@ -242,14 +242,31 @@ body .content__heading {
 
 .message {
     display: flex;
+    flex-direction: column;  /* ← 縦方向の配置に変更 */
     align-items: flex-start;
-    gap: 20px;
+    gap: 10px;              /* ← ユーザー情報とメッセージの間隔 */
     margin: 20px 0 25px 0;
     padding: 0 20px;
 }
 
 .message--own {
-    flex-direction: row-reverse;
+    flex-direction: column;
+    align-items: flex-end;  /* ← 右寄せに変更 */
+}
+
+.message--own .message__user-info {
+    flex-direction: row-reverse;  /* ← ユーザー名とプロフィール画像の順序を逆転 */
+    align-items: center;
+    gap: 8px;
+}
+
+.message--own .message__content {
+    align-items: flex-end;  /* ← メッセージを右寄せ */
+}
+
+.message--own .message__bubble {
+    background-color: #007bff;
+    color: white;
 }
 
 .message__avatar {
@@ -279,7 +296,7 @@ body .content__heading {
 
 .message__content {
     flex: 1;
-    max-width: 65%;
+    max-width: 100%;        /* ← 幅を調整 */
     min-width: 0;
     margin: 0;
     padding: 0;
@@ -293,7 +310,7 @@ body .content__heading {
     font-size: 15px;
     font-weight: bold;
     color: #666;
-    margin: 0 0 8px 0;
+    margin: 0;
     padding: 0;
 }
 
@@ -304,11 +321,6 @@ body .content__heading {
     display: inline-block;
     max-width: 100%;
     margin: 0;
-}
-
-.message--own .message__bubble {
-    background-color: #007bff;
-    color: white;
 }
 
 .message__text {
@@ -682,4 +694,21 @@ body .content__heading {
     display: block;
     text-align: center;
     word-break: break-word;
+}
+
+.message__user-info {
+    display: flex;
+    flex-direction: row;     /* ← 横方向の配置に戻す */
+    align-items: center;     /* ← 中央揃え */
+    gap: 8px;               /* ← プロフィール画像とユーザー名の間隔 */
+    flex-shrink: 0;
+}
+
+.message__username {
+    font-size: 15px;
+    font-weight: bold;
+    color: #666;
+    margin: 0;
+    padding: 0;
+    text-align: left;       /* ← 左寄せに戻す */
 }
