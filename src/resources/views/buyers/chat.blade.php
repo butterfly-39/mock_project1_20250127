@@ -132,6 +132,35 @@
 
 @section('scripts')
 <script>
+// 入力情報保持機能
+document.addEventListener('DOMContentLoaded', function() {
+    const textarea = document.querySelector('.chat-form__input');
+    const storageKey = 'chat_draft_buyer_{{ $item->id }}_{{ $item->user->id }}';
+    
+    // ページ読み込み時に保存された内容を復元
+    const savedContent = localStorage.getItem(storageKey);
+    if (savedContent) {
+        textarea.value = savedContent;
+    }
+    
+    // 入力内容をリアルタイムで保存
+    textarea.addEventListener('input', function() {
+        localStorage.setItem(storageKey, this.value);
+    });
+    
+    // フォーム送信時に保存内容をクリア
+    document.querySelector('.chat-form').addEventListener('submit', function() {
+        localStorage.removeItem(storageKey);
+    });
+    
+    // ページ離脱時に内容を保存
+    window.addEventListener('beforeunload', function() {
+        if (textarea.value.trim()) {
+            localStorage.setItem(storageKey, textarea.value);
+        }
+    });
+});
+
 function editMessage(messageId, currentMessage) {
     // 編集用のフォームを表示
     const textarea = document.querySelector('.chat-form__input');
