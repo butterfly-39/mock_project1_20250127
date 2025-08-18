@@ -161,10 +161,6 @@ function editMessage(messageId, currentMessage) {
     methodInput.value = 'PUT';
     form.appendChild(methodInput);
     
-    // 送信ボタンのテキストを変更
-    const submitBtn = document.querySelector('.chat-form__send-btn');
-    submitBtn.innerHTML = '更新';
-    
     // 編集モードフラグを設定
     form.dataset.editMode = 'true';
     form.dataset.editMessageId = messageId;
