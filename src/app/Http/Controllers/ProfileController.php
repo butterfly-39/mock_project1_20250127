@@ -34,7 +34,17 @@ class ProfileController extends Controller
                     ->orWhereHas('orders', function($orderQuery) use ($user) {
                         $orderQuery->where('user_id', $user->id);  // 自分が購入した商品
                     });
-            })->where('status', 'trading')->get();
+            })->where('status', 'trading')
+            ->with(['messages' => function($query) {
+                $query->where('is_deleted', false)
+                    ->orderBy('created_at', 'desc');
+            }])
+            ->get()
+            ->sortByDesc(function($item) {
+                // 最新メッセージの日時でソート
+                $latestMessage = $item->messages->first();
+                return $latestMessage ? $latestMessage->created_at : $item->created_at;
+            });
             
             // 各商品の未読メッセージ件数を計算（既読処理前の状態）
             foreach ($tradingItems as $item) {
