@@ -33,7 +33,9 @@
                 </div>
                 <p class="product-user__name">「{{ $buyer->name }}」さんとの取引画面</p>
             </div>
-            <button class="chat-header__complete-btn">取引を完了する</button>
+            @if($item->status === 'trading')
+                <button class="chat-header__complete-btn" onclick="showRatingModal()">取引を完了する</button>
+            @endif
         </div>
 
         <!-- 商品情報 -->
@@ -132,6 +134,39 @@
                 </div>
             </form>
         </div>
+
+        <!-- 評価モーダル -->
+        <div id="ratingModal" class="modal" style="display: none;">
+            <div class="modal-content rating-modal">
+                <div class="modal-body">
+                    <h3 class="rating-title">取引が完了しました。</h3>
+                    <p class="rating-question">今回の取引相手はどうでしたか？</p>
+                    
+                    <form action="{{ route('ratings.store') }}" method="POST" class="rating-form">
+                        @csrf
+                        <input type="hidden" name="item_id" value="{{ $item->id }}">
+                        <input type="hidden" name="order_id" value="{{ $order->id ?? '' }}">
+                        
+                        <div class="rating-stars">
+                            <input type="radio" name="rating" value="5" id="star5" required>
+                            <label for="star5" class="star">★</label>
+                            <input type="radio" name="rating" value="4" id="star4">
+                            <label for="star4" class="star">★</label>
+                            <input type="radio" name="rating" value="3" id="star3">
+                            <label for="star3" class="star">★</label>
+                            <input type="radio" name="rating" value="2" id="star2">
+                            <label for="star2" class="star">★</label>
+                            <input type="radio" name="rating" value="1" id="star1">
+                            <label for="star1" class="star">★</label>
+                        </div>
+                        
+                        <div class="rating-submit">
+                            <button type="submit" class="btn btn-primary">送信する</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
     </div>
 </div>
 @endsection
@@ -209,5 +244,20 @@ document.querySelector('.chat-form').addEventListener('submit', function(e) {
         this.appendChild(methodInput);
     }
 });
+
+// 取引完了・評価機能
+function showRatingModal() {
+    document.getElementById('ratingModal').style.display = 'block';
+}
+
+// モーダル外クリックで閉じる
+window.onclick = function(event) {
+    const modals = document.querySelectorAll('.modal');
+    modals.forEach(modal => {
+        if (event.target === modal) {
+            modal.style.display = 'none';
+        }
+    });
+}
 </script>
 @endsection

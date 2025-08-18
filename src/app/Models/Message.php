@@ -138,3 +138,4 @@ class Message extends Model
         return $this->deleted_at;
     }
 }
+ 

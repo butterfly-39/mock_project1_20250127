@@ -92,3 +92,4 @@ class Rating extends Model
         return $query->orderBy('rating', $direction);
     }
 }
+ 

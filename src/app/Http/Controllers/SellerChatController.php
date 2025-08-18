@@ -44,3 +44,4 @@ class SellerChatController extends Controller
         return view('sellers.chat', compact('item', 'messages', 'buyer', 'otherTradingItems'));
     }
 }
+ 

@@ -69,7 +69,7 @@
         @endforeach
     @elseif(request()->get('tab') === 'buy')
         @foreach($items as $item)
-            <div class="item-card">
+        <div class="item-card">
                 @if($item->image)
                     <img src="{{ asset('storage/' . $item->image) }}" alt="商品画像" class="item-card__image">
                 @else
@@ -78,7 +78,7 @@
                 <p class="item-card__name">{{ $item->name }}</p>
             </div>
         @endforeach
-    @else
+            @else
         @foreach($items as $item)
             <div class="item-card">
                 @if($item->image)
@@ -87,8 +87,8 @@
                     <img src="/images/sample.jpg" alt="商品画像" class="item-card__image">
                 @endif
                 <p class="item-card__name">{{ $item->name }}</p>
-            </div>
-        @endforeach
+        </div>
+    @endforeach
     @endif
 
     @if($items->isEmpty() && request()->get('tab') !== 'trading')

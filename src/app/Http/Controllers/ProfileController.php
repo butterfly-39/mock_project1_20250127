@@ -19,7 +19,7 @@ class ProfileController extends Controller
         // 変数を初期化
         $items = collect();  // ← 空のコレクションで初期化
         $tradingItems = collect();  // ← 空のコレクションで初期化
-        
+
         if ($tab === 'sell') {
             $items = Item::where('user_id', $user->id)
                 ->where('status', 'available')

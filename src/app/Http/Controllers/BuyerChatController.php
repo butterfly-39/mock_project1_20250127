@@ -32,3 +32,4 @@ class BuyerChatController extends Controller
         return view('buyers.chat', compact('item', 'messages', 'seller'));
     }
 }
+ 
