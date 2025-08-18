@@ -64,8 +64,12 @@
                         </div>
                         @if($message->user_id === auth()->id())
                             <div class="message__actions">
-                                <a href="#" class="message__edit">編集</a>
-                                <a href="#" class="message__delete">削除</a>
+                                <button type="button" class="message__edit" onclick="editMessage({{ $message->id }}, '{{ addslashes($message->message) }}')">編集</button>
+                                <form action="{{ route('messages.destroy', $message) }}" method="POST" style="display: inline;">
+                                    @csrf
+                                    @method('DELETE')
+                                    <button type="submit" class="message__delete" onclick="return confirm('このメッセージを削除しますか？')">削除</button>
+                                </form>
                             </div>
                         @endif
                     </div>
@@ -109,4 +113,55 @@
         </div>
     </div>
 </div>
+@endsection
+
+@section('scripts')
+<script>
+function editMessage(messageId, currentMessage) {
+    // 編集用のフォームを表示
+    const textarea = document.querySelector('.chat-form__input');
+    textarea.value = currentMessage;
+    textarea.focus();
+    
+    // フォームのactionを編集用に変更
+    const form = document.querySelector('.chat-form');
+    form.action = '{{ route("messages.update", "") }}/' + messageId;
+    
+    // 既存の_methodフィールドを削除
+    const existingMethod = form.querySelector('input[name="_method"]');
+    if (existingMethod) {
+        existingMethod.remove();
+    }
+    
+    // メソッドをPUTに変更
+    const methodInput = document.createElement('input');
+    methodInput.type = 'hidden';
+    methodInput.name = '_method';
+    methodInput.value = 'PUT';
+    form.appendChild(methodInput);
+    
+    // 送信ボタンのテキストを変更
+    const submitBtn = document.querySelector('.chat-form__send-btn');
+    submitBtn.innerHTML = '更新';
+    
+    // 編集モードフラグを設定
+    form.dataset.editMode = 'true';
+    form.dataset.editMessageId = messageId;
+}
+
+// フォーム送信時の処理
+document.querySelector('.chat-form').addEventListener('submit', function(e) {
+    if (this.dataset.editMode === 'true') {
+        // 編集モードの場合
+        this.action = '{{ route("messages.update", "") }}/' + this.dataset.editMessageId;
+        
+        // メソッドをPUTに変更
+        const methodInput = document.createElement('input');
+        methodInput.type = 'hidden';
+        methodInput.name = '_method';
+        methodInput.value = 'PUT';
+        this.appendChild(methodInput);
+    }
+});
+</script>
 @endsection

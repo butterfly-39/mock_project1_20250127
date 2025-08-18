@@ -22,6 +22,7 @@ class SellerChatController extends Controller
         
         // メッセージを取得
         $messages = Message::where('item_id', $item_id)
+            ->where('is_deleted', false) // ← 削除済みメッセージを除外
             ->orderBy('created_at', 'asc')
             ->get();
         

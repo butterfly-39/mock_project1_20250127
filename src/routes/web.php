@@ -38,7 +38,9 @@ Route::middleware('auth')->group(function () {
     Route::get('/buyers/chat/{item_id}', [BuyerChatController::class, 'show'])->name('buyers.chat');
     Route::get('/sellers/chat/{item_id}', [SellerChatController::class, 'show'])->name('sellers.chat');
     
-    // メッセージ投稿のルート
+    // メッセージ投稿・編集・削除のルート
+    Route::delete('/messages/{message}', [MessageController::class, 'destroy'])->name('messages.destroy');
+    Route::put('/messages/{message}', [MessageController::class, 'update'])->name('messages.update');
     Route::post('/messages', [MessageController::class, 'store'])->name('messages.store');
 });
 Route::get('/', [ItemController::class, 'items_view']);

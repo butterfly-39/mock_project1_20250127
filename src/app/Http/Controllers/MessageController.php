@@ -25,4 +25,36 @@ class MessageController extends Controller
         
         return redirect()->back()->with('success', 'メッセージを送信しました。');
     }
+
+    public function update(Request $request, Message $message)
+    {
+        // 権限チェック：自分のメッセージのみ編集可能
+        if ($message->user_id !== auth()->id()) {
+            abort(403);
+        }
+        
+        $request->validate([
+            'message' => ['required', 'string', 'max:400'],
+        ]);
+        
+        $message->update([
+            'message' => $request->message,
+            'is_edited' => true,
+            'edited_at' => now(),
+        ]);
+        
+        return redirect()->back()->with('success', 'メッセージを編集しました。');
+    }
+    
+    public function destroy(Message $message)
+    {
+        // 権限チェック：自分のメッセージのみ削除可能
+        if ($message->user_id !== auth()->id()) {
+            abort(403);
+        }
+        
+        $message->softDelete();
+        
+        return redirect()->back()->with('success', 'メッセージを削除しました。');
+    }
 }
