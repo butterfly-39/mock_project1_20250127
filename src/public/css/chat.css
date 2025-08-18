@@ -713,6 +713,21 @@ body .content__heading {
     text-align: left;       /* ← 左寄せに戻す */
 }
 
+/* 出品者画面専用のスタイル */
+.seller-chat-header {
+    justify-content: flex-start;
+}
+
+.seller-chat-header .product-user {
+    margin-right: auto;
+    padding: 10px 25px;
+}
+
+/* 出品者画面での余白調整 */
+.seller-chat .chat-header {
+    padding-right: 120px; /* ボタン分のスペースを確保 */
+}
+
 /* 評価モーダル専用スタイル */
 .rating-modal {
     max-width: 400px;

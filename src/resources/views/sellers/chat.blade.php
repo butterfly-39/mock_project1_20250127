@@ -5,7 +5,7 @@
 @endsection
 
 @section('content')
-<div class="chat-layout">
+<div class="chat-layout seller-chat">
     <!-- 左サイドバー -->
     <div class="chat-sidebar">
         <h3 class="chat-sidebar__title">その他の取引</h3>
@@ -22,7 +22,7 @@
 
     <!-- メインコンテンツ -->
     <div class="chat-main">
-        <div class="chat-header">
+        <div class="chat-header seller-chat-header">
             <div class="product-user">
                 <div class="product-user__avatar">
                     @if($buyer->profile && $buyer->profile->image)
@@ -33,9 +33,7 @@
                 </div>
                 <p class="product-user__name">「{{ $buyer->name }}」さんとの取引画面</p>
             </div>
-            @if($item->status === 'trading')
-                <button class="chat-header__complete-btn" onclick="showRatingModal()">取引を完了する</button>
-            @endif
+            <!-- 出品者には取引完了ボタンを表示しない -->
         </div>
 
         <!-- 商品情報 -->
@@ -135,38 +133,39 @@
             </form>
         </div>
 
-        <!-- 評価モーダル -->
-        <div id="ratingModal" class="modal" style="display: none;">
-            <div class="modal-content rating-modal">
-                <div class="modal-body">
-                    <h3 class="rating-title">取引が完了しました。</h3>
-                    <p class="rating-question">今回の取引相手はどうでしたか？</p>
-                    
-                    <form action="{{ route('ratings.store') }}" method="POST" class="rating-form">
-                        @csrf
-                        <input type="hidden" name="item_id" value="{{ $item->id }}">
-                        <input type="hidden" name="order_id" value="{{ $order->id ?? '' }}">
+        @if($item->status === 'completed' && !$hasRated)
+            <!-- 評価モーダル -->
+            <div id="ratingModal" class="modal" style="display: block;">
+                <div class="modal-content rating-modal">
+                    <div class="modal-body">
+                        <h3 class="rating-title">取引が完了しました。</h3>
+                        <p class="rating-question">今回の取引相手はどうでしたか？</p>
                         
-                        <div class="rating-stars">
-                            <input type="radio" name="rating" value="5" id="star5" required>
-                            <label for="star5" class="star">★</label>
-                            <input type="radio" name="rating" value="4" id="star4">
-                            <label for="star4" class="star">★</label>
-                            <input type="radio" name="rating" value="3" id="star3">
-                            <label for="star3" class="star">★</label>
-                            <input type="radio" name="rating" value="2" id="star2">
-                            <label for="star2" class="star">★</label>
-                            <input type="radio" name="rating" value="1" id="star1">
-                            <label for="star1" class="star">★</label>
-                        </div>
-                        
-                        <div class="rating-submit">
-                            <button type="submit" class="btn btn-primary">送信する</button>
-                        </div>
-                    </form>
+                        <form action="{{ route('ratings.store') }}" method="POST" class="rating-form">
+                            @csrf
+                            <input type="hidden" name="item_id" value="{{ $item->id }}">
+                            
+                            <div class="rating-stars">
+                                <input type="radio" name="rating" value="5" id="star5" required>
+                                <label for="star5" class="star">★</label>
+                                <input type="radio" name="rating" value="4" id="star4">
+                                <label for="star4" class="star">★</label>
+                                <input type="radio" name="rating" value="3" id="star3">
+                                <label for="star3" class="star">★</label>
+                                <input type="radio" name="rating" value="2" id="star2">
+                                <label for="star2" class="star">★</label>
+                                <input type="radio" name="rating" value="1" id="star1">
+                                <label for="star1" class="star">★</label>
+                            </div>
+                            
+                            <div class="rating-submit">
+                                <button type="submit" class="btn btn-primary">送信する</button>
+                            </div>
+                        </form>
+                    </div>
                 </div>
             </div>
-        </div>
+        @endif
     </div>
 </div>
 @endsection

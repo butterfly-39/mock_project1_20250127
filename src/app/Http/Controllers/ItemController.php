@@ -90,6 +90,12 @@ class ItemController extends Controller
             
         return view('items.index', compact('items', 'query'));
     }
+
+    public function index()
+    {
+        $items = Item::where('status', 'trading')->get();
+        return view('items.index', compact('items'));
+    }
 }
 
 

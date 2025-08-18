@@ -43,10 +43,11 @@ Route::middleware('auth')->group(function () {
     Route::delete('/messages/{message}', [MessageController::class, 'destroy'])->name('messages.destroy');
     Route::put('/messages/{message}', [MessageController::class, 'update'])->name('messages.update');
     Route::post('/messages', [MessageController::class, 'store'])->name('messages.store');
-
+    
     // 評価投稿のルート
     Route::post('/ratings', [RatingController::class, 'store'])->name('ratings.store');
 });
 Route::get('/', [ItemController::class, 'items_view']);
 Route::get('/item/{item_id}', [ItemController::class, 'item_show']);
+Route::get('/items', [ItemController::class, 'index'])->name('items.index');
 

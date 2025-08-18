@@ -141,7 +141,6 @@
             <form action="{{ route('ratings.store') }}" method="POST" class="rating-form">
                 @csrf
                 <input type="hidden" name="item_id" value="{{ $item->id }}">
-                <input type="hidden" name="order_id" value="{{ $order->id ?? '' }}">
                 
                 <div class="rating-stars">
                     <input type="radio" name="rating" value="5" id="star5" required>

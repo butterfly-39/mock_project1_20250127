@@ -2,9 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
 use App\Models\Item;
 use App\Models\Message;
+use App\Models\User;
+use App\Models\Rating;
+use App\Models\Order;
+use Illuminate\Http\Request;
 
 class SellerChatController extends Controller
 {
@@ -14,34 +17,65 @@ class SellerChatController extends Controller
         
         // 出品者かどうかチェック
         if ($item->user_id !== auth()->id()) {
-            abort(403);
+            abort(403, 'この商品のチャット画面にアクセスする権限がありません');
         }
         
-        // 購入者を取得
+        // 購入者を取得（既存のリレーションを使用）
         $buyer = $item->orders->first()->user ?? null;
         
-        // メッセージを取得
-        $messages = Message::where('item_id', $item_id)
-            ->where('is_deleted', false) // ← 削除済みメッセージを除外
-            ->orderBy('created_at', 'asc')
-            ->get();
+        if (!$buyer) {
+            abort(404, '購入者情報が見つかりません');
+        }
         
-        // 他の取引中の商品を取得（現在の商品以外）
+        // 注文情報を取得
+        $order = $item->orders->first();
+        
+        // 他の取引中の商品を取得
         $otherTradingItems = Item::where('user_id', auth()->id())
             ->where('status', 'trading')
             ->where('id', '!=', $item_id)
             ->get();
         
+        // メッセージを取得
+        $messages = Message::where('item_id', $item_id)
+            ->where('is_deleted', false)
+            ->orderBy('created_at', 'asc')
+            ->get();
+        
+        // 購入者が評価済みかどうかをチェック
+        $hasRated = false;
+        if ($order) {
+            // この商品に対する評価が存在するかチェック
+            $hasRated = Rating::where('item_id', $item_id)
+                ->where('order_id', $order->id)
+                ->exists();
+        }
+        
+        // デバッグ用のログ出力
+        \Log::info('Seller chat debug:', [
+            'item_id' => $item_id,
+            'item_status' => $item->status,
+            'has_order' => $order ? true : false,
+            'order_id' => $order ? $order->id : null,
+            'has_rating' => $hasRated,
+            'ratings_count' => Rating::where('item_id', $item_id)->count()
+        ]);
+        
         // 相手からの未読メッセージを既読にする
         Message::where('item_id', $item_id)
-            ->where('user_id', '!=', auth()->id())  // 相手からのメッセージ
+            ->where('user_id', '!=', auth()->id())
             ->where('is_read', false)
             ->update([
-                'is_read' => true,
-                'read_at' => now()
+                'is_read' => true
             ]);
         
-        return view('sellers.chat', compact('item', 'messages', 'buyer', 'otherTradingItems'));
+        return view('sellers.chat', compact(
+            'item', 
+            'buyer', 
+            'otherTradingItems', 
+            'messages',
+            'hasRated'
+        ));
     }
 }
  
