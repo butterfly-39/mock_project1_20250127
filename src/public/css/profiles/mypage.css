@@ -4,7 +4,7 @@
     text-decoration: none;
     cursor: pointer;
     margin-right: 40px;
-    position: relative; /* 通知バッジの位置調整用 */
+    position: relative;
 }
 
 .mypage-form__heading:hover,
@@ -12,11 +12,10 @@
     color: rgb(245, 69, 69);
 }
 
-/* 通知バッジのスタイル */
 .mypage-form__notification-badge {
     position: absolute;
-    top: -8px;
-    right: -12px;
+    top: -2px;
+    right: -25px;
     background-color: #ff4444;
     color: white;
     border-radius: 50%;
@@ -163,8 +162,8 @@
 /* 未読通知マーク */
 .unread-notification {
     position: absolute;
-    top: -5px;
-    left: -5px;
+    top: 2px;
+    left: 2px;
     background-color: #e74c3c;
     border-radius: 50%;
     width: 24px;
@@ -182,11 +181,11 @@
 }
 
 .mypage-item__image {
-    position: relative;  /* ← 通知マークの位置決めのため */
+    position: relative;
 }
 
 .item-card__image-container {
-    position: relative;  /* ← 通知マークの位置決めのため */
+    position: relative;
     display: inline-block;
 }
 
