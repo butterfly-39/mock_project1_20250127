@@ -74,6 +74,11 @@ class RatingController extends Controller
                 'rating' => $request->rating
             ]);
             
+            // 出品者が評価した場合のみ、商品をsoldにする
+            if (!$isBuyer) {
+                $item->update(['status' => 'sold']);
+            }
+
             // 購入者・出品者ともに商品一覧画面に遷移
             return redirect()->route('items.index')->with('success', '評価を送信しました');
             
