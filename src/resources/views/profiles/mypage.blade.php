@@ -15,7 +15,7 @@
 				<i class="fas fa-user mypage-form__no-image" style="font-size: 4rem;"></i>
 			@endif
 			<div class="mypage-userbox">
-				<label class="mypage-form__label" for="image">ユーザー名</label>
+				<label class="mypage-form__label" for="image">{{ $user->name }}</label>
 
 				{{-- ユーザー名の下に平均評価の星を表示（評価がある場合のみ） --}}
 				@if(isset($averageRating) && $averageRating !== null)
