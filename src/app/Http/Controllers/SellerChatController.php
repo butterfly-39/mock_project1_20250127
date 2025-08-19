@@ -54,14 +54,11 @@ class SellerChatController extends Controller
         // 出品者が購入者を評価済みかどうかをチェック
         $sellerHasRated = false;
         if ($order) {
-            // 現在のテーブル構造では、item_idとorder_idの組み合わせで評価済みかチェック
-            // 出品者と購入者の両方が評価済みかチェック
-            $totalRatings = Rating::where('item_id', $item_id)
+            $sellerHasRated = Rating::where('item_id', $item_id)
                 ->where('order_id', $order->id)
-                ->count();
-            
-            // 2件の評価があれば両方評価済み
-            $sellerHasRated = ($totalRatings >= 2);
+                ->where('rater_id', auth()->id())  // 出品者（現在のユーザー）
+                ->where('rated_id', $buyer->id)    // 購入者
+                ->exists();
         }
         
         // デバッグ用のログ出力

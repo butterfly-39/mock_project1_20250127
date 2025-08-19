@@ -7,6 +7,7 @@ use App\Models\Item;
 use App\Models\Order;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use App\Models\User; // Added missing import for User model
 
 class RatingController extends Controller
 {
@@ -23,6 +24,8 @@ class RatingController extends Controller
         
         // 購入者か出品者かを判定してorder_idを取得
         $order = null;
+        $isBuyer = false;
+        $buyer = null;
         
         // 購入者の場合
         $buyerOrder = Order::where('item_id', $request->item_id)
@@ -31,12 +34,17 @@ class RatingController extends Controller
             
         if ($buyerOrder) {
             $order = $buyerOrder;
+            $isBuyer = true;
+            $buyer = $currentUser;
         } else {
             // 出品者の場合
             if ($item->user_id === $currentUser->id) {
                 $sellerOrder = Order::where('item_id', $request->item_id)->first();
                 if ($sellerOrder) {
                     $order = $sellerOrder;
+                    $isBuyer = false;
+                    // 購入者情報を取得
+                    $buyer = User::find($sellerOrder->user_id);
                 }
             }
         }
@@ -48,7 +56,8 @@ class RatingController extends Controller
         // 既に評価済みかチェック（現在のユーザーがこの商品を評価済みか）
         $existingRating = Rating::where([
             'item_id' => $request->item_id,
-            'order_id' => $order->id
+            'order_id' => $order->id,
+            'rater_id' => $currentUser->id
         ])->first();
 
         if ($existingRating) {
@@ -60,6 +69,8 @@ class RatingController extends Controller
             $rating = Rating::create([
                 'item_id' => $request->item_id,
                 'order_id' => $order->id,
+                'rater_id' => $currentUser->id,  // 評価する人（現在のユーザー）
+                'rated_id' => $isBuyer ? $item->user_id : $buyer->id,  // 評価される人
                 'rating' => $request->rating
             ]);
             
