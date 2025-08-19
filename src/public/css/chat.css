@@ -730,28 +730,38 @@ body .content__heading {
 
 /* 評価モーダル専用スタイル */
 .rating-modal {
-    max-width: 400px;
+    max-width: 350px;
     text-align: center;
-    background: #f8f9fa;
-    border: 2px solid #e9ecef;
+    background: #f9faf8;
+    border: 2px solid #040404;
 }
 
 .rating-modal .modal-body {
-    padding: 40px 30px;
+    padding: 20px;
+    background: #f2f1dd;
+    border-radius: 20px;
 }
 
 .rating-title {
-    font-size: 20px;
+    font-size: 30px;
     font-weight: bold;
     color: #333;
-    margin: 0 0 20px 0;
+    margin: 0 0 25px 0;
+    text-align: left;
+    border-bottom: 1px solid #040404;
+    padding-bottom: 15px;
+    margin-left: -20px;
+    margin-right: -20px;
+    padding-left: 20px;
+    padding-right: 20px;
 }
 
 .rating-question {
     font-size: 16px;
     color: #666;
-    margin: 0 0 30px 0;
+    margin: 0 0 25px 0;
     line-height: 1.5;
+    text-align: left;
 }
 
 .rating-form {
@@ -760,9 +770,16 @@ body .content__heading {
 
 .rating-stars {
     display: flex;
+    flex-direction: row-reverse;
     justify-content: center;
     gap: 5px;
     margin-bottom: 30px;
+    border-bottom: 1px solid #040404;
+    padding-bottom: 25px;
+    margin-left: -20px;
+    margin-right: -20px;
+    padding-left: 20px;
+    padding-right: 20px;
 }
 
 .rating-stars input[type="radio"] {
@@ -770,7 +787,7 @@ body .content__heading {
 }
 
 .rating-stars .star {
-    font-size: 32px;
+    font-size: 80px;
     color: #ddd;
     cursor: pointer;
     transition: color 0.2s ease;
@@ -782,26 +799,20 @@ body .content__heading {
     color: #ffd700;
 }
 
-.rating-stars input[type="radio"]:checked ~ .star,
-.rating-stars input[type="radio"]:checked ~ .star ~ .star {
-    color: #ffd700;
-}
-
 .rating-stars input[type="radio"]:checked + .star {
     color: #ffd700;
 }
 
 .rating-submit {
-    text-align: center;
+    text-align: right;
 }
 
 .rating-submit .btn {
-    background: #dc3545;
+    background: #f55665;
     color: white;
     border: none;
-    padding: 12px 30px;
-    font-size: 16px;
-    font-weight: 600;
+    padding: 8px 25px;
+    font-size: 20px;
     border-radius: 6px;
     cursor: pointer;
     transition: background-color 0.3s;
