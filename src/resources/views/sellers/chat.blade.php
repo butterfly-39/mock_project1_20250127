@@ -133,7 +133,7 @@
             </form>
         </div>
 
-        @if($item->status === 'completed' && !$hasRated)
+        @if($hasRated && !$sellerHasRated)
             <!-- 評価モーダル -->
             <div id="ratingModal" class="modal" style="display: block;">
                 <div class="modal-content rating-modal">

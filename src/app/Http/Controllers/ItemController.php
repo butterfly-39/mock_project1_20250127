@@ -93,7 +93,8 @@ class ItemController extends Controller
 
     public function index()
     {
-        $items = Item::where('status', 'trading')->get();
+        // すべての商品を取得（ステータスに関係なく）
+        $items = Item::orderBy('created_at', 'desc')->get();
         return view('items.index', compact('items'));
     }
 }

@@ -12,9 +12,6 @@ class RatingController extends Controller
 {
     public function store(Request $request)
     {
-        // デバッグ用のログ出力
-        \Log::info('Rating request:', $request->all());
-        
         $request->validate([
             'item_id' => 'required|exists:items,id',
             'rating' => 'required|integer|between:1,5'
@@ -48,7 +45,7 @@ class RatingController extends Controller
             return redirect()->back()->with('error', '取引が見つかりません');
         }
 
-        // 既に評価済みかチェック
+        // 既に評価済みかチェック（現在のユーザーがこの商品を評価済みか）
         $existingRating = Rating::where([
             'item_id' => $request->item_id,
             'order_id' => $order->id
@@ -66,16 +63,11 @@ class RatingController extends Controller
                 'rating' => $request->rating
             ]);
             
-            \Log::info('Rating created:', $rating->toArray());
-            
-            // 商品のステータスは変更しない（既存のステータスを維持）
-            
             // 購入者・出品者ともに商品一覧画面に遷移
             return redirect()->route('items.index')->with('success', '評価を送信しました');
             
         } catch (\Exception $e) {
-            \Log::error('Rating creation failed:', ['error' => $e->getMessage()]);
-            return redirect()->back()->with('error', '評価の保存に失敗しました: ' . $e->getMessage());
+            return redirect()->back()->with('error', '評価の保存に失敗しました');
         }
     }
 } 

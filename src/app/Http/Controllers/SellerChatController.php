@@ -51,13 +51,27 @@ class SellerChatController extends Controller
                 ->exists();
         }
         
+        // 出品者が購入者を評価済みかどうかをチェック
+        $sellerHasRated = false;
+        if ($order) {
+            // 現在のテーブル構造では、item_idとorder_idの組み合わせで評価済みかチェック
+            // 出品者と購入者の両方が評価済みかチェック
+            $totalRatings = Rating::where('item_id', $item_id)
+                ->where('order_id', $order->id)
+                ->count();
+            
+            // 2件の評価があれば両方評価済み
+            $sellerHasRated = ($totalRatings >= 2);
+        }
+        
         // デバッグ用のログ出力
         \Log::info('Seller chat debug:', [
             'item_id' => $item_id,
             'item_status' => $item->status,
             'has_order' => $order ? true : false,
             'order_id' => $order ? $order->id : null,
-            'has_rating' => $hasRated,
+            'buyer_has_rating' => $hasRated,
+            'seller_has_rating' => $sellerHasRated,
             'ratings_count' => Rating::where('item_id', $item_id)->count()
         ]);
         
@@ -74,7 +88,8 @@ class SellerChatController extends Controller
             'buyer', 
             'otherTradingItems', 
             'messages',
-            'hasRated'
+            'hasRated',
+            'sellerHasRated'
         ));
     }
 }
