@@ -3,42 +3,7 @@
 <head>
     <meta charset="utf-8">
     <title>取引完了のお知らせ</title>
-    <style>
-        body {
-            font-family: 'Hiragino Kaku Gothic ProN', 'Hiragino Sans', Meiryo, sans-serif;
-            line-height: 1.6;
-            color: #333;
-            max-width: 600px;
-            margin: 0 auto;
-            padding: 20px;
-        }
-        .header {
-            background-color: #f8f9fa;
-            padding: 20px;
-            text-align: center;
-            border-radius: 8px;
-            margin-bottom: 30px;
-        }
-        .content {
-            background-color: #ffffff;
-            padding: 30px;
-            border: 1px solid #e9ecef;
-            border-radius: 8px;
-            margin-bottom: 20px;
-        }
-        .item-info {
-            background-color: #f8f9fa;
-            padding: 20px;
-            border-radius: 8px;
-            margin: 20px 0;
-        }
-        .footer {
-            text-align: center;
-            color: #6c757d;
-            font-size: 14px;
-            margin-top: 30px;
-        }
-    </style>
+    <link rel="stylesheet" href="{{ asset('css/emails/transaction-completed.css') }}">
 </head>
 <body>
     <div class="header">
