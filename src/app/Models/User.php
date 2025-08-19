@@ -73,4 +73,38 @@ class User extends Authenticatable
     {
         return $this->hasMany(Favorite::class, 'user_id');
     }
+
+    /**
+     * 評価された評価の平均を取得
+     */
+    public function getAverageRating()
+    {
+        $ratings = Rating::where('rated_id', $this->id)->get();
+        
+        if ($ratings->isEmpty()) {
+            return null;
+        }
+        
+        $average = $ratings->avg('rating');
+        return round($average); // 四捨五入
+    }
+
+    /**
+     * 評価された評価の件数を取得
+     */
+    public function getRatingCount()
+    {
+        return Rating::where('rated_id', $this->id)->count();
+    }
+
+    /**
+     * 評価された評価の詳細を取得
+     */
+    public function getRatings()
+    {
+        return Rating::where('rated_id', $this->id)
+            ->with(['rater', 'item'])
+            ->orderBy('created_at', 'desc')
+            ->get();
+    }
 }

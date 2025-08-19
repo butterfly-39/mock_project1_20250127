@@ -50,6 +50,11 @@
     margin-bottom: 50px;
 }
 
+.mypage-userbox {
+    display: flex;
+    flex-direction: column;
+}
+
 .mypage-form__image-preview {
     width: 120px;
     height: 120px;
@@ -78,6 +83,21 @@
 .mypage-form__no-image {
     font-size: 5rem;
     color: #888787;
+}
+
+.mypage-rating-stars .star {
+    font-size: 20px;
+    line-height: 1;
+}
+
+.mypage-rating-stars .star--filled {
+    color: #ffd700;
+    /* イエロー */
+}
+
+.mypage-rating-stars .star--empty {
+    color: #cfcfcf;
+    /* グレー */
 }
 
 .mypage-form__select-btn {
