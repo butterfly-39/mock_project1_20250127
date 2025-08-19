@@ -799,6 +799,11 @@ body .content__heading {
     color: #ffd700;
 }
 
+.rating-stars input[type="radio"]:checked + .star,
+.rating-stars input[type="radio"]:checked + .star ~ .star {
+    color: #ffd700;
+}
+
 .rating-stars input[type="radio"]:checked + .star {
     color: #ffd700;
 }
