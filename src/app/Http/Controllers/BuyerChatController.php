@@ -31,6 +31,14 @@ class BuyerChatController extends Controller
 			->orderBy('created_at', 'asc')
 			->get();
 		
+		// その他の取引中の商品を取得
+		$otherTradingItems = Item::whereHas('orders', function($query) {
+			$query->where('user_id', auth()->id());
+		})
+		->where('id', '!=', $item_id)
+		->where('status', 'trading')
+		->get();
+		
 		// 相手からの未読メッセージを既読にする
 		Message::where('item_id', $item_id)
 			->where('user_id', '!=', auth()->id())  // 相手からのメッセージ
@@ -40,7 +48,7 @@ class BuyerChatController extends Controller
 				'read_at' => now()
 			]);
 		
-		return view('buyers.chat', compact('item', 'messages', 'seller'));
+		return view('buyers.chat', compact('item', 'messages', 'seller', 'otherTradingItems'));
 	}
 }
  

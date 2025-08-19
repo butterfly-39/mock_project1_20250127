@@ -10,7 +10,13 @@
     <div class="chat-sidebar">
         <h3 class="chat-sidebar__title">その他の取引</h3>
         <div class="chat-sidebar__transactions">
-            <!-- 他の取引一覧 -->
+            @foreach($otherTradingItems as $otherItem)
+                <div class="chat-sidebar__transaction-item">
+                    <a href="{{ route('buyers.chat', ['item_id' => $otherItem->id]) }}" class="chat-sidebar__transaction-link">
+                        {{ $otherItem->name }}
+                    </a>
+                </div>
+            @endforeach
         </div>
     </div>
 
