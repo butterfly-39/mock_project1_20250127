@@ -10,11 +10,15 @@ services:
             - ./src:/var/www/
         depends_on:
             - php
+        networks:
+            - app-network
 
     php:
         build: ./docker/php
         volumes:
             - ./src:/var/www/
+        networks:
+            - app-network
 
     mysql:
         image: mysql:8.0.33
@@ -29,6 +33,8 @@ services:
         volumes:
             - ./docker/mysql/data:/var/lib/mysql
             - ./docker/mysql/my.cnf:/etc/mysql/conf.d/my.cnf
+        networks:
+            - app-network
 
     phpmyadmin:
         image: phpmyadmin/phpmyadmin
@@ -41,3 +47,22 @@ services:
             - mysql
         ports:
             - 8085:80
+        networks:
+            - app-network
+
+    mailhog:
+        image: axllent/mailpit:latest
+        platform: linux/arm64/v8
+        ports:
+            - "1028:1025"  # SMTP (ポート1025が使用中のため1028に変更)
+            - "8027:8025"  # Web UI (ポート8025が使用中のため8027に変更)
+        environment:
+            MP_SMTP_AUTH_ACCEPT_ANY: 1
+            MP_SMTP_AUTH_ALLOW_INSECURE: 1
+        restart: unless-stopped
+        networks:
+            - app-network
+
+networks:
+    app-network:
+        driver: bridge

@@ -8,6 +8,8 @@ use App\Models\Order;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\User; // Added missing import for User model
+use App\Mail\TransactionCompletedMail;
+use Illuminate\Support\Facades\Mail;
 
 class RatingController extends Controller
 {
@@ -77,6 +79,16 @@ class RatingController extends Controller
             // 出品者が評価した場合のみ、商品をsoldにする
             if (!$isBuyer) {
                 $item->update(['status' => 'sold']);
+            }
+
+            // 購入者が評価した場合、出品者にメール通知を送信
+            if ($isBuyer) {
+                try {
+                    Mail::to($item->user->email)->send(new TransactionCompletedMail($item, $item->user, $buyer));
+                } catch (\Exception $e) {
+                    // メール送信に失敗しても評価は保存されているので、ログに記録するだけ
+                    \Log::error('取引完了メール送信失敗: ' . $e->getMessage());
+                }
             }
 
             // 購入者・出品者ともに商品一覧画面に遷移
