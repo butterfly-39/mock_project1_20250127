@@ -12,7 +12,7 @@
 			@if($user->profile && $user->profile->image)
 				<img src="{{ asset('storage/' . $user->profile->image) }}" alt="プロフィール画像" class="mypage-form__image" style="width: 4rem; height: 4rem;">
 			@else
-				<i class="fas fa-user mypage-form__no-image" style="font-size: 4rem;"></i>
+				<span class="mypage-form__avatar-placeholder" aria-label="No profile image"></span>
 			@endif
 			<div class="mypage-userbox">
 				<label class="mypage-form__label" for="image">{{ $user->name }}</label>
