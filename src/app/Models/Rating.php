@@ -15,6 +15,8 @@ class Rating extends Model
     protected $fillable = [
         'item_id',
         'order_id',
+        'rater_id',
+        'rated_id',
         'rating'
     ];
 
@@ -44,6 +46,22 @@ class Rating extends Model
     }
 
     /**
+     * 評価者とのリレーション
+     */
+    public function rater()
+    {
+        return $this->belongsTo(User::class, 'rater_id');
+    }
+
+    /**
+     * 被評価者とのリレーション
+     */
+    public function rated()
+    {
+        return $this->belongsTo(User::class, 'rated_id');
+    }
+
+    /**
      * 特定の商品の評価を取得するスコープ
      */
     public function scopeForItem($query, $itemId)
@@ -57,6 +75,22 @@ class Rating extends Model
     public function scopeForOrder($query, $orderId)
     {
         return $query->where('order_id', $orderId);
+    }
+
+    /**
+     * 特定の評価者の評価を取得するスコープ
+     */
+    public function scopeByRater($query, $raterId)
+    {
+        return $query->where('rater_id', $raterId);
+    }
+
+    /**
+     * 特定の被評価者の評価を取得するスコープ
+     */
+    public function scopeByRated($query, $ratedId)
+    {
+        return $query->where('rated_id', $ratedId);
     }
 
     /**
@@ -75,7 +109,6 @@ class Rating extends Model
         return $this->rating;
     }
 
-
     /**
      * 評価を作成日時順でソート
      */
@@ -90,6 +123,25 @@ class Rating extends Model
     public function scopeByRating($query, $direction = 'desc')
     {
         return $query->orderBy('rating', $direction);
+    }
+
+    /**
+     * 特定の取引での評価状況をチェック
+     */
+    public function scopeForTransaction($query, $itemId, $orderId)
+    {
+        return $query->where('item_id', $itemId)
+                    ->where('order_id', $orderId);
+    }
+
+    /**
+     * 特定のユーザーが特定の取引で評価済みかチェック
+     */
+    public function scopeUserHasRated($query, $itemId, $orderId, $raterId)
+    {
+        return $query->where('item_id', $itemId)
+                    ->where('order_id', $orderId)
+                    ->where('rater_id', $raterId);
     }
 }
  
