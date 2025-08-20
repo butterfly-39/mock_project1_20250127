@@ -70,4 +70,4 @@ class TransactionCompletedMail extends Mailable
     {
         return [];
     }
-} 
+}

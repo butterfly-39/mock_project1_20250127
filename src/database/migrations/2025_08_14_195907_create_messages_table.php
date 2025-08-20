@@ -16,28 +16,22 @@ class CreateMessagesTable extends Migration
         Schema::create('messages', function (Blueprint $table) {
             $table->id();
 
-            // 取引に関連する情報
             $table->foreignId('item_id')->constrained()->cascadeOnDelete();
-            $table->foreignId('user_id')->constrained()->cascadeOnDelete(); // メッセージ送信者
+            $table->foreignId('user_id')->constrained()->cascadeOnDelete();
 
-            // メッセージ内容
             $table->text('message');
             $table->string('image')->nullable();
 
-            // 既読管理
             $table->boolean('is_read')->default(false);
             $table->timestamp('read_at')->nullable();
 
-            // 編集・削除管理
             $table->boolean('is_edited')->default(false);
             $table->timestamp('edited_at')->nullable();
             $table->boolean('is_deleted')->default(false);
             $table->timestamp('deleted_at')->nullable();
 
-            // タイムスタンプ
             $table->timestamps();
 
-            // インデックス
             $table->index(['item_id', 'created_at']);
             $table->index(['user_id', 'created_at']);
         });

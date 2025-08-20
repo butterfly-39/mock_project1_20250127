@@ -7,7 +7,7 @@ use App\Models\Item;
 use App\Models\Order;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-use App\Models\User; // Added missing import for User model
+use App\Models\User;
 use App\Mail\TransactionCompletedMail;
 use Illuminate\Support\Facades\Mail;
 
@@ -20,32 +20,28 @@ class RatingController extends Controller
             'rating' => 'required|integer|between:1,5'
         ]);
 
-        // 現在のユーザーと商品情報を取得
+
         $currentUser = Auth::user();
         $item = Item::find($request->item_id);
-        
-        // 購入者か出品者かを判定してorder_idを取得
+
         $order = null;
         $isBuyer = false;
         $buyer = null;
-        
-        // 購入者の場合
+
         $buyerOrder = Order::where('item_id', $request->item_id)
             ->where('user_id', $currentUser->id)
             ->first();
-            
+
         if ($buyerOrder) {
             $order = $buyerOrder;
             $isBuyer = true;
             $buyer = $currentUser;
         } else {
-            // 出品者の場合
             if ($item->user_id === $currentUser->id) {
                 $sellerOrder = Order::where('item_id', $request->item_id)->first();
                 if ($sellerOrder) {
                     $order = $sellerOrder;
                     $isBuyer = false;
-                    // 購入者情報を取得
                     $buyer = User::find($sellerOrder->user_id);
                 }
             }
@@ -55,7 +51,6 @@ class RatingController extends Controller
             return redirect()->back()->with('error', '取引が見つかりません');
         }
 
-        // 既に評価済みかチェック（現在のユーザーがこの商品を評価済みか）
         $existingRating = Rating::where([
             'item_id' => $request->item_id,
             'order_id' => $order->id,
@@ -67,35 +62,31 @@ class RatingController extends Controller
         }
 
         try {
-            // 評価を保存
             $rating = Rating::create([
                 'item_id' => $request->item_id,
                 'order_id' => $order->id,
-                'rater_id' => $currentUser->id,  // 評価する人（現在のユーザー）
-                'rated_id' => $isBuyer ? $item->user_id : $buyer->id,  // 評価される人
+                'rater_id' => $currentUser->id,
+                'rated_id' => $isBuyer ? $item->user_id : $buyer->id,
                 'rating' => $request->rating
             ]);
-            
-            // 出品者が評価した場合のみ、商品をsoldにする
+
             if (!$isBuyer) {
                 $item->update(['status' => 'sold']);
             }
 
-            // 購入者が評価した場合、出品者にメール通知を送信
             if ($isBuyer) {
                 try {
                     Mail::to($item->user->email)->send(new TransactionCompletedMail($item, $item->user, $buyer));
                 } catch (\Exception $e) {
-                    // メール送信に失敗しても評価は保存されているので、ログに記録するだけ
                     \Log::error('取引完了メール送信失敗: ' . $e->getMessage());
                 }
             }
 
-            // 購入者・出品者ともに商品一覧画面に遷移
+
             return redirect()->route('items.index')->with('success', '評価を送信しました');
-            
+
         } catch (\Exception $e) {
             return redirect()->back()->with('error', '評価の保存に失敗しました');
         }
     }
-} 
+}

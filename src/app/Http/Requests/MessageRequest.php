@@ -37,4 +37,4 @@ class MessageRequest extends FormRequest
             'image.mimes' => '「.png」または「.jpeg」形式でアップロードしてください',
         ];
     }
-} 
+}

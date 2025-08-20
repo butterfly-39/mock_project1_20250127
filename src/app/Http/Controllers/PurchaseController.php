@@ -36,9 +36,9 @@ class PurchaseController extends Controller
             return redirect()->back()->with('error', '配送先情報が不完全です。');
         }
 
-        // トランザクション開始
+
         DB::transaction(function () use ($item, $request, $profile) {
-    
+
             $order = Order::create([
                 'user_id' => auth()->id(),
                 'item_id' => $item->id,
@@ -48,8 +48,7 @@ class PurchaseController extends Controller
                 'status' => 'pending'
             ]);
 
-    
-            $item->update(['status' => 'trading']); // ✅ 修正
+            $item->update(['status' => 'trading']);
         });
 
         return redirect('/');
@@ -65,7 +64,7 @@ class PurchaseController extends Controller
     {
         $item = Item::find($item_id);
         $profile = Profile::where('user_id', auth()->id())->first();
-        
+
         $profile->update([
             'postal_code' => $request->postal_code,
             'address' => $request->address,

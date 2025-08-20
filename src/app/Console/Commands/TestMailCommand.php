@@ -44,21 +44,21 @@ class TestMailCommand extends Command
         $item = new Item();
         $item->name = 'テスト商品';
         $item->price = 1000;
-        
+
         $seller = new User();
         $seller->name = 'テスト出品者';
         $seller->email = 'seller@example.com';
-        
+
         $buyer = new User();
         $buyer->name = 'テスト購入者';
         $buyer->email = 'buyer@example.com';
-        
+
         try {
             Mail::to($seller->email)->send(new TransactionCompletedMail($item, $seller, $buyer));
-            
+
             $this->info('✅ メール送信テストが成功しました！');
             $this->info('送信先: ' . $seller->email);
-            
+
             return 0;
         } catch (\Exception $e) {
             $this->error('❌ メール送信テストが失敗しました: ' . $e->getMessage());

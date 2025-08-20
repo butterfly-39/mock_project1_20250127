@@ -12,7 +12,7 @@
 
     <div class="content">
         <p>{{ $seller->name }}様</p>
-        
+
         <p>お疲れ様です。<br>
         商品「{{ $item->name }}」の取引が完了いたしました。</p>
 
@@ -36,4 +36,4 @@
         <p>© {{ date('Y') }} マーケットプレイス</p>
     </div>
 </body>
-</html> 
+</html>

@@ -17,13 +17,13 @@ class ItemController extends Controller
     {
         $tab = $request->query('tab', 'recommended');
         $query = $request->query('query');
-        
+
         $items = Item::query();
-        
+
         if ($query) {
             $items = $items->where('name', 'LIKE', "%{$query}%");
         }
-        
+
         if ($tab === 'mylist') {
             if (auth()->check()) {
                 $favoriteItemIds = auth()->user()->favorites()->pluck('item_id');
@@ -34,9 +34,9 @@ class ItemController extends Controller
         } else {
             $items = $items->where('user_id', '!=', auth()->id());
         }
-        
+
         $items = $items->orderBy('created_at', 'desc')->get();
-        
+
         return view('items.index', compact('items', 'query'));
     }
 
@@ -63,11 +63,11 @@ class ItemController extends Controller
             $path = $image->store('item_images', 'public');
             $item['image'] = $path;
         }
-        
+
         $item['user_id'] = auth()->id();
-        
+
         $newItem = Item::create($item);
-        
+
         if ($request->has('category')) {
             $newItem->categories()->attach($request->input('category'));
         }
@@ -78,11 +78,11 @@ class ItemController extends Controller
     public function search(Request $request)
     {
         $query = $request->input('query');
-        
+
         $items = Item::where('name', 'LIKE', "%{$query}%")
             ->orderBy('created_at', 'desc')
             ->paginate(20);
-            
+
         return view('items.index', compact('items', 'query'));
     }
 

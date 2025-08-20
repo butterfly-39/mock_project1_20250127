@@ -17,7 +17,6 @@ class CommentController extends Controller
         $comment->user_id = auth()->id();
         $comment->comment = $request->comment;
         $comment->save();
-        
 
         $item->load('comments.user.profile');
         return redirect()->back();

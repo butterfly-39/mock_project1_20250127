@@ -128,4 +128,3 @@ class Rating extends Model
                     ->where('rater_id', $raterId);
     }
 }
- 
