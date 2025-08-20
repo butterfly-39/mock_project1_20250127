@@ -53,7 +53,7 @@
 		@foreach($tradingItems as $item)
 			<div class="item-card">
 				<div class="item-card__image-container">
-					@if($item->unreadCount > 0)  <!-- ← コントローラーで計算した件数を使用 -->
+					@if($item->unreadCount > 0)
 						<div class="unread-notification">
 							<span class="unread-count">{{ $item->unreadCount }}</span>
 						</div>
@@ -84,7 +84,7 @@
 		@endforeach
 	@elseif(request()->get('tab') === 'buy')
 		@foreach($items as $item)
-		<div class="item-card">
+			<div class="item-card">
 				@if($item->image)
 					<img src="{{ asset('storage/' . $item->image) }}" alt="商品画像" class="item-card__image">
 				@else
@@ -93,7 +93,7 @@
 				<p class="item-card__name">{{ $item->name }}</p>
 			</div>
 		@endforeach
-			@else
+	@else
 		@foreach($items as $item)
 			<div class="item-card">
 				@if($item->image)
@@ -102,18 +102,14 @@
 					<img src="/images/sample.jpg" alt="商品画像" class="item-card__image">
 				@endif
 				<p class="item-card__name">{{ $item->name }}</p>
-		</div>
-	@endforeach
+			</div>
+		@endforeach
 	@endif
 
-	@if($items->isEmpty() && request()->get('tab') !== 'trading')
-		<p class="items-list__empty">
-			@if(request()->get('tab') === 'buy')
-				購入した商品はありません
-			@else
-				出品した商品はありません
-			@endif
-		</p>
+	@if($items->isEmpty() && request()->get('tab') === 'buy')
+		<p class="items-list__empty">購入した商品はありません</p>
+	@elseif($items->isEmpty() && request()->get('tab') === 'sell')
+		<p class="items-list__empty">出品した商品はありません</p>
 	@endif
 
 	@if(request()->get('tab') === 'trading' && $tradingItems->isEmpty())

@@ -6,15 +6,15 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Http\Requests\ProfileRequest;
 use App\Models\Item;
-use App\Models\Order; // Added this import for Order model
-use App\Models\Message; // Added this import for Message model
+use App\Models\Order;
+use App\Models\Message;
 
 class ProfileController extends Controller
 {
 	public function mypage_view(Request $request)
 	{
 		$user = Auth::user();
-		$tab = $request->query('tab', 'trading');
+		$tab = $request->query('tab', 'sell');
 
 		$averageRating = $user->getAverageRating();
 		$ratingCount = $user->getRatingCount();
