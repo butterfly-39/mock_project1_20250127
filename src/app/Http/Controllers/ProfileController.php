@@ -24,9 +24,7 @@ class ProfileController extends Controller
 		$tradingItems = collect();
 
 		if ($tab === 'sell') {
-			$items = Item::where('user_id', $user->id)
-				->where('status', 'available')
-				->get();
+			$items = Item::where('user_id', $user->id)->get();
 		} elseif ($tab === 'buy') {
 			$items = Item::whereHas('orders', function($query) use ($user) {
 				$query->where('user_id', $user->id);
