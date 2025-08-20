@@ -51,15 +51,10 @@ services:
             - app-network
 
     mailhog:
-        image: axllent/mailpit:latest
-        platform: linux/arm64/v8
+        image: mailhog/mailhog:latest
         ports:
-            - "1028:1025"  # SMTP (ポート1025が使用中のため1028に変更)
-            - "8027:8025"  # Web UI (ポート8025が使用中のため8027に変更)
-        environment:
-            MP_SMTP_AUTH_ACCEPT_ANY: 1
-            MP_SMTP_AUTH_ALLOW_INSECURE: 1
-        restart: unless-stopped
+            - "1025:1025"  # SMTP
+            - "8025:8025"  # Web UI
         networks:
             - app-network
 

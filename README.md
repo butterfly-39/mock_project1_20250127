@@ -52,7 +52,18 @@ php artisan db:seed
 ## URL
 ・開発環境：http://localhost:85/
 ・phpMyAdmin：http://localhost:8085/
+・mailhog: http://localhost:8025
 
-## ログインユーザー情報
-・メールアドレス：test2@test.com
-・パスワード：password
+## テストアカウント
+・name: 出品者1
+・email: test1@test.com
+・password: password
+
+・name: 出品者2
+・email: test2@test.com
+・password: password
+
+・name: 購入者3
+・email: test3@test.com
+・password: password
+
