@@ -18,7 +18,7 @@ class CommentController extends Controller
         $comment->comment = $request->comment;
         $comment->save();
         
-        // コメントを含めてアイテムを再取得
+
         $item->load('comments.user.profile');
         return redirect()->back();
     }

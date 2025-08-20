@@ -41,7 +41,6 @@ class TestMailCommand extends Command
      */
     public function handle()
     {
-        // テスト用のデータを作成
         $item = new Item();
         $item->name = 'テスト商品';
         $item->price = 1000;
@@ -55,7 +54,6 @@ class TestMailCommand extends Command
         $buyer->email = 'buyer@example.com';
         
         try {
-            // メール送信テスト
             Mail::to($seller->email)->send(new TransactionCompletedMail($item, $seller, $buyer));
             
             $this->info('✅ メール送信テストが成功しました！');

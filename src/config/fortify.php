@@ -158,7 +158,7 @@ return [
     ],
 
     'redirects' => [
-        'logout' => '/login', // ログアウト後にログインページへリダイレクト
+        'logout' => '/login',
     ],
 
 ];

@@ -128,27 +128,23 @@
 
 @section('scripts')
 <script>
-function previewImage(input) {
-    const preview = document.getElementById('preview');
-    if (input.files && input.files[0]) {
-        const file = input.files[0];
+document.getElementById('imageInput').addEventListener('change', function(e) {
+    const file = e.target.files[0];
+    if (file) {
         const reader = new FileReader();
-        
         reader.onload = function(e) {
             const img = new Image();
             img.onload = function() {
-                // キャンバスを作成して画像をリサイズ
                 const canvas = document.createElement('canvas');
                 let width = img.width;
                 let height = img.height;
                 
-                // 最大サイズを1200pxに設定
                 const MAX_SIZE = 1200;
                 if (width > height && width > MAX_SIZE) {
-                    height = Math.round((height * MAX_SIZE) / width);
+                    height = (height * MAX_SIZE) / width;
                     width = MAX_SIZE;
                 } else if (height > MAX_SIZE) {
-                    width = Math.round((width * MAX_SIZE) / height);
+                    width = (width * MAX_SIZE) / height;
                     height = MAX_SIZE;
                 }
                 
@@ -157,28 +153,25 @@ function previewImage(input) {
                 const ctx = canvas.getContext('2d');
                 ctx.drawImage(img, 0, 0, width, height);
                 
-                // 圧縮した画像をプレビュー表示
                 const compressedDataUrl = canvas.toDataURL('image/jpeg', 0.7);
                 preview.innerHTML = `<img src="${compressedDataUrl}" alt="商品画像">`;
                 
-                // 圧縮した画像データをFileに変換
                 canvas.toBlob(function(blob) {
                     const compressedFile = new File([blob], file.name, {
                         type: 'image/jpeg',
-                        lastModified: new Date().getTime()
+                        lastModified: Date.now()
                     });
                     
-                    // 元のinput[type=file]の値を更新
                     const dataTransfer = new DataTransfer();
                     dataTransfer.items.add(compressedFile);
-                    input.files = dataTransfer.files;
+                    document.getElementById('imageInput').files = dataTransfer.files;
                 }, 'image/jpeg', 0.7);
             };
             img.src = e.target.result;
         };
         reader.readAsDataURL(file);
     }
-}
+});
 </script>
 @endsection
 

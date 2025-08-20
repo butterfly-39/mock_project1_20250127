@@ -16,7 +16,7 @@ class BuyerChatController extends Controller
 			abort(403);
 		}
 		
-		// 評価済みの場合は取引画面に遷移させない（マイページのまま）
+		
 		$order = $item->orders->first();
 		if ($order && Rating::where('item_id', $item_id)
 			->where('order_id', $order->id)
@@ -31,7 +31,7 @@ class BuyerChatController extends Controller
 			->orderBy('created_at', 'asc')
 			->get();
 		
-		// その他の取引中の商品を取得
+		
 		$otherTradingItems = Item::whereHas('orders', function($query) {
 			$query->where('user_id', auth()->id());
 		})
@@ -39,9 +39,9 @@ class BuyerChatController extends Controller
 		->where('status', 'trading')
 		->get();
 		
-		// 相手からの未読メッセージを既読にする
+		
 		Message::where('item_id', $item_id)
-			->where('user_id', '!=', auth()->id())  // 相手からのメッセージ
+			            ->where('user_id', '!=', auth()->id())
 			->where('is_read', false)
 			->update([
 				'is_read' => true,

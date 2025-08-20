@@ -13,17 +13,15 @@ class ProfileController extends Controller
 {
 	public function mypage_view(Request $request)
 	{
-		$user = auth()->user();
+		$user = Auth::user();
 		$tab = $request->query('tab', 'trading');
-		
-		// 評価情報を取得
+
 		$averageRating = $user->getAverageRating();
 		$ratingCount = $user->getRatingCount();
 		$ratings = $user->getRatings();
-		
-		// 変数を初期化
-		$items = collect();  // ← 空のコレクションで初期化
-		$tradingItems = collect();  // ← 空のコレクションで初期化
+
+		$items = collect();
+		$tradingItems = collect();
 
 		if ($tab === 'sell') {
 			$items = Item::where('user_id', $user->id)
@@ -35,9 +33,9 @@ class ProfileController extends Controller
 			})->where('status', 'sold')->get();
 		} elseif ($tab === 'trading') {
 			$tradingItems = Item::where(function($query) use ($user) {
-				$query->where('user_id', $user->id)  // 自分が出品した商品
+				$query->where('user_id', $user->id)
 					->orWhereHas('orders', function($orderQuery) use ($user) {
-						$orderQuery->where('user_id', $user->id);  // 自分が購入した商品
+						$orderQuery->where('user_id', $user->id);
 					});
 			})->where('status', 'trading')
 			->with(['messages' => function($query) {
@@ -46,34 +44,31 @@ class ProfileController extends Controller
 			}])
 			->get()
 			->sortByDesc(function($item) {
-				// 最新メッセージの日時でソート
 				$latestMessage = $item->messages->first();
 				return $latestMessage ? $latestMessage->created_at : $item->created_at;
 			});
-			
-			// 各商品の未読メッセージ件数を計算（既読処理前の状態）
+
 			foreach ($tradingItems as $item) {
 				$item->unreadCount = Message::where('item_id', $item->id)
-					->where('user_id', '!=', $user->id)  // 相手からのメッセージ
+					->where('user_id', '!=', $user->id)
 					->where('is_read', false)
 					->where('is_deleted', false)
 					->count();
 			}
 		}
-		
-		// 未読メッセージ総件数を計算（既読処理前の状態）
+
 		$unreadMessageCount = Message::whereHas('item', function($query) use ($user) {
 			$query->where(function($itemQuery) use ($user) {
-				$itemQuery->where('user_id', $user->id)  // 自分が出品
+				$itemQuery->where('user_id', $user->id)
 					->where('status', 'trading');
 			})->orWhereHas('orders', function($orderQuery) use ($user) {
-				$orderQuery->where('user_id', $user->id);  // 自分が購入
+				$orderQuery->where('user_id', $user->id);
 			});
 		})->where('user_id', '!=', $user->id)
 		->where('is_read', false)
 		->where('is_deleted', false)
 		->count();
-		
+
 		return view('profiles.mypage', compact(
 			'user',
 			'tradingItems',
@@ -95,12 +90,11 @@ class ProfileController extends Controller
 	public function edit_update(ProfileRequest $request)
 	{
 		$user = Auth::user();
-		// usersテーブルの更新
+
 		$user->update([
 			'name' => $request->name
 		]);
 
-		// profilesテーブル用のデータ
 		$profile = $request->only(['postal_code', 'address', 'building']);
 
 		if ($request->hasFile('image')) {
@@ -109,7 +103,6 @@ class ProfileController extends Controller
 			$profile['image'] = $path;
 		}
 
-		// プロフィール情報を更新または作成
 		$user->profile()->updateOrCreate(
 			['user_id' => $user->id],
 			$profile

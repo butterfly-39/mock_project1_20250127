@@ -31,24 +31,24 @@ class PurchaseController extends Controller
         $item = Item::find($item_id);
         $profile = Profile::where('user_id', auth()->id())->first();
 
-        // プロフィール情報の存在チェックを追加
+
         if (!$profile || !$profile->postal_code || !$profile->address) {
             return redirect()->back()->with('error', '配送先情報が不完全です。');
         }
 
         // トランザクション開始
         DB::transaction(function () use ($item, $request, $profile) {
-            // 注文を作成（住所情報も含める）
+    
             $order = Order::create([
                 'user_id' => auth()->id(),
                 'item_id' => $item->id,
                 'order_postal_code' => $profile->postal_code,
                 'order_address' => $profile->address,
                 'order_building' => $profile->building,
-                'status' => 'pending' // 取引中として作成
+                'status' => 'pending'
             ]);
 
-            // 商品のステータスを「trading」に更新（取引中）
+    
             $item->update(['status' => 'trading']); // ✅ 修正
         });
 

@@ -28,7 +28,7 @@ class MessageController extends Controller
 
     public function update(Request $request, Message $message)
     {
-        // 権限チェック：自分のメッセージのみ編集可能
+
         if ($message->user_id !== auth()->id()) {
             abort(403);
         }
@@ -48,7 +48,7 @@ class MessageController extends Controller
     
     public function destroy(Message $message)
     {
-        // 権限チェック：自分のメッセージのみ削除可能
+
         if ($message->user_id !== auth()->id()) {
             abort(403);
         }

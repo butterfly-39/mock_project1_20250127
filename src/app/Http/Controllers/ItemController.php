@@ -11,7 +11,6 @@ use App\Models\Favorite;
 use App\Models\ItemCategory;
 use App\Models\Comment;
 
-
 class ItemController extends Controller
 {
     public function items_view(Request $request)
@@ -21,18 +20,16 @@ class ItemController extends Controller
         
         $items = Item::query();
         
-        // 検索クエリがある場合
         if ($query) {
             $items = $items->where('name', 'LIKE', "%{$query}%");
         }
         
-        // タブに応じてフィルタリング
         if ($tab === 'mylist') {
             if (auth()->check()) {
                 $favoriteItemIds = auth()->user()->favorites()->pluck('item_id');
                 $items = $items->whereIn('id', $favoriteItemIds);
             } else {
-                $items = $items->whereRaw('1 = 0'); // 空の結果を返す
+                $items = $items->whereRaw('1 = 0');
             }
         } else {
             $items = $items->where('user_id', '!=', auth()->id());
@@ -60,7 +57,7 @@ class ItemController extends Controller
     public function sell_update(ExhibitionRequest $request)
     {
         $item = $request->only('condition_id', 'name', 'brand_name', 'description', 'price');
-        // 画像がアップロードされた場合の処理
+
         if ($request->hasFile('image')) {
             $image = $request->file('image');
             $path = $image->store('item_images', 'public');
@@ -69,10 +66,8 @@ class ItemController extends Controller
         
         $item['user_id'] = auth()->id();
         
-        // itemを作成し、カテゴリーを関連付ける
         $newItem = Item::create($item);
         
-        // カテゴリーの保存
         if ($request->has('category')) {
             $newItem->categories()->attach($request->input('category'));
         }
@@ -93,7 +88,6 @@ class ItemController extends Controller
 
     public function index()
     {
-        // すべての商品を取得（ステータスに関係なく）
         $items = Item::orderBy('created_at', 'desc')->get();
         return view('items.index', compact('items'));
     }

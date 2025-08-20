@@ -177,23 +177,19 @@ document.addEventListener('DOMContentLoaded', function() {
     const textarea = document.querySelector('.chat-form__input');
     const storageKey = 'chat_draft_buyer_{{ $item->id }}_{{ $item->user->id }}';
     
-    // ページ読み込み時に保存された内容を復元
     const savedContent = localStorage.getItem(storageKey);
     if (savedContent) {
         textarea.value = savedContent;
     }
     
-    // 入力内容をリアルタイムで保存
     textarea.addEventListener('input', function() {
         localStorage.setItem(storageKey, this.value);
     });
     
-    // フォーム送信時に保存内容をクリア
     document.querySelector('.chat-form').addEventListener('submit', function() {
         localStorage.removeItem(storageKey);
     });
     
-    // ページ離脱時に内容を保存
     window.addEventListener('beforeunload', function() {
         if (textarea.value.trim()) {
             localStorage.setItem(storageKey, textarea.value);
@@ -202,40 +198,32 @@ document.addEventListener('DOMContentLoaded', function() {
 });
 
 function editMessage(messageId, currentMessage) {
-    // 編集用のフォームを表示
     const textarea = document.querySelector('.chat-form__input');
     textarea.value = currentMessage;
     textarea.focus();
     
-    // フォームのactionを編集用に変更
     const form = document.querySelector('.chat-form');
     form.action = '{{ route("messages.update", "") }}/' + messageId;
     
-    // 既存の_methodフィールドを削除
     const existingMethod = form.querySelector('input[name="_method"]');
     if (existingMethod) {
         existingMethod.remove();
     }
     
-    // メソッドをPUTに変更
     const methodInput = document.createElement('input');
     methodInput.type = 'hidden';
     methodInput.name = '_method';
     methodInput.value = 'PUT';
     form.appendChild(methodInput);
     
-    // 編集モードフラグを設定
     form.dataset.editMode = 'true';
     form.dataset.editMessageId = messageId;
 }
 
-// フォーム送信時の処理
 document.querySelector('.chat-form').addEventListener('submit', function(e) {
     if (this.dataset.editMode === 'true') {
-        // 編集モードの場合
         this.action = '{{ route("messages.update", "") }}/' + this.dataset.editMessageId;
         
-        // メソッドをPUTに変更
         const methodInput = document.createElement('input');
         methodInput.type = 'hidden';
         methodInput.name = '_method';
@@ -249,7 +237,6 @@ function showRatingModal() {
     document.getElementById('ratingModal').style.display = 'block';
 }
 
-// モーダル外クリックで閉じる
 window.onclick = function(event) {
     const modals = document.querySelectorAll('.modal');
     modals.forEach(modal => {
