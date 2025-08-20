@@ -78,7 +78,7 @@
                             </div>
                         @endif
                     </div>
-                    
+
                     <div class="message__content">
                         <div class="message__bubble">
                             <p class="message__text">{{ $message->message }}</p>
@@ -117,7 +117,7 @@
                         @enderror
                     </div>
                 @endif
-                
+
                 <div class="chat-form__input-group">
                     <textarea class="chat-form__input" name="message" placeholder="取引メッセージを記入してください" rows="3">{{ old('message') }}</textarea>
                     <div class="chat-form__buttons">
@@ -140,11 +140,11 @@
                     <div class="modal-body">
                         <h3 class="rating-title">取引が完了しました。</h3>
                         <p class="rating-question">今回の取引相手はどうでしたか？</p>
-                        
+
                         <form action="{{ route('ratings.store') }}" method="POST" class="rating-form">
                             @csrf
                             <input type="hidden" name="item_id" value="{{ $item->id }}">
-                            
+
                             <div class="rating-stars">
                                 <input type="radio" name="rating" value="5" id="star5" required>
                                 <label for="star5" class="star">★</label>
@@ -157,7 +157,7 @@
                                 <input type="radio" name="rating" value="1" id="star1">
                                 <label for="star1" class="star">★</label>
                             </div>
-                            
+
                             <div class="rating-submit">
                                 <button type="submit" class="btn btn-primary">送信する</button>
                             </div>
@@ -176,20 +176,20 @@
 document.addEventListener('DOMContentLoaded', function() {
     const textarea = document.querySelector('.chat-form__input');
     const storageKey = 'chat_draft_seller_{{ $item->id }}_{{ $buyer->id }}';
-    
+
     const savedContent = localStorage.getItem(storageKey);
     if (savedContent) {
         textarea.value = savedContent;
     }
-    
+
     textarea.addEventListener('input', function() {
         localStorage.setItem(storageKey, this.value);
     });
-    
+
     document.querySelector('.chat-form').addEventListener('submit', function() {
         localStorage.removeItem(storageKey);
     });
-    
+
     window.addEventListener('beforeunload', function() {
         if (textarea.value.trim()) {
             localStorage.setItem(storageKey, textarea.value);
@@ -201,21 +201,21 @@ function editMessage(messageId, currentMessage) {
     const textarea = document.querySelector('.chat-form__input');
     textarea.value = currentMessage;
     textarea.focus();
-    
+
     const form = document.querySelector('.chat-form');
     form.action = '{{ route("messages.update", "") }}/' + messageId;
-    
+
     const existingMethod = form.querySelector('input[name="_method"]');
     if (existingMethod) {
         existingMethod.remove();
     }
-    
+
     const methodInput = document.createElement('input');
     methodInput.type = 'hidden';
     methodInput.name = '_method';
     methodInput.value = 'PUT';
     form.appendChild(methodInput);
-    
+
     form.dataset.editMode = 'true';
     form.dataset.editMessageId = messageId;
 }
@@ -223,7 +223,7 @@ function editMessage(messageId, currentMessage) {
 document.querySelector('.chat-form').addEventListener('submit', function(e) {
     if (this.dataset.editMode === 'true') {
         this.action = '{{ route("messages.update", "") }}/' + this.dataset.editMessageId;
-        
+
         const methodInput = document.createElement('input');
         methodInput.type = 'hidden';
         methodInput.name = '_method';

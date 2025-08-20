@@ -94,22 +94,6 @@ class Rating extends Model
     }
 
     /**
-     * 評価が存在するかチェック
-     */
-    public function exists()
-    {
-        return $this->exists;
-    }
-
-    /**
-     * 評価点数を取得
-     */
-    public function getRating()
-    {
-        return $this->rating;
-    }
-
-    /**
      * 評価を作成日時順でソート
      */
     public function scopeLatest($query)
